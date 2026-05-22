@@ -372,7 +372,10 @@ function openModal(id) {
 
   document.getElementById('pmodal').classList.add('open');
   document.getElementById('pmodalOverlay').classList.add('active');
+  document.getElementById('pmodal').scrollTop = 0;
   document.body.style.overflow = 'hidden';
+
+  renderAlsoLike(id);
 }
 
 function renderVariants(prod) {
@@ -432,6 +435,40 @@ function closeModal() {
 function updateModalQty(delta) {
   modalQty = Math.max(1, modalQty + delta);
   document.getElementById('pmodalQtyNum').textContent = modalQty;
+}
+
+function renderAlsoLike(currentId) {
+  const grid = document.getElementById('pmodalAlsoGrid');
+  const wrap = document.getElementById('pmodalAlso');
+  if (!grid || !wrap) return;
+
+  const current = PRODUCTS[currentId];
+  if (!current) { wrap.style.display = 'none'; return; }
+
+  const allIds  = Object.keys(PRODUCTS);
+  const sameCat = allIds.filter(id => id !== currentId && PRODUCTS[id].cat === current.cat);
+  const diffCat = allIds.filter(id => id !== currentId && PRODUCTS[id].cat !== current.cat);
+  const picks   = [...sameCat, ...diffCat].slice(0, 4);
+
+  if (!picks.length) { wrap.style.display = 'none'; return; }
+
+  grid.innerHTML = '';
+  picks.forEach(id => {
+    const p   = PRODUCTS[id];
+    const div = document.createElement('div');
+    div.className = 'pmodal-also-card';
+    div.innerHTML = `
+      <div class="pmodal-also-thumb">${p.emoji}</div>
+      <p class="pmodal-also-name">${p.name}</p>
+      <p class="pmodal-also-price">₱${p.price.toLocaleString('en-PH')}</p>
+    `;
+    div.addEventListener('click', () => {
+      document.getElementById('pmodal').scrollTop = 0;
+      openModal(id);
+    });
+    grid.appendChild(div);
+  });
+  wrap.style.display = 'block';
 }
 
 function addFromModal() {

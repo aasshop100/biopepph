@@ -34,45 +34,25 @@
       <span class="logo-bio">BIO</span><span class="logo-pep">PEP</span>
       <span class="logo-ph">PH</span>
     </a>
-    <nav class="header-nav">
-      <a href="#products">Shop</a>
-      <a href="#why-us">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="header-social">
-      <a href="https://facebook.com/biopepph" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-      </a>
-      <a href="https://instagram.com/biopepph" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
-      </a>
-    </div>
     <button class="cart-trigger" id="cartOpen" aria-label="Open cart">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
       <span class="cart-count-badge" id="cartBadge">0</span>
     </button>
-    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-  <!-- Mobile nav -->
-  <div class="mobile-nav" id="mobileNav">
-    <a href="#products" class="mobile-nav-link">Shop</a>
-    <a href="#why-us" class="mobile-nav-link">About</a>
-    <a href="#contact" class="mobile-nav-link">Contact</a>
   </div>
 </header>
 
-<!-- ====== DELIVERY INFO STRIP ====== -->
-<div class="delivery-strip">
-  <div class="delivery-strip-inner">
-    <div class="dinfo-item"><span>📍</span>Philippines-based</div>
-    <span class="dinfo-sep">·</span>
-    <div class="dinfo-item"><span>🏍</span>Same-Day Delivery (Metro Manila, 12PM–8PM)</div>
-    <span class="dinfo-sep">·</span>
-    <div class="dinfo-item"><span>📦</span>Nationwide via J&T / Lalamove (Everyday)</div>
-    <span class="dinfo-sep">·</span>
-    <div class="dinfo-item"><span>💬</span>24/7 Chat Support</div>
+<!-- ====== STICKY CATEGORY NAV ====== -->
+<div class="cat-nav-sticky" id="catNavSticky">
+  <div class="cat-scroll">
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" data-cat="all">All</button>
+      <button class="cat-tab" data-cat="WeightLoss">Weight Loss</button>
+      <button class="cat-tab" data-cat="Healing">Healing</button>
+      <button class="cat-tab" data-cat="AntiAging">Anti-Aging</button>
+      <button class="cat-tab" data-cat="Growth">Growth</button>
+      <button class="cat-tab" data-cat="Stacks">Stacks</button>
+      <button class="cat-tab" data-cat="Other">Other</button>
+    </div>
   </div>
 </div>
 
@@ -112,9 +92,7 @@
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-content">
-    <span class="hero-badge">🇵🇭 Proudly Philippine-based</span>
     <h1>Premium<br><em>Peptides</em><br>Delivered.</h1>
-    <p>Research-grade peptides for weight loss, healing, anti-aging, and performance. Nationwide delivery.</p>
     <div class="hero-actions">
       <a href="#products" class="btn-primary">Shop Now →</a>
       <a href="#why-us" class="btn-ghost">Learn More</a>
@@ -180,23 +158,6 @@
 
 <!-- ====== PRODUCTS ====== -->
 <section class="products-section" id="products">
-  <div class="section-head">
-    <span class="eyebrow">Our Products</span>
-    <h2>Shop <span>BIOPEP</span></h2>
-  </div>
-
-  <!-- Category Tabs -->
-  <div class="cat-scroll">
-    <div class="cat-tabs" id="catTabs">
-      <button class="cat-tab active" data-cat="all">All</button>
-      <button class="cat-tab" data-cat="WeightLoss">Weight Loss</button>
-      <button class="cat-tab" data-cat="Healing">Healing</button>
-      <button class="cat-tab" data-cat="AntiAging">Anti-Aging</button>
-      <button class="cat-tab" data-cat="Growth">Growth</button>
-      <button class="cat-tab" data-cat="Stacks">Stacks</button>
-      <button class="cat-tab" data-cat="Other">Other</button>
-    </div>
-  </div>
 
   <!-- Product Grid -->
   <div class="pgrid" id="productGrid">
@@ -798,6 +759,12 @@
       </div>
     </div>
     <button class="pmodal-add-btn" id="pmodalAddBtn">Add to Cart</button>
+
+    <!-- You May Also Like -->
+    <div class="pmodal-also" id="pmodalAlso" style="display:none;">
+      <p class="pmodal-also-title">You may also like</p>
+      <div class="pmodal-also-grid" id="pmodalAlsoGrid"></div>
+    </div>
   </div>
 </div>
 
