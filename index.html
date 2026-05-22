@@ -39,6 +39,14 @@
       <a href="#why-us">About</a>
       <a href="#contact">Contact</a>
     </nav>
+    <div class="header-social">
+      <a href="https://facebook.com/biopepph" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="https://instagram.com/biopepph" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+      </a>
+    </div>
     <button class="cart-trigger" id="cartOpen" aria-label="Open cart">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
       <span class="cart-count-badge" id="cartBadge">0</span>
@@ -54,6 +62,19 @@
     <a href="#contact" class="mobile-nav-link">Contact</a>
   </div>
 </header>
+
+<!-- ====== DELIVERY INFO STRIP ====== -->
+<div class="delivery-strip">
+  <div class="delivery-strip-inner">
+    <div class="dinfo-item"><span>📍</span>Philippines-based</div>
+    <span class="dinfo-sep">·</span>
+    <div class="dinfo-item"><span>🏍</span>Same-Day Delivery (Metro Manila, 12PM–8PM)</div>
+    <span class="dinfo-sep">·</span>
+    <div class="dinfo-item"><span>📦</span>Nationwide via J&T / Lalamove (Everyday)</div>
+    <span class="dinfo-sep">·</span>
+    <div class="dinfo-item"><span>💬</span>24/7 Chat Support</div>
+  </div>
+</div>
 
 <!-- ====== CART OVERLAY ====== -->
 <div class="cart-overlay" id="cartOverlay"></div>
@@ -88,6 +109,10 @@
       <button class="btn-order messenger" id="orderMessenger" onclick="orderViaMessenger()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 4.9 0 11c0 3.4 1.7 6.5 4.4 8.5V24l4-2.2c1.1.3 2.3.5 3.6.5 6.6 0 12-4.9 12-11S18.6 0 12 0zm1.2 14.8l-3-3.3-5.9 3.3 6.5-6.9 3.1 3.3 5.8-3.3-6.5 6.9z"/></svg>
         Order via Messenger
+      </button>
+      <button class="btn-order viber" id="orderViber" onclick="orderViaViber()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4.1C5.5.1 1 4.4 1 9.8c0 3 1.5 5.7 4 7.5v3.8l3.5-1.9c.9.2 1.9.3 2.9.3 5.9 0 10.6-4.3 10.6-9.7C22 4.4 17.3.1 11.4.1zM8.5 6.4l.8.8c.3.3.5.6.5 1 0 .6-.3 1.1-.8 1.3l-.4.2c-.1 0-.2.1-.2.2 0 .1 0 .2.1.3.5 1.4 1.4 2.5 2.8 2.9.1 0 .2.1.3.1.1 0 .2-.1.2-.2l.2-.4c.2-.6.7-.8 1.3-.8.3 0 .6.2.9.5l.8.8c.3.3.4.7.3 1.1-.2.6-.7 1.1-1.3 1.3-.4.1-.8.2-1.2.1-1.6-.2-3.1-1-4.2-2.1C7.7 11.5 7 9.9 7 8.1c0-.4.1-.8.2-1.2.2-.7.7-1.1 1.3-1.3.3-.1.7 0 1 .3z"/></svg>
+        Order via Viber
       </button>
       <button class="btn-order telegram" id="orderTelegram" onclick="orderViaTelegram()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.9 8.2l-2 9.4c-.1.6-.5.8-.9.5l-2.6-1.9-1.2 1.2c-.1.1-.3.2-.6.2l.2-2.7 5.1-4.6c.2-.2 0-.3-.3-.1L6.4 14.8l-2.6-.8c-.6-.2-.6-.6.1-.8l10.2-3.9c.5-.2 1 .1.8.9z"/></svg>
@@ -183,6 +208,7 @@
       <button class="cat-tab" data-cat="Healing">Healing</button>
       <button class="cat-tab" data-cat="AntiAging">Anti-Aging</button>
       <button class="cat-tab" data-cat="Growth">Growth</button>
+      <button class="cat-tab" data-cat="Stacks">Stacks</button>
       <button class="cat-tab" data-cat="Other">Other</button>
     </div>
   </div>
@@ -192,17 +218,20 @@
 
     <!-- WEIGHT LOSS -->
     <div class="pgrid-item" data-cat="WeightLoss">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+      <div class="pcard" data-id="sema-5mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);" onclick="openModal('sema-5mg')">
           <span class="pcard-emoji">💉</span>
           <span class="pcard-tag">Best Seller</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Weight Loss</p>
-          <h6 class="pcard-name">Semaglutide 5mg</h6>
+          <h6 class="pcard-name" onclick="openModal('sema-5mg')">Semaglutide 5mg</h6>
           <p class="pcard-desc">GLP-1 Receptor Agonist · Appetite suppression · Fat loss</p>
           <div class="pcard-foot">
-            <span class="pcard-price">₱2,500</span>
+            <div class="pcard-price-wrap">
+              <span class="pcard-price">₱2,500</span>
+              <span class="pcard-price-orig">₱3,000</span>
+            </div>
             <button class="btn-add" onclick="addItem('sema-5mg','Semaglutide 5mg',2500)">Add</button>
           </div>
         </div>
@@ -210,14 +239,14 @@
     </div>
 
     <div class="pgrid-item" data-cat="WeightLoss">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+      <div class="pcard" data-id="retro-10mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);" onclick="openModal('retro-10mg')">
           <span class="pcard-emoji">💉</span>
           <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Weight Loss</p>
-          <h6 class="pcard-name">Retatrutide 10mg</h6>
+          <h6 class="pcard-name" onclick="openModal('retro-10mg')">Retatrutide 10mg</h6>
           <p class="pcard-desc">Triple Agonist · GLP-1/GIP/Glucagon · Advanced fat loss</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱4,500</span>
@@ -228,13 +257,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="WeightLoss">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+      <div class="pcard" data-id="tirze-10mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);" onclick="openModal('tirze-10mg')">
           <span class="pcard-emoji">💉</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Weight Loss</p>
-          <h6 class="pcard-name">Tirzepatide 10mg</h6>
+          <h6 class="pcard-name" onclick="openModal('tirze-10mg')">Tirzepatide 10mg</h6>
           <p class="pcard-desc">GLP-1/GIP Dual Agonist · Clinical-grade weight management</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱4,000</span>
@@ -245,13 +274,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="WeightLoss">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+      <div class="pcard" data-id="cagri-10mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);" onclick="openModal('cagri-10mg')">
           <span class="pcard-emoji">💉</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Weight Loss</p>
-          <h6 class="pcard-name">Cagrilintide 10mg</h6>
+          <h6 class="pcard-name" onclick="openModal('cagri-10mg')">Cagrilintide 10mg</h6>
           <p class="pcard-desc">Amylin Analogue · Satiety · Complements Semaglutide</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱3,800</span>
@@ -262,13 +291,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="WeightLoss">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);">
+      <div class="pcard" data-id="survo-10mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);" onclick="openModal('survo-10mg')">
           <span class="pcard-emoji">💉</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Weight Loss</p>
-          <h6 class="pcard-name">Survodutide 10mg</h6>
+          <h6 class="pcard-name" onclick="openModal('survo-10mg')">Survodutide 10mg</h6>
           <p class="pcard-desc">GLP-1/Glucagon · Next-gen weight loss peptide</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱4,200</span>
@@ -280,17 +309,20 @@
 
     <!-- HEALING -->
     <div class="pgrid-item" data-cat="Healing">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+      <div class="pcard" data-id="bpc157-5mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);" onclick="openModal('bpc157-5mg')">
           <span class="pcard-emoji">🧬</span>
           <span class="pcard-tag">Popular</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Healing</p>
-          <h6 class="pcard-name">BPC-157 5mg</h6>
+          <h6 class="pcard-name" onclick="openModal('bpc157-5mg')">BPC-157 5mg</h6>
           <p class="pcard-desc">Body Protective Compound · Gut & tissue repair</p>
           <div class="pcard-foot">
-            <span class="pcard-price">₱1,800</span>
+            <div class="pcard-price-wrap">
+              <span class="pcard-price">₱1,800</span>
+              <span class="pcard-price-orig">₱2,200</span>
+            </div>
             <button class="btn-add" onclick="addItem('bpc157-5mg','BPC-157 5mg',1800)">Add</button>
           </div>
         </div>
@@ -298,13 +330,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="Healing">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+      <div class="pcard" data-id="tb500-5mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);" onclick="openModal('tb500-5mg')">
           <span class="pcard-emoji">🧬</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Healing</p>
-          <h6 class="pcard-name">TB-500 5mg</h6>
+          <h6 class="pcard-name" onclick="openModal('tb500-5mg')">TB-500 5mg</h6>
           <p class="pcard-desc">Thymosin Beta-4 · Muscle & tendon healing · Recovery</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱2,000</span>
@@ -315,13 +347,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="Healing">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+      <div class="pcard" data-id="bpc-tb-blend">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);" onclick="openModal('bpc-tb-blend')">
           <span class="pcard-emoji">🧬</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Healing</p>
-          <h6 class="pcard-name">BPC-157 + TB-500 Blend</h6>
+          <h6 class="pcard-name" onclick="openModal('bpc-tb-blend')">BPC-157 + TB-500 Blend</h6>
           <p class="pcard-desc">Dual-action healing stack · Faster recovery</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱3,200</span>
@@ -333,14 +365,14 @@
 
     <!-- ANTI-AGING -->
     <div class="pgrid-item" data-cat="AntiAging">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+      <div class="pcard" data-id="ghkcu-50mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);" onclick="openModal('ghkcu-50mg')">
           <span class="pcard-emoji">✨</span>
           <span class="pcard-tag">Top Pick</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
-          <h6 class="pcard-name">GHK-Cu 50mg</h6>
+          <h6 class="pcard-name" onclick="openModal('ghkcu-50mg')">GHK-Cu 50mg</h6>
           <p class="pcard-desc">Copper Peptide · Skin rejuvenation · Collagen boost</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱2,200</span>
@@ -351,13 +383,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="AntiAging">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+      <div class="pcard" data-id="epith-10mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);" onclick="openModal('epith-10mg')">
           <span class="pcard-emoji">✨</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
-          <h6 class="pcard-name">Epithalon 10mg</h6>
+          <h6 class="pcard-name" onclick="openModal('epith-10mg')">Epithalon 10mg</h6>
           <p class="pcard-desc">Telomere extension · Longevity · Pineal gland peptide</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱2,800</span>
@@ -368,13 +400,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="AntiAging">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);">
+      <div class="pcard" data-id="ta1-1.6mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);" onclick="openModal('ta1-1.6mg')">
           <span class="pcard-emoji">✨</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
-          <h6 class="pcard-name">Thymosin Alpha-1</h6>
+          <h6 class="pcard-name" onclick="openModal('ta1-1.6mg')">Thymosin Alpha-1</h6>
           <p class="pcard-desc">Immune modulator · Anti-inflammatory · Longevity</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱3,500</span>
@@ -386,17 +418,20 @@
 
     <!-- GROWTH -->
     <div class="pgrid-item" data-cat="Growth">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+      <div class="pcard" data-id="ipa-5mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);" onclick="openModal('ipa-5mg')">
           <span class="pcard-emoji">💪</span>
           <span class="pcard-tag">Popular</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Growth</p>
-          <h6 class="pcard-name">Ipamorelin 5mg</h6>
+          <h6 class="pcard-name" onclick="openModal('ipa-5mg')">Ipamorelin 5mg</h6>
           <p class="pcard-desc">GHRP · Growth hormone release · Lean muscle</p>
           <div class="pcard-foot">
-            <span class="pcard-price">₱1,600</span>
+            <div class="pcard-price-wrap">
+              <span class="pcard-price">₱1,600</span>
+              <span class="pcard-price-orig">₱2,000</span>
+            </div>
             <button class="btn-add" onclick="addItem('ipa-5mg','Ipamorelin 5mg',1600)">Add</button>
           </div>
         </div>
@@ -404,13 +439,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="Growth">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+      <div class="pcard" data-id="cjc-2mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);" onclick="openModal('cjc-2mg')">
           <span class="pcard-emoji">💪</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Growth</p>
-          <h6 class="pcard-name">CJC-1295 2mg</h6>
+          <h6 class="pcard-name" onclick="openModal('cjc-2mg')">CJC-1295 2mg</h6>
           <p class="pcard-desc">GHRH analogue · Long-acting · Muscle growth & fat loss</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱1,800</span>
@@ -421,13 +456,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="Growth">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+      <div class="pcard" data-id="hex-2mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);" onclick="openModal('hex-2mg')">
           <span class="pcard-emoji">💪</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Growth</p>
-          <h6 class="pcard-name">Hexarelin 2mg</h6>
+          <h6 class="pcard-name" onclick="openModal('hex-2mg')">Hexarelin 2mg</h6>
           <p class="pcard-desc">GHRP-6 analogue · Strong GH release · Cardioprotective</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱1,500</span>
@@ -438,13 +473,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="Growth">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);">
+      <div class="pcard" data-id="igf1lr3-1mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);" onclick="openModal('igf1lr3-1mg')">
           <span class="pcard-emoji">💪</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Growth</p>
-          <h6 class="pcard-name">IGF-1 LR3 1mg</h6>
+          <h6 class="pcard-name" onclick="openModal('igf1lr3-1mg')">IGF-1 LR3 1mg</h6>
           <p class="pcard-desc">Insulin-like Growth Factor · Muscle hypertrophy</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱2,500</span>
@@ -454,15 +489,100 @@
       </div>
     </div>
 
+    <!-- STACKS -->
+    <div class="pgrid-item" data-cat="Stacks">
+      <div class="pcard" data-id="stack-fat-loss">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);" onclick="openModal('stack-fat-loss')">
+          <span class="pcard-emoji">🔥</span>
+          <span class="pcard-tag stack">Stack</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Stacks</p>
+          <h6 class="pcard-name" onclick="openModal('stack-fat-loss')">Fat Loss Starter Kit</h6>
+          <p class="pcard-desc">Semaglutide 5mg + Bacteriostatic Water · Save ₱200</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap">
+              <span class="pcard-price">₱2,600</span>
+              <span class="pcard-price-orig">₱2,800</span>
+            </div>
+            <button class="btn-add" onclick="addItem('stack-fat-loss','Fat Loss Starter Kit',2600)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Stacks">
+      <div class="pcard" data-id="stack-recovery">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);" onclick="openModal('stack-recovery')">
+          <span class="pcard-emoji">⚡</span>
+          <span class="pcard-tag stack">Stack</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Stacks</p>
+          <h6 class="pcard-name" onclick="openModal('stack-recovery')">Recovery Pro Stack</h6>
+          <p class="pcard-desc">BPC-157 5mg + TB-500 5mg · Dual healing synergy · Save ₱300</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap">
+              <span class="pcard-price">₱3,500</span>
+              <span class="pcard-price-orig">₱3,800</span>
+            </div>
+            <button class="btn-add" onclick="addItem('stack-recovery','Recovery Pro Stack',3500)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Stacks">
+      <div class="pcard" data-id="stack-glow">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);" onclick="openModal('stack-glow')">
+          <span class="pcard-emoji">🌸</span>
+          <span class="pcard-tag stack">Stack</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Stacks</p>
+          <h6 class="pcard-name" onclick="openModal('stack-glow')">Anti-Aging Glow Stack</h6>
+          <p class="pcard-desc">GHK-Cu 50mg + Epithalon 10mg · Skin & longevity · Save ₱500</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap">
+              <span class="pcard-price">₱4,500</span>
+              <span class="pcard-price-orig">₱5,000</span>
+            </div>
+            <button class="btn-add" onclick="addItem('stack-glow','Anti-Aging Glow Stack',4500)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Stacks">
+      <div class="pcard" data-id="stack-gh">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);" onclick="openModal('stack-gh')">
+          <span class="pcard-emoji">💥</span>
+          <span class="pcard-tag stack">Stack</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Stacks</p>
+          <h6 class="pcard-name" onclick="openModal('stack-gh')">GH Optimizer Stack</h6>
+          <p class="pcard-desc">Ipamorelin 5mg + CJC-1295 2mg · Peak GH release · Save ₱300</p>
+          <div class="pcard-foot">
+            <div class="pcard-price-wrap">
+              <span class="pcard-price">₱3,100</span>
+              <span class="pcard-price-orig">₱3,400</span>
+            </div>
+            <button class="btn-add" onclick="addItem('stack-gh','GH Optimizer Stack',3100)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- OTHER -->
     <div class="pgrid-item" data-cat="Other">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+      <div class="pcard" data-id="mt2-10mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);" onclick="openModal('mt2-10mg')">
           <span class="pcard-emoji">🌙</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Other</p>
-          <h6 class="pcard-name">Melanotan II 10mg</h6>
+          <h6 class="pcard-name" onclick="openModal('mt2-10mg')">Melanotan II 10mg</h6>
           <p class="pcard-desc">Tanning peptide · Libido · Appetite suppression</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱1,800</span>
@@ -473,13 +593,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="Other">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+      <div class="pcard" data-id="pt141-10mg">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);" onclick="openModal('pt141-10mg')">
           <span class="pcard-emoji">🌙</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Other</p>
-          <h6 class="pcard-name">PT-141 10mg</h6>
+          <h6 class="pcard-name" onclick="openModal('pt141-10mg')">PT-141 10mg</h6>
           <p class="pcard-desc">Bremelanotide · Libido & sexual function</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱2,000</span>
@@ -490,13 +610,13 @@
     </div>
 
     <div class="pgrid-item" data-cat="Other">
-      <div class="pcard">
-        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+      <div class="pcard" data-id="bac-water">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);" onclick="openModal('bac-water')">
           <span class="pcard-emoji">💧</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Other</p>
-          <h6 class="pcard-name">Bacteriostatic Water 10mL</h6>
+          <h6 class="pcard-name" onclick="openModal('bac-water')">Bacteriostatic Water 10mL</h6>
           <p class="pcard-desc">For reconstitution · Sterile · Required for all peptides</p>
           <div class="pcard-foot">
             <span class="pcard-price">₱300</span>
@@ -526,7 +646,7 @@
       <div class="why-card">
         <div class="why-icon">🚚</div>
         <h5>Fast Nationwide Delivery</h5>
-        <p>Shipped via trusted couriers across the Philippines. Metro Manila in 1–2 days.</p>
+        <p>Shipped via J&T and Lalamove across the Philippines. Metro Manila same-day.</p>
       </div>
       <div class="why-card">
         <div class="why-icon">💳</div>
@@ -536,7 +656,7 @@
       <div class="why-card">
         <div class="why-icon">💬</div>
         <h5>Expert Support</h5>
-        <p>Got questions? Message us on Messenger or Telegram — we reply fast.</p>
+        <p>Got questions? Message us on Messenger, Viber, or Telegram — we reply fast.</p>
       </div>
     </div>
   </div>
@@ -550,14 +670,14 @@
     <div class="how-steps">
       <div class="how-step">
         <div class="step-num">1</div>
-        <h6>Add to Cart</h6>
-        <p>Browse our products and add what you need to your cart.</p>
+        <h6>Browse & Add</h6>
+        <p>Tap any product to view details, then add to your cart.</p>
       </div>
       <div class="how-arrow">→</div>
       <div class="how-step">
         <div class="step-num">2</div>
         <h6>Send Your Order</h6>
-        <p>Click "Order via Messenger" or "Order via Telegram" — your cart is auto-filled.</p>
+        <p>Click "Order via Messenger", "Viber", or "Telegram" — your cart is auto-filled.</p>
       </div>
       <div class="how-arrow">→</div>
       <div class="how-step">
@@ -583,6 +703,13 @@
           <span>@biopepph</span>
         </div>
       </a>
+      <a href="viber://chat?number=%2B63XXXXXXXXXX" target="_blank" rel="noopener noreferrer" class="contact-card viber">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4.1C5.5.1 1 4.4 1 9.8c0 3 1.5 5.7 4 7.5v3.8l3.5-1.9c.9.2 1.9.3 2.9.3 5.9 0 10.6-4.3 10.6-9.7C22 4.4 17.3.1 11.4.1zM8.5 6.4l.8.8c.3.3.5.6.5 1 0 .6-.3 1.1-.8 1.3l-.4.2c-.1 0-.2.1-.2.2 0 .1 0 .2.1.3.5 1.4 1.4 2.5 2.8 2.9.1 0 .2.1.3.1.1 0 .2-.1.2-.2l.2-.4c.2-.6.7-.8 1.3-.8.3 0 .6.2.9.5l.8.8c.3.3.4.7.3 1.1-.2.6-.7 1.1-1.3 1.3-.4.1-.8.2-1.2.1-1.6-.2-3.1-1-4.2-2.1C7.7 11.5 7 9.9 7 8.1c0-.4.1-.8.2-1.2.2-.7.7-1.1 1.3-1.3.3-.1.7 0 1 .3z"/></svg>
+        <div>
+          <strong>Viber</strong>
+          <span>@biopepph</span>
+        </div>
+      </a>
       <a href="https://t.me/biopepph" target="_blank" rel="noopener noreferrer" class="contact-card telegram">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.9 8.2l-2 9.4c-.1.6-.5.8-.9.5l-2.6-1.9-1.2 1.2c-.1.1-.3.2-.6.2l.2-2.7 5.1-4.6c.2-.2 0-.3-.3-.1L6.4 14.8l-2.6-.8c-.6-.2-.6-.6.1-.8l10.2-3.9c.5-.2 1 .1.8.9z"/></svg>
         <div>
@@ -600,13 +727,24 @@
     <div class="footer-brand">
       <span class="logo"><span class="logo-bio">BIO</span><span class="logo-pep">PEP</span><span class="logo-ph">PH</span></span>
       <p>Premium research peptides delivered across the Philippines.</p>
+      <div class="footer-social">
+        <a href="https://facebook.com/biopepph" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://instagram.com/biopepph" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="viber://chat?number=%2B63XXXXXXXXXX" target="_blank" rel="noopener noreferrer" aria-label="Viber">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.4.1C5.5.1 1 4.4 1 9.8c0 3 1.5 5.7 4 7.5v3.8l3.5-1.9c.9.2 1.9.3 2.9.3 5.9 0 10.6-4.3 10.6-9.7C22 4.4 17.3.1 11.4.1zM8.5 6.4l.8.8c.3.3.5.6.5 1 0 .6-.3 1.1-.8 1.3l-.4.2c-.1 0-.2.1-.2.2 0 .1 0 .2.1.3.5 1.4 1.4 2.5 2.8 2.9.1 0 .2.1.3.1.1 0 .2-.1.2-.2l.2-.4c.2-.6.7-.8 1.3-.8.3 0 .6.2.9.5l.8.8c.3.3.4.7.3 1.1-.2.6-.7 1.1-1.3 1.3-.4.1-.8.2-1.2.1-1.6-.2-3.1-1-4.2-2.1C7.7 11.5 7 9.9 7 8.1c0-.4.1-.8.2-1.2.2-.7.7-1.1 1.3-1.3.3-.1.7 0 1 .3z"/></svg>
+        </a>
+      </div>
     </div>
     <div class="footer-links-col">
       <strong>Shop</strong>
       <a href="#products">All Products</a>
       <a href="#products" onclick="filterCat('WeightLoss')">Weight Loss</a>
       <a href="#products" onclick="filterCat('Healing')">Healing</a>
-      <a href="#products" onclick="filterCat('AntiAging')">Anti-Aging</a>
+      <a href="#products" onclick="filterCat('Stacks')">Stacks</a>
     </div>
     <div class="footer-links-col">
       <strong>Info</strong>
@@ -617,6 +755,7 @@
     <div class="footer-links-col">
       <strong>Connect</strong>
       <a href="https://m.me/biopepph" target="_blank" rel="noopener noreferrer">Messenger</a>
+      <a href="viber://chat?number=%2B63XXXXXXXXXX" target="_blank" rel="noopener noreferrer">Viber</a>
       <a href="https://t.me/biopepph" target="_blank" rel="noopener noreferrer">Telegram</a>
     </div>
   </div>
@@ -639,6 +778,37 @@
     </div>
   </div>
   <button class="sticky-btn" id="stickyBtn">View Order →</button>
+</div>
+
+<!-- ====== PRODUCT DETAIL MODAL ====== -->
+<div class="pmodal-overlay" id="pmodalOverlay"></div>
+<div class="pmodal" id="pmodal" role="dialog" aria-modal="true">
+  <div class="pmodal-img-wrap" id="pmodalImgWrap">
+    <span class="pmodal-emoji" id="pmodalEmoji">💉</span>
+    <span class="pmodal-badge" id="pmodalBadge"></span>
+    <button class="pmodal-close" id="pmodalClose" aria-label="Close">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="pmodal-body">
+    <p class="pmodal-cat" id="pmodalCat"></p>
+    <h3 class="pmodal-name" id="pmodalName"></h3>
+    <div class="pmodal-price-row">
+      <span class="pmodal-price" id="pmodalPrice"></span>
+      <span class="pmodal-orig-price" id="pmodalOrigPrice"></span>
+      <span class="pmodal-save-badge" id="pmodalSaveBadge"></span>
+    </div>
+    <p class="pmodal-desc" id="pmodalDesc"></p>
+    <div class="pmodal-qty-row">
+      <span class="pmodal-qty-label">Quantity</span>
+      <div class="pmodal-qty-controls">
+        <button class="qty-btn" onclick="updateModalQty(-1)">−</button>
+        <span class="qty-num" id="pmodalQtyNum">1</span>
+        <button class="qty-btn" onclick="updateModalQty(1)">+</button>
+      </div>
+    </div>
+    <button class="pmodal-add-btn" id="pmodalAddBtn">Add to Cart</button>
+  </div>
 </div>
 
 <script src="script.js"></script>

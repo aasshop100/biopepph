@@ -120,6 +120,7 @@ button { font-family: inherit; cursor: pointer; }
   display: flex;
   gap: 4px;
   margin-left: auto;
+  margin-right: 4px;
 }
 .header-nav a {
   font-size: 0.875rem;
@@ -1088,4 +1089,312 @@ footer {
   .contact-card { min-width: 100%; }
   h2 { font-size: 1.7rem; }
   .how-steps { flex-direction: column; align-items: center; }
+}
+
+/* ================================================
+   DELIVERY INFO STRIP
+   ================================================ */
+.delivery-strip {
+  background: var(--pink-light);
+  border-bottom: 1px solid var(--pink-border);
+  padding: 7px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.delivery-strip::-webkit-scrollbar { display: none; }
+.delivery-strip-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  min-width: max-content;
+  margin: 0 auto;
+}
+.dinfo-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--pink-deep);
+  white-space: nowrap;
+}
+.dinfo-sep { color: var(--pink-border); font-size: 0.9rem; line-height: 1; }
+
+/* ================================================
+   SALE PRICING
+   ================================================ */
+.pcard-price-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.pcard-price-orig {
+  font-size: 0.7rem;
+  color: var(--grey);
+  text-decoration: line-through;
+  font-weight: 400;
+}
+.pcard-tag.stack { background: linear-gradient(135deg, #a855f7, #ec4899); }
+
+/* ================================================
+   HEADER SOCIAL LINKS
+   ================================================ */
+.header-social {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+.header-nav { margin-left: 0; }
+.social-link {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--grey);
+  transition: var(--transition);
+}
+.social-link:hover { color: var(--pink-dark); background: var(--pink-light); }
+
+/* ================================================
+   FOOTER SOCIAL
+   ================================================ */
+.footer-social {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+.footer-social a {
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.45);
+  transition: var(--transition);
+}
+.footer-social a:hover { background: var(--pink); color: var(--white); border-color: var(--pink); }
+
+/* ================================================
+   VIBER BUTTON
+   ================================================ */
+.btn-order.viber { background: #7360F2; }
+.btn-order.viber:hover { background: #5a4dd0; transform: translateY(-1px); }
+.contact-card.viber { background: #7360F2; }
+
+/* ================================================
+   PRODUCT CARD — CLICKABLE IMAGE
+   ================================================ */
+.pcard-img { cursor: pointer; }
+.pcard-name { cursor: pointer; }
+.pcard-name:hover { color: var(--pink-dark); }
+
+/* ================================================
+   PRODUCT DETAIL MODAL
+   ================================================ */
+.pmodal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.52);
+  backdrop-filter: blur(4px);
+  z-index: 2500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.pmodal-overlay.active { opacity: 1; pointer-events: all; }
+
+.pmodal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  z-index: 2600;
+  border-radius: 24px 24px 0 0;
+  max-height: 92vh;
+  overflow-y: auto;
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.32, 0, 0.25, 1);
+  -webkit-overflow-scrolling: touch;
+}
+.pmodal.open { transform: translateY(0); }
+
+.pmodal-img-wrap {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #fce7f3, #f9a8d4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px 24px 0 0;
+  flex-shrink: 0;
+}
+.pmodal-emoji { font-size: 4.5rem; pointer-events: none; }
+
+.pmodal-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--pink-dark);
+  color: var(--white);
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.pmodal-badge.stack { background: linear-gradient(135deg, #a855f7, #ec4899); }
+.pmodal-badge.new { background: #7c3aed; }
+.pmodal-badge:empty { display: none; }
+
+.pmodal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.92);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--charcoal);
+  transition: var(--transition);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+.pmodal-close:hover { background: var(--pink); color: var(--white); }
+
+.pmodal-body {
+  padding: 20px 20px 40px;
+}
+.pmodal-cat {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin: 0 0 6px;
+}
+.pmodal-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--black);
+  line-height: 1.2;
+  margin: 0 0 14px;
+}
+.pmodal-price-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.pmodal-price {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: var(--pink-dark);
+}
+.pmodal-orig-price {
+  font-size: 0.9rem;
+  color: var(--grey);
+  text-decoration: line-through;
+}
+.pmodal-orig-price:empty { display: none; }
+.pmodal-save-badge {
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.pmodal-save-badge:empty { display: none; }
+
+.pmodal-desc {
+  font-size: 0.88rem;
+  color: var(--grey);
+  line-height: 1.75;
+  margin-bottom: 22px;
+}
+
+.pmodal-qty-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  background: var(--pink-light);
+  border: 1px solid var(--pink-border);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.pmodal-qty-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+.pmodal-qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.pmodal-qty-controls .qty-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 1rem;
+}
+.pmodal-qty-controls .qty-num {
+  font-size: 1rem;
+  font-weight: 700;
+  min-width: 28px;
+  text-align: center;
+}
+
+.pmodal-add-btn {
+  width: 100%;
+  background: var(--pink);
+  color: var(--white);
+  border: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 15px;
+  border-radius: 14px;
+  transition: var(--transition);
+  box-shadow: var(--shadow-pink);
+}
+.pmodal-add-btn:hover { background: var(--pink-dark); transform: translateY(-1px); }
+
+@media (min-width: 600px) {
+  .pmodal {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: 90%;
+    max-width: 460px;
+    max-height: 88vh;
+    border-radius: var(--radius-lg);
+    transform: translate(-50%, -44%) scale(0.96);
+    transition: transform 0.3s cubic-bezier(0.32, 0, 0.25, 1), opacity 0.3s ease;
+    opacity: 0;
+  }
+  .pmodal.open {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  .pmodal-img-wrap { border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
 }
