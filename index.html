@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIOPEP PH | Premium Peptides Philippines</title>
+  <meta name="description" content="BIOPEP — Your trusted source for premium research peptides in the Philippines. Semaglutide, BPC-157, Retatrutide, GHK-Cu and more. Fast delivery nationwide.">
+  <meta name="keywords" content="peptides philippines, semaglutide philippines, BPC-157 PH, retatrutide PH, buy peptides PH, weight loss peptides philippines">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="BIOPEP PH | Premium Peptides Philippines">
+  <meta property="og:description" content="Your trusted source for premium research peptides in the Philippines.">
+  <meta property="og:site_name" content="BIOPEP PH">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ====== PROMO BAR ====== -->
+<div id="promo-bar">
+  <div class="promo-inner">
+    <span>🎉 FREE DELIVERY on orders ₱3,000 and above! <a href="#products">Shop Now →</a></span>
+    <button id="closePromoBar" aria-label="Close">×</button>
+  </div>
+</div>
+
+<!-- ====== HEADER ====== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-bio">BIO</span><span class="logo-pep">PEP</span>
+      <span class="logo-ph">PH</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#products">Shop</a>
+      <a href="#why-us">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="cart-trigger" id="cartOpen" aria-label="Open cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-count-badge" id="cartBadge">0</span>
+    </button>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#products" class="mobile-nav-link">Shop</a>
+    <a href="#why-us" class="mobile-nav-link">About</a>
+    <a href="#contact" class="mobile-nav-link">Contact</a>
+  </div>
+</header>
+
+<!-- ====== CART OVERLAY ====== -->
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<!-- ====== CART DRAWER ====== -->
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-drawer-head">
+    <h5>My Order <span class="cart-count-tag" id="drawerCount">0</span></h5>
+    <button class="cart-close-btn" id="cartClose">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+
+  <div class="cart-drawer-body" id="drawerBody">
+    <div class="cart-empty" id="cartEmpty">
+      <div class="cart-empty-icon">🛒</div>
+      <p>Your cart is empty</p>
+      <button class="btn-browse" onclick="closeCart()">Browse Products</button>
+    </div>
+  </div>
+
+  <div class="cart-drawer-foot" id="drawerFoot">
+    <div class="cart-summary">
+      <div class="summary-row"><span>Items</span><span id="drawerItemCount">0</span></div>
+      <div class="summary-row"><span>Subtotal</span><strong id="drawerSubtotal">₱0</strong></div>
+      <div class="summary-row grand"><span>Total</span><strong id="drawerTotal">₱0</strong></div>
+    </div>
+    <div class="order-note">
+      <p>Add your name, address & payment method in your message.</p>
+    </div>
+    <div class="order-btns">
+      <button class="btn-order messenger" id="orderMessenger" onclick="orderViaMessenger()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 4.9 0 11c0 3.4 1.7 6.5 4.4 8.5V24l4-2.2c1.1.3 2.3.5 3.6.5 6.6 0 12-4.9 12-11S18.6 0 12 0zm1.2 14.8l-3-3.3-5.9 3.3 6.5-6.9 3.1 3.3 5.8-3.3-6.5 6.9z"/></svg>
+        Order via Messenger
+      </button>
+      <button class="btn-order telegram" id="orderTelegram" onclick="orderViaTelegram()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.9 8.2l-2 9.4c-.1.6-.5.8-.9.5l-2.6-1.9-1.2 1.2c-.1.1-.3.2-.6.2l.2-2.7 5.1-4.6c.2-.2 0-.3-.3-.1L6.4 14.8l-2.6-.8c-.6-.2-.6-.6.1-.8l10.2-3.9c.5-.2 1 .1.8.9z"/></svg>
+        Order via Telegram
+      </button>
+    </div>
+    <button class="btn-clear-cart" onclick="clearCart()">Clear Cart</button>
+  </div>
+</aside>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-badge">🇵🇭 Proudly Philippine-based</span>
+    <h1>Premium<br><em>Peptides</em><br>Delivered.</h1>
+    <p>Research-grade peptides for weight loss, healing, anti-aging, and performance. Nationwide delivery.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">Shop Now →</a>
+      <a href="#why-us" class="btn-ghost">Learn More</a>
+    </div>
+    <div class="hero-pills">
+      <span>✓ Fast Nationwide Delivery</span>
+      <span>✓ Verified Quality</span>
+      <span>✓ GCash / Bank Transfer</span>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-blob"></div>
+    <div class="hero-card-float">
+      <div class="hcard">
+        <div class="hcard-icon">🧬</div>
+        <div>
+          <strong>Semaglutide</strong>
+          <span>GLP-1 · Weight Loss</span>
+        </div>
+        <span class="hcard-price">₱2,500</span>
+      </div>
+      <div class="hcard hcard-2">
+        <div class="hcard-icon">💊</div>
+        <div>
+          <strong>BPC-157</strong>
+          <span>Healing · Recovery</span>
+        </div>
+        <span class="hcard-price">₱1,800</span>
+      </div>
+      <div class="hcard hcard-3">
+        <div class="hcard-icon">✨</div>
+        <div>
+          <strong>GHK-Cu</strong>
+          <span>Anti-aging · Skin</span>
+        </div>
+        <span class="hcard-price">₱2,200</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TRUST BAR ====== -->
+<div class="trust-strip">
+  <div class="trust-strip-inner">
+    <div class="trust-chip">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2L3 7v6c0 5 3.8 9.7 9 10.9C18.2 22.7 22 18 22 13V7L12 2z"/><polyline points="9,12 11,14 15,10"/></svg>
+      Research Grade
+    </div>
+    <div class="trust-chip">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Nationwide Delivery
+    </div>
+    <div class="trust-chip">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Secure Payment
+    </div>
+    <div class="trust-chip">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      24/7 Support
+    </div>
+  </div>
+</div>
+
+<!-- ====== PRODUCTS ====== -->
+<section class="products-section" id="products">
+  <div class="section-head">
+    <span class="eyebrow">Our Products</span>
+    <h2>Shop <span>BIOPEP</span></h2>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="cat-scroll">
+    <div class="cat-tabs" id="catTabs">
+      <button class="cat-tab active" data-cat="all">All</button>
+      <button class="cat-tab" data-cat="WeightLoss">Weight Loss</button>
+      <button class="cat-tab" data-cat="Healing">Healing</button>
+      <button class="cat-tab" data-cat="AntiAging">Anti-Aging</button>
+      <button class="cat-tab" data-cat="Growth">Growth</button>
+      <button class="cat-tab" data-cat="Other">Other</button>
+    </div>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="pgrid" id="productGrid">
+
+    <!-- WEIGHT LOSS -->
+    <div class="pgrid-item" data-cat="WeightLoss">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+          <span class="pcard-emoji">💉</span>
+          <span class="pcard-tag">Best Seller</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Weight Loss</p>
+          <h6 class="pcard-name">Semaglutide 5mg</h6>
+          <p class="pcard-desc">GLP-1 Receptor Agonist · Appetite suppression · Fat loss</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱2,500</span>
+            <button class="btn-add" onclick="addItem('sema-5mg','Semaglutide 5mg',2500)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="WeightLoss">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+          <span class="pcard-emoji">💉</span>
+          <span class="pcard-tag new">New</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Weight Loss</p>
+          <h6 class="pcard-name">Retatrutide 10mg</h6>
+          <p class="pcard-desc">Triple Agonist · GLP-1/GIP/Glucagon · Advanced fat loss</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱4,500</span>
+            <button class="btn-add" onclick="addItem('retro-10mg','Retatrutide 10mg',4500)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="WeightLoss">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+          <span class="pcard-emoji">💉</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Weight Loss</p>
+          <h6 class="pcard-name">Tirzepatide 10mg</h6>
+          <p class="pcard-desc">GLP-1/GIP Dual Agonist · Clinical-grade weight management</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱4,000</span>
+            <button class="btn-add" onclick="addItem('tirze-10mg','Tirzepatide 10mg',4000)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="WeightLoss">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+          <span class="pcard-emoji">💉</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Weight Loss</p>
+          <h6 class="pcard-name">Cagrilintide 10mg</h6>
+          <p class="pcard-desc">Amylin Analogue · Satiety · Complements Semaglutide</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱3,800</span>
+            <button class="btn-add" onclick="addItem('cagri-10mg','Cagrilintide 10mg',3800)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="WeightLoss">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);">
+          <span class="pcard-emoji">💉</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Weight Loss</p>
+          <h6 class="pcard-name">Survodutide 10mg</h6>
+          <p class="pcard-desc">GLP-1/Glucagon · Next-gen weight loss peptide</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱4,200</span>
+            <button class="btn-add" onclick="addItem('survo-10mg','Survodutide 10mg',4200)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HEALING -->
+    <div class="pgrid-item" data-cat="Healing">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+          <span class="pcard-emoji">🧬</span>
+          <span class="pcard-tag">Popular</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Healing</p>
+          <h6 class="pcard-name">BPC-157 5mg</h6>
+          <p class="pcard-desc">Body Protective Compound · Gut & tissue repair</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱1,800</span>
+            <button class="btn-add" onclick="addItem('bpc157-5mg','BPC-157 5mg',1800)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Healing">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+          <span class="pcard-emoji">🧬</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Healing</p>
+          <h6 class="pcard-name">TB-500 5mg</h6>
+          <p class="pcard-desc">Thymosin Beta-4 · Muscle & tendon healing · Recovery</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱2,000</span>
+            <button class="btn-add" onclick="addItem('tb500-5mg','TB-500 5mg',2000)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Healing">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+          <span class="pcard-emoji">🧬</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Healing</p>
+          <h6 class="pcard-name">BPC-157 + TB-500 Blend</h6>
+          <p class="pcard-desc">Dual-action healing stack · Faster recovery</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱3,200</span>
+            <button class="btn-add" onclick="addItem('bpc-tb-blend','BPC-157 + TB-500 Blend',3200)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANTI-AGING -->
+    <div class="pgrid-item" data-cat="AntiAging">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+          <span class="pcard-emoji">✨</span>
+          <span class="pcard-tag">Top Pick</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Anti-Aging</p>
+          <h6 class="pcard-name">GHK-Cu 50mg</h6>
+          <p class="pcard-desc">Copper Peptide · Skin rejuvenation · Collagen boost</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱2,200</span>
+            <button class="btn-add" onclick="addItem('ghkcu-50mg','GHK-Cu 50mg',2200)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="AntiAging">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+          <span class="pcard-emoji">✨</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Anti-Aging</p>
+          <h6 class="pcard-name">Epithalon 10mg</h6>
+          <p class="pcard-desc">Telomere extension · Longevity · Pineal gland peptide</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱2,800</span>
+            <button class="btn-add" onclick="addItem('epith-10mg','Epithalon 10mg',2800)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="AntiAging">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);">
+          <span class="pcard-emoji">✨</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Anti-Aging</p>
+          <h6 class="pcard-name">Thymosin Alpha-1</h6>
+          <p class="pcard-desc">Immune modulator · Anti-inflammatory · Longevity</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱3,500</span>
+            <button class="btn-add" onclick="addItem('ta1-1.6mg','Thymosin Alpha-1',3500)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="pgrid-item" data-cat="Growth">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+          <span class="pcard-emoji">💪</span>
+          <span class="pcard-tag">Popular</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Growth</p>
+          <h6 class="pcard-name">Ipamorelin 5mg</h6>
+          <p class="pcard-desc">GHRP · Growth hormone release · Lean muscle</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱1,600</span>
+            <button class="btn-add" onclick="addItem('ipa-5mg','Ipamorelin 5mg',1600)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Growth">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+          <span class="pcard-emoji">💪</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Growth</p>
+          <h6 class="pcard-name">CJC-1295 2mg</h6>
+          <p class="pcard-desc">GHRH analogue · Long-acting · Muscle growth & fat loss</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱1,800</span>
+            <button class="btn-add" onclick="addItem('cjc-2mg','CJC-1295 2mg',1800)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Growth">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+          <span class="pcard-emoji">💪</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Growth</p>
+          <h6 class="pcard-name">Hexarelin 2mg</h6>
+          <p class="pcard-desc">GHRP-6 analogue · Strong GH release · Cardioprotective</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱1,500</span>
+            <button class="btn-add" onclick="addItem('hex-2mg','Hexarelin 2mg',1500)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Growth">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf4ff,#fce7f3);">
+          <span class="pcard-emoji">💪</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Growth</p>
+          <h6 class="pcard-name">IGF-1 LR3 1mg</h6>
+          <p class="pcard-desc">Insulin-like Growth Factor · Muscle hypertrophy</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱2,500</span>
+            <button class="btn-add" onclick="addItem('igf1lr3-1mg','IGF-1 LR3 1mg',2500)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER -->
+    <div class="pgrid-item" data-cat="Other">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#fbcfe8);">
+          <span class="pcard-emoji">🌙</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Other</p>
+          <h6 class="pcard-name">Melanotan II 10mg</h6>
+          <p class="pcard-desc">Tanning peptide · Libido · Appetite suppression</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱1,800</span>
+            <button class="btn-add" onclick="addItem('mt2-10mg','Melanotan II 10mg',1800)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Other">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fdf2f8,#fce7f3);">
+          <span class="pcard-emoji">🌙</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Other</p>
+          <h6 class="pcard-name">PT-141 10mg</h6>
+          <p class="pcard-desc">Bremelanotide · Libido & sexual function</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱2,000</span>
+            <button class="btn-add" onclick="addItem('pt141-10mg','PT-141 10mg',2000)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="Other">
+      <div class="pcard">
+        <div class="pcard-img" style="background: linear-gradient(135deg,#fce7f3,#f9a8d4);">
+          <span class="pcard-emoji">💧</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Other</p>
+          <h6 class="pcard-name">Bacteriostatic Water 10mL</h6>
+          <p class="pcard-desc">For reconstitution · Sterile · Required for all peptides</p>
+          <div class="pcard-foot">
+            <span class="pcard-price">₱300</span>
+            <button class="btn-add" onclick="addItem('bac-water','Bacteriostatic Water 10mL',300)">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ====== WHY BIOPEP ====== -->
+<section class="why-section" id="why-us">
+  <div class="why-inner">
+    <div class="why-text">
+      <span class="eyebrow">Why Choose Us</span>
+      <h2>Why <span>BIOPEP?</span></h2>
+      <p>We're a passionate team of health enthusiasts based in the Philippines, dedicated to making high-quality research peptides accessible and affordable.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🧪</div>
+        <h5>Research Grade Quality</h5>
+        <p>All peptides are sourced from verified manufacturers with full purity testing.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🚚</div>
+        <h5>Fast Nationwide Delivery</h5>
+        <p>Shipped via trusted couriers across the Philippines. Metro Manila in 1–2 days.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💳</div>
+        <h5>Easy Payment</h5>
+        <p>GCash, Maya, bank transfer, and COD available. Hassle-free checkout.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">💬</div>
+        <h5>Expert Support</h5>
+        <p>Got questions? Message us on Messenger or Telegram — we reply fast.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== HOW TO ORDER ====== -->
+<section class="how-section">
+  <div class="how-inner">
+    <span class="eyebrow">Simple Process</span>
+    <h2>How to <span>Order</span></h2>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">1</div>
+        <h6>Add to Cart</h6>
+        <p>Browse our products and add what you need to your cart.</p>
+      </div>
+      <div class="how-arrow">→</div>
+      <div class="how-step">
+        <div class="step-num">2</div>
+        <h6>Send Your Order</h6>
+        <p>Click "Order via Messenger" or "Order via Telegram" — your cart is auto-filled.</p>
+      </div>
+      <div class="how-arrow">→</div>
+      <div class="how-step">
+        <div class="step-num">3</div>
+        <h6>Pay & Receive</h6>
+        <p>We confirm your order, you pay via GCash/bank, and we ship!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONTACT ====== -->
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <span class="eyebrow">Get in Touch</span>
+    <h2>Contact <span>Us</span></h2>
+    <p class="contact-sub">Have questions? We're here to help. Reach us through any channel below.</p>
+    <div class="contact-cards">
+      <a href="https://m.me/biopepph" target="_blank" rel="noopener noreferrer" class="contact-card messenger">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 4.9 0 11c0 3.4 1.7 6.5 4.4 8.5V24l4-2.2c1.1.3 2.3.5 3.6.5 6.6 0 12-4.9 12-11S18.6 0 12 0zm1.2 14.8l-3-3.3-5.9 3.3 6.5-6.9 3.1 3.3 5.8-3.3-6.5 6.9z"/></svg>
+        <div>
+          <strong>Facebook Messenger</strong>
+          <span>@biopepph</span>
+        </div>
+      </a>
+      <a href="https://t.me/biopepph" target="_blank" rel="noopener noreferrer" class="contact-card telegram">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.9 8.2l-2 9.4c-.1.6-.5.8-.9.5l-2.6-1.9-1.2 1.2c-.1.1-.3.2-.6.2l.2-2.7 5.1-4.6c.2-.2 0-.3-.3-.1L6.4 14.8l-2.6-.8c-.6-.2-.6-.6.1-.8l10.2-3.9c.5-.2 1 .1.8.9z"/></svg>
+        <div>
+          <strong>Telegram</strong>
+          <span>@biopepph</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo"><span class="logo-bio">BIO</span><span class="logo-pep">PEP</span><span class="logo-ph">PH</span></span>
+      <p>Premium research peptides delivered across the Philippines.</p>
+    </div>
+    <div class="footer-links-col">
+      <strong>Shop</strong>
+      <a href="#products">All Products</a>
+      <a href="#products" onclick="filterCat('WeightLoss')">Weight Loss</a>
+      <a href="#products" onclick="filterCat('Healing')">Healing</a>
+      <a href="#products" onclick="filterCat('AntiAging')">Anti-Aging</a>
+    </div>
+    <div class="footer-links-col">
+      <strong>Info</strong>
+      <a href="#why-us">About Us</a>
+      <a href="#how-section">How to Order</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-links-col">
+      <strong>Connect</strong>
+      <a href="https://m.me/biopepph" target="_blank" rel="noopener noreferrer">Messenger</a>
+      <a href="https://t.me/biopepph" target="_blank" rel="noopener noreferrer">Telegram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 BIOPEP PH. All rights reserved.</p>
+    <p class="disclaimer">⚠️ All products are for research purposes only. Not intended for human use. Consult a healthcare professional.</p>
+  </div>
+</footer>
+
+<!-- ====== STICKY BOTTOM BAR ====== -->
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-bar-left">
+    <div class="sticky-bar-icon">
+      🛒
+      <span class="sticky-badge" id="stickyCount">0</span>
+    </div>
+    <div>
+      <span class="sticky-items" id="stickyItems">0 items</span>
+      <strong class="sticky-total" id="stickyTotal">₱0</strong>
+    </div>
+  </div>
+  <button class="sticky-btn" id="stickyBtn">View Order →</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
