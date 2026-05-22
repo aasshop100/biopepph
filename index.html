@@ -101,9 +101,9 @@
       <div class="summary-row"><span>Items</span><span id="drawerItemCount">0</span></div>
       <div class="summary-row grand"><span>Subtotal</span><strong id="drawerTotal">₱0</strong></div>
     </div>
-    <button class="btn-checkout" onclick="openCheckout()">
+    <a href="checkout.html" class="btn-checkout" id="btnCheckout">
       Proceed to Checkout →
-    </button>
+    </a>
     <button class="btn-clear-cart" onclick="clearCart()">Clear Cart</button>
   </div>
 </aside>
@@ -801,9 +801,8 @@
   </div>
 </div>
 
-<!-- ====== CHECKOUT PANEL ====== -->
-<div class="checkout-overlay" id="checkoutOverlay"></div>
-<aside class="checkout-panel" id="checkoutPanel">
+<!-- CHECKOUT IS ON checkout.html -->
+<aside class="checkout-panel" id="checkoutPanel" style="display:none;">
 
   <div class="checkout-head">
     <button class="checkout-back" id="checkoutBack">

@@ -212,8 +212,7 @@ function addItem(id, name, price, variantLabel) {
   }
   saveCart();
   renderCart();
-  showToast(`✓ ${displayName} added!`);
-  openCart();
+  showToast(`✓ ${displayName} added to cart!`);
 }
 
 function changeQty(cartId, delta) {
@@ -253,6 +252,9 @@ function renderCart() {
   if (badge)    badge.textContent    = totalQty;
   if (countTag) countTag.textContent = totalQty;
 
+  // Always clear rendered items first
+  body.querySelectorAll('.cart-item').forEach(el => el.remove());
+
   if (totalQty === 0) {
     if (emptyEl) emptyEl.style.display = 'flex';
     if (foot)    foot.classList.remove('show');
@@ -262,8 +264,6 @@ function renderCart() {
 
   if (emptyEl) emptyEl.style.display = 'none';
   if (foot)    foot.classList.add('show');
-
-  body.querySelectorAll('.cart-item').forEach(el => el.remove());
 
   cart.forEach(item => {
     const lineTotal = (item.price * item.qty).toLocaleString('en-PH');

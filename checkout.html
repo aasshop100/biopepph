@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — BIOPEP PH</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="inner-page">
+
+  <!-- ====== HEADER ====== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-bio">BIO</span><span class="logo-pep">PEP</span><span class="logo-ph">PH</span>
+      </a>
+      <div class="inner-page-steps">
+        <span class="step active">1. Checkout</span>
+        <span class="step-sep">›</span>
+        <span class="step">2. Payment</span>
+        <span class="step-sep">›</span>
+        <span class="step">3. Confirmation</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="inner-page-main">
+    <div class="inner-page-inner">
+
+      <div class="page-top-nav">
+        <a href="index.html" class="page-back-link">← Back to Shop</a>
+        <h1 class="page-title">Checkout</h1>
+      </div>
+
+      <!-- ====== CART ITEMS ====== -->
+      <section class="page-card" id="cartSection">
+        <div class="page-card-head">
+          <h2>Your Items</h2>
+          <a href="index.html" class="page-edit-link">Edit Cart</a>
+        </div>
+        <div id="coCartItems"></div>
+        <div id="coEmptyMsg" class="co-empty-msg" style="display:none;">
+          <p>Your cart is empty. <a href="index.html">← Continue shopping</a></p>
+        </div>
+      </section>
+
+      <!-- ====== DELIVERY OPTIONS ====== -->
+      <section class="page-card">
+        <h2>Delivery Option</h2>
+        <div class="co-delivery-opts">
+
+          <label class="co-delivery-opt">
+            <input type="radio" name="coDelivery" value="sameday" data-fee="150" data-label="Same-Day Delivery (Metro Manila)">
+            <div class="co-delivery-card">
+              <span class="co-del-icon">🏍</span>
+              <div class="co-del-info">
+                <strong>Same-Day Delivery</strong>
+                <span>Metro Manila only · 12PM–8PM</span>
+              </div>
+              <span class="co-del-fee">₱150</span>
+            </div>
+          </label>
+
+          <label class="co-delivery-opt">
+            <input type="radio" name="coDelivery" value="jnt" data-fee="160" data-label="Via J&T Express" checked>
+            <div class="co-delivery-card">
+              <span class="co-del-icon">📦</span>
+              <div class="co-del-info">
+                <strong>VIA J&T EXPRESS</strong>
+                <span>Nationwide · 2–5 business days · Flat fee</span>
+              </div>
+              <span class="co-del-fee">₱160</span>
+            </div>
+          </label>
+
+          <label class="co-delivery-opt">
+            <input type="radio" name="coDelivery" value="lalamove" data-fee="160" data-label="Via Lalamove">
+            <div class="co-delivery-card">
+              <span class="co-del-icon">🛵</span>
+              <div class="co-del-info">
+                <strong>VIA LALAMOVE</strong>
+                <span>Metro Manila · Same-day or scheduled · Flat fee</span>
+              </div>
+              <span class="co-del-fee">₱160</span>
+            </div>
+          </label>
+
+          <label class="co-delivery-opt">
+            <input type="radio" name="coDelivery" value="pickup" data-fee="0" data-label="Pickup">
+            <div class="co-delivery-card">
+              <span class="co-del-icon">🏪</span>
+              <div class="co-del-info">
+                <strong>Pickup</strong>
+                <span>Coordinate with us first</span>
+              </div>
+              <span class="co-del-fee">Free</span>
+            </div>
+          </label>
+
+        </div>
+      </section>
+
+      <!-- ====== CUSTOMER DETAILS ====== -->
+      <section class="page-card">
+        <h2>Your Details</h2>
+        <div class="co-form">
+          <div class="co-field">
+            <label for="coName">Full Name <span class="co-req">*</span></label>
+            <input type="text" id="coName" placeholder="Juan Dela Cruz" autocomplete="name">
+          </div>
+          <div class="co-field">
+            <label for="coPhone">Phone Number <span class="co-req">*</span></label>
+            <input type="tel" id="coPhone" placeholder="09XX XXX XXXX" autocomplete="tel">
+          </div>
+          <div class="co-field">
+            <label for="coStreet">Street &amp; Barangay <span class="co-req">*</span></label>
+            <input type="text" id="coStreet" placeholder="123 Rizal St., Brgy. Santo Niño" autocomplete="address-line1">
+          </div>
+          <div class="co-field-row">
+            <div class="co-field">
+              <label for="coCity">City / Municipality <span class="co-req">*</span></label>
+              <input type="text" id="coCity" placeholder="Makati City" autocomplete="address-level2">
+            </div>
+            <div class="co-field">
+              <label for="coProvince">Province</label>
+              <input type="text" id="coProvince" placeholder="Metro Manila" autocomplete="address-level1">
+            </div>
+          </div>
+          <div class="co-field">
+            <label for="coNotes">Order Notes <span class="co-opt">(optional)</span></label>
+            <textarea id="coNotes" rows="2" placeholder="Landmarks, preferred delivery time, special instructions..."></textarea>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== PROMO CODE ====== -->
+      <section class="page-card">
+        <h2>Promo Code</h2>
+        <div class="co-promo-wrap">
+          <input type="text" id="coPromo" placeholder="Enter promo code" class="co-promo-input" autocomplete="off">
+          <button class="co-promo-btn" onclick="applyPromo()">Apply</button>
+        </div>
+        <p class="co-promo-result" id="coPromoResult"></p>
+      </section>
+
+      <!-- ====== ORDER TOTAL + PLACE ORDER ====== -->
+      <section class="page-card co-total-card">
+        <div class="co-order-totals">
+          <div class="co-total-row"><span>Subtotal</span><span id="coPageSubtotal">₱0</span></div>
+          <div class="co-total-row"><span>Delivery</span><span id="coPageDelivery">₱160</span></div>
+          <div class="co-total-row discount" id="coDiscountRow" style="display:none;">
+            <span>Discount</span><span id="coDiscount" class="discount-val"></span>
+          </div>
+          <div class="co-total-row grand"><span>Total</span><strong id="coPageTotal">₱0</strong></div>
+        </div>
+        <button class="btn-place-order" id="btnPlaceOrder" onclick="placeOrder()">
+          Place Order →
+        </button>
+        <p class="co-terms">⚠️ All products are for research purposes only. Not for human use.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment — BIOPEP PH</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="inner-page">
+
+  <!-- ====== HEADER ====== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-bio">BIO</span><span class="logo-pep">PEP</span><span class="logo-ph">PH</span>
+      </a>
+      <div class="inner-page-steps">
+        <span class="step done">1. Checkout ✓</span>
+        <span class="step-sep">›</span>
+        <span class="step active">2. Payment</span>
+        <span class="step-sep">›</span>
+        <span class="step">3. Confirmation</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="inner-page-main">
+    <div class="inner-page-inner">
+
+      <div class="page-top-nav">
+        <a href="checkout.html" class="page-back-link">← Back to Checkout</a>
+        <h1 class="page-title">Payment</h1>
+      </div>
+
+      <!-- ====== ORDER RECEIVED STATUS ====== -->
+      <section class="page-card">
+        <div class="pay-status">
+          <span class="pay-status-icon">🎉</span>
+          <div class="pay-status-text">
+            <strong>Order Received!</strong>
+            <span>Please complete your payment to confirm your order.</span>
+          </div>
+        </div>
+        <p class="pay-order-id" id="payOrderId">Order #BP-XXXXXX</p>
+      </section>
+
+      <!-- ====== ORDER SUMMARY ====== -->
+      <section class="page-card">
+        <div class="page-card-head">
+          <h2>Order Summary</h2>
+        </div>
+        <div id="payCartItems"></div>
+        <div class="co-order-totals" style="margin-top:12px;">
+          <div class="co-total-row"><span>Subtotal</span><span id="paySubtotal">₱0</span></div>
+          <div class="co-total-row"><span>Delivery (<span id="payDeliveryLabel">—</span>)</span><span id="payDelivery">₱0</span></div>
+          <div class="co-total-row discount" id="payDiscountRow" style="display:none;">
+            <span>Discount</span><span id="payDiscount" class="discount-val"></span>
+          </div>
+          <div class="co-total-row grand"><span>Total</span><strong id="payTotal">₱0</strong></div>
+        </div>
+      </section>
+
+      <!-- ====== PAYMENT METHOD ====== -->
+      <section class="page-card">
+        <h2>Choose Payment Method</h2>
+
+        <div class="pay-methods">
+          <label class="pay-method-opt">
+            <input type="radio" name="payMethod" value="gcash" checked>
+            <div class="pay-method-card">
+              <span class="pay-method-icon">💙</span>
+              GCash
+            </div>
+          </label>
+          <label class="pay-method-opt">
+            <input type="radio" name="payMethod" value="maya">
+            <div class="pay-method-card">
+              <span class="pay-method-icon">💚</span>
+              Maya
+            </div>
+          </label>
+          <label class="pay-method-opt">
+            <input type="radio" name="payMethod" value="bank">
+            <div class="pay-method-card">
+              <span class="pay-method-icon">🏦</span>
+              Bank
+            </div>
+          </label>
+          <label class="pay-method-opt">
+            <input type="radio" name="payMethod" value="cod">
+            <div class="pay-method-card">
+              <span class="pay-method-icon">💵</span>
+              COD
+            </div>
+          </label>
+        </div>
+
+        <!-- GCash Panel -->
+        <div class="pay-detail-panel active" id="panel-gcash">
+          <div class="pay-amount-due">
+            <span>Amount to Pay via GCash</span>
+            <strong id="gcashAmount">₱0</strong>
+          </div>
+          <div class="pay-qr">
+            <div class="pay-qr-placeholder">
+              <span>📱</span>
+              Scan QR Code<br>(Upload your GCash QR here)
+            </div>
+          </div>
+          <table class="pay-account-table">
+            <tr><td>Account Name</td><td>BIOPEP PH</td></tr>
+            <tr><td>GCash Number</td><td>09XX XXX XXXX</td></tr>
+          </table>
+          <p class="pay-note">📸 Take a screenshot of your payment confirmation and send it to us via Messenger, Viber, or Telegram after clicking "I've Paid".</p>
+        </div>
+
+        <!-- Maya Panel -->
+        <div class="pay-detail-panel" id="panel-maya">
+          <div class="pay-amount-due">
+            <span>Amount to Pay via Maya</span>
+            <strong id="mayaAmount">₱0</strong>
+          </div>
+          <table class="pay-account-table">
+            <tr><td>Account Name</td><td>BIOPEP PH</td></tr>
+            <tr><td>Maya Number</td><td>09XX XXX XXXX</td></tr>
+          </table>
+          <p class="pay-note">📸 Take a screenshot of your payment confirmation and send it to us via Messenger, Viber, or Telegram after clicking "I've Paid".</p>
+        </div>
+
+        <!-- Bank Transfer Panel -->
+        <div class="pay-detail-panel" id="panel-bank">
+          <div class="pay-amount-due">
+            <span>Amount to Transfer</span>
+            <strong id="bankAmount">₱0</strong>
+          </div>
+          <div class="pay-bank-section">
+            <div class="pay-bank-label">BDO</div>
+            <table class="pay-account-table">
+              <tr><td>Account Name</td><td>BIOPEP PH</td></tr>
+              <tr><td>Account No.</td><td>XXXX XXXX XXXX</td></tr>
+            </table>
+          </div>
+          <div class="pay-bank-section">
+            <div class="pay-bank-label">BPI</div>
+            <table class="pay-account-table">
+              <tr><td>Account Name</td><td>BIOPEP PH</td></tr>
+              <tr><td>Account No.</td><td>XXXX XXXX XXXX</td></tr>
+            </table>
+          </div>
+          <p class="pay-note">📸 Send a screenshot of your bank transfer confirmation to us via Messenger, Viber, or Telegram.</p>
+        </div>
+
+        <!-- COD Panel -->
+        <div class="pay-detail-panel" id="panel-cod">
+          <div class="pay-amount-due">
+            <span>Amount to Prepare (Cash)</span>
+            <strong id="codAmount">₱0</strong>
+          </div>
+          <div class="pay-cod-info">
+            <div class="pay-cod-row">
+              <span>📦</span>
+              <span>Cash on Delivery is available for select areas. We will confirm availability when we process your order.</span>
+            </div>
+            <div class="pay-cod-row">
+              <span>💬</span>
+              <span>Please have the exact amount ready upon delivery.</span>
+            </div>
+            <div class="pay-cod-row">
+              <span>⚠️</span>
+              <span>COD orders may take 1–2 extra business days for verification before shipping.</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ====== I'VE PAID ====== -->
+      <section class="page-card co-total-card">
+        <button class="btn-paid" id="btnPaid" onclick="confirmPayment()">
+          I've Paid ✓
+        </button>
+        <p class="co-terms">After clicking, send your payment screenshot to us so we can verify and process your order quickly.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="payment.js"></script>
+</body>
+</html>

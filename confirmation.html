@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — BIOPEP PH</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="inner-page">
+
+  <!-- ====== HEADER ====== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-bio">BIO</span><span class="logo-pep">PEP</span><span class="logo-ph">PH</span>
+      </a>
+      <div class="inner-page-steps">
+        <span class="step done">1. Checkout ✓</span>
+        <span class="step-sep">›</span>
+        <span class="step done">2. Payment ✓</span>
+        <span class="step-sep">›</span>
+        <span class="step active">3. Confirmation</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="inner-page-main">
+    <div class="inner-page-inner">
+
+      <!-- ====== HERO ====== -->
+      <section class="page-card">
+        <div class="conf-hero">
+          <div class="conf-hero-icon">🎉</div>
+          <h2>Thank You for Your Order!</h2>
+          <p>We've received your order and will process it shortly.</p>
+          <span class="conf-order-id" id="confOrderId">Order #BP-XXXXXX</span>
+        </div>
+      </section>
+
+      <!-- ====== ORDER SUMMARY ====== -->
+      <section class="page-card">
+        <div class="page-card-head">
+          <h2>Order Summary</h2>
+          <span id="confPlacedAt" style="font-size:0.75rem;color:var(--grey);"></span>
+        </div>
+        <div id="confCartItems"></div>
+        <div class="co-order-totals" style="margin-top:12px;">
+          <div class="co-total-row"><span>Subtotal</span><span id="confSubtotal">₱0</span></div>
+          <div class="co-total-row"><span>Delivery</span><span id="confDelivery">₱0</span></div>
+          <div class="co-total-row discount" id="confDiscountRow" style="display:none;">
+            <span>Discount</span><span id="confDiscount" class="discount-val"></span>
+          </div>
+          <div class="co-total-row grand"><span>Total Paid</span><strong id="confTotal">₱0</strong></div>
+        </div>
+      </section>
+
+      <!-- ====== DELIVERY INFO ====== -->
+      <section class="page-card">
+        <h2>Delivery Details</h2>
+        <table class="pay-account-table">
+          <tr><td>Name</td><td id="confName">—</td></tr>
+          <tr><td>Phone</td><td id="confPhone">—</td></tr>
+          <tr><td>Address</td><td id="confAddress">—</td></tr>
+          <tr><td>Delivery</td><td id="confDeliveryOpt">—</td></tr>
+          <tr><td>Payment</td><td id="confPaymentMethod">—</td></tr>
+        </table>
+        <div id="confNotesRow" style="display:none;margin-top:10px;">
+          <div style="font-size:0.78rem;font-weight:600;color:var(--grey);margin-bottom:4px;">Order Notes</div>
+          <div id="confNotes" style="font-size:0.85rem;color:var(--charcoal);background:var(--pink-pale);border-radius:8px;padding:8px 10px;"></div>
+        </div>
+      </section>
+
+      <!-- ====== WHAT'S NEXT ====== -->
+      <section class="page-card">
+        <h2>What's Next?</h2>
+        <div class="conf-steps">
+          <div class="conf-step">
+            <div class="conf-step-num">1</div>
+            <div class="conf-step-text">
+              <strong>Payment Verification</strong>
+              <span>We'll verify your payment within 1–2 hours (Mon–Sat, 9AM–9PM).</span>
+            </div>
+          </div>
+          <div class="conf-step">
+            <div class="conf-step-num">2</div>
+            <div class="conf-step-text">
+              <strong>Order Processing</strong>
+              <span>Once confirmed, we'll carefully pack your order.</span>
+            </div>
+          </div>
+          <div class="conf-step">
+            <div class="conf-step-num">3</div>
+            <div class="conf-step-text">
+              <strong>Shipping</strong>
+              <span>Your order will be handed to the courier and you'll receive a tracking number.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== SEND PROOF OF PAYMENT ====== -->
+      <section class="page-card">
+        <h2>Send Your Proof of Payment</h2>
+        <p style="font-size:0.82rem;color:var(--grey);margin-bottom:14px;">Send a screenshot of your payment to us through any of these channels:</p>
+        <div class="conf-contact-btns">
+          <a class="conf-contact-btn messenger" id="confMessenger" href="#" target="_blank" rel="noopener">
+            💬 Send via Messenger
+          </a>
+          <a class="conf-contact-btn viber" id="confViber" href="#" target="_blank" rel="noopener">
+            📞 Send via Viber
+          </a>
+          <a class="conf-contact-btn telegram" id="confTelegram" href="#" target="_blank" rel="noopener">
+            ✈️ Send via Telegram
+          </a>
+        </div>
+      </section>
+
+      <!-- ====== CONTINUE SHOPPING ====== -->
+      <section class="page-card" style="text-align:center;">
+        <a href="index.html" class="btn-continue">← Continue Shopping</a>
+        <p class="co-terms" style="margin-top:10px;">Thank you for trusting BIOPEP PH! 💕</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="confirmation.js"></script>
+</body>
+</html>
