@@ -664,14 +664,40 @@ function showToast(msg) {
   }, 2800);
 }
 
-// ─── MOBILE MENU ──────────────────────────────
-function initMobileMenu() {
-  const btn = document.getElementById('mobileMenuBtn');
-  const nav = document.getElementById('mobileNav');
-  if (!btn || !nav) return;
-  btn.addEventListener('click', () => nav.classList.toggle('open'));
-  nav.querySelectorAll('.mobile-nav-link').forEach(a => {
-    a.addEventListener('click', () => nav.classList.remove('open'));
+// ─── MOBILE NAV ───────────────────────────────
+function initMobileNav() {
+  const openBtn  = document.getElementById('mnavOpen');
+  const drawer   = document.getElementById('mnavDrawer');
+  const overlay  = document.getElementById('mnavOverlay');
+  const closeBtn = document.getElementById('mnavClose');
+  if (!openBtn || !drawer) return;
+
+  const open  = () => { drawer.classList.add('open'); overlay?.classList.add('active'); document.body.style.overflow = 'hidden'; };
+  const close = () => { drawer.classList.remove('open'); overlay?.classList.remove('active'); document.body.style.overflow = ''; };
+
+  openBtn.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+  overlay?.addEventListener('click', close);
+
+  drawer.querySelectorAll('.mnav-cat').forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterCat(btn.dataset.cat);
+      close();
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  document.getElementById('mnavSearch')?.addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    document.querySelectorAll('#productGrid .pgrid-item').forEach(item => {
+      const name = item.querySelector('.pcard-name')?.textContent.toLowerCase() || '';
+      item.classList.toggle('hidden', !!q && !name.includes(q));
+    });
+    if (!q) {
+      const activeTab = document.querySelector('.cat-tab.active');
+      const cat = activeTab?.dataset.cat || 'all';
+      filterCat(cat);
+    }
   });
 }
 
@@ -704,7 +730,7 @@ function initSmoothScroll() {
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   initCategoryTabs();
-  initMobileMenu();
+  initMobileNav();
   initPromoBar();
   initSmoothScroll();
 

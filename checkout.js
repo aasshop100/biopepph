@@ -24,7 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
   updateTotals();
 
   document.querySelectorAll('input[name="coDelivery"]').forEach(r => {
-    r.addEventListener('change', updateTotals);
+    r.addEventListener('change', () => {
+      updateTotals();
+      showAddressSection();
+    });
   });
 
   document.getElementById('coPromo').addEventListener('keydown', e => {
@@ -94,6 +97,14 @@ function updateTotals() {
   }
 }
 
+// ─── ADDRESS SECTION ─────────────────────────
+function showAddressSection() {
+  const section = document.getElementById('addressSection');
+  if (!section || section.style.display !== 'none') return;
+  section.style.display = 'block';
+  section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
 // ─── PROMO CODE ───────────────────────────────
 function applyPromo() {
   const input  = document.getElementById('coPromo');
@@ -121,6 +132,13 @@ function applyPromo() {
 
 // ─── VALIDATION ───────────────────────────────
 function validateForm() {
+  const deliveryChecked = document.querySelector('input[name="coDelivery"]:checked');
+  if (!deliveryChecked) {
+    showToast('⚠️ Please select a delivery option first.');
+    document.querySelector('.co-delivery-opts')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return false;
+  }
+
   const required = [
     { id: 'coName',   label: 'Full Name'         },
     { id: 'coPhone',  label: 'Phone Number'       },
