@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input[name="coDelivery"]').forEach(r => {
     r.addEventListener('change', () => {
       updateTotals();
-      showAddressSection();
     });
   });
 
@@ -95,14 +94,6 @@ function updateTotals() {
   } else {
     discRow.style.display = 'none';
   }
-}
-
-// ─── ADDRESS SECTION ─────────────────────────
-function showAddressSection() {
-  const section = document.getElementById('addressSection');
-  if (!section || section.style.display !== 'none') return;
-  section.style.display = 'block';
-  section.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // ─── PROMO CODE ───────────────────────────────

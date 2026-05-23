@@ -81,20 +81,18 @@
         </div>
       </section>
 
-      <!-- ====== ADDRESS + MAP (appears after delivery is chosen) ====== -->
-      <section class="page-card" id="addressSection" style="display:none;">
-        <h2>Delivery Address</h2>
-        <div class="delivery-map-wrap">
-          <iframe
-            class="delivery-map"
-            src="https://maps.google.com/maps?q=Philippines&t=&z=7&ie=UTF8&iwloc=&output=embed"
-            frameborder="0"
-            scrolling="no"
-            title="Select your delivery area"
-            loading="lazy">
-          </iframe>
-        </div>
-        <div class="co-form" style="margin-top:14px;">
+      <!-- ====== CUSTOMER DETAILS + DELIVERY ADDRESS ====== -->
+      <section class="page-card">
+        <h2>Your Details</h2>
+        <div class="co-form">
+          <div class="co-field">
+            <label for="coName">Full Name <span class="co-req">*</span></label>
+            <input type="text" id="coName" placeholder="Juan Dela Cruz" autocomplete="name">
+          </div>
+          <div class="co-field">
+            <label for="coPhone">Phone Number <span class="co-req">*</span></label>
+            <input type="tel" id="coPhone" placeholder="09XX XXX XXXX" autocomplete="tel">
+          </div>
           <div class="co-field">
             <label for="coStreet">Street &amp; Barangay <span class="co-req">*</span></label>
             <input type="text" id="coStreet" placeholder="123 Rizal St., Brgy. Santo Niño" autocomplete="address-line1">
@@ -112,21 +110,6 @@
           <div class="co-field">
             <label for="coNotes">Landmarks / Notes <span class="co-opt">(optional)</span></label>
             <textarea id="coNotes" rows="2" placeholder="e.g. Blue gate, near 7-Eleven, preferred delivery time..."></textarea>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== CUSTOMER DETAILS ====== -->
-      <section class="page-card">
-        <h2>Your Details</h2>
-        <div class="co-form">
-          <div class="co-field">
-            <label for="coName">Full Name <span class="co-req">*</span></label>
-            <input type="text" id="coName" placeholder="Juan Dela Cruz" autocomplete="name">
-          </div>
-          <div class="co-field">
-            <label for="coPhone">Phone Number <span class="co-req">*</span></label>
-            <input type="tel" id="coPhone" placeholder="09XX XXX XXXX" autocomplete="tel">
           </div>
         </div>
       </section>
