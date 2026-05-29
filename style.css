@@ -2277,7 +2277,7 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   /* Product modal */
   .pmodal-body { padding: 16px 16px 32px; }
   .pmodal-name { font-size: 1.15rem; }
-  .pmodal-also-grid { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .pmodal-also-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
   .pmodal-also-thumb { font-size: 1.3rem; }
 
   /* Cart */

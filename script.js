@@ -206,6 +206,7 @@ function addItem(id, name, price, variantLabel) {
   const displayName = variantLabel ? `${name} (${variantLabel})` : name;
   const existing = cart.find(i => i.id === cartId);
   if (existing) {
+    if (existing.qty >= 20) { showToast('⚠️ Maximum 20 per item.'); return; }
     existing.qty += 1;
   } else {
     cart.push({ id: cartId, baseId: id, name: displayName, price, qty: 1 });
@@ -659,8 +660,10 @@ function showToast(msg) {
   document.body.appendChild(toast);
   requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
   setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 350);
+    if (document.body.contains(toast)) {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 350);
+    }
   }, 2800);
 }
 

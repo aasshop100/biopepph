@@ -7,8 +7,8 @@ const PROMO_CODES = {
   '100OFF':    { type: 'fixed',   value: 100, label: '₱100 off your order!'          },
 };
 
-let cart        = JSON.parse(localStorage.getItem('biopep_cart')) || [];
-let appliedPromo = null;
+let cart         = JSON.parse(localStorage.getItem('biopep_cart')) || [];
+let appliedPromo = localStorage.getItem('biopep_promo') || null;
 
 // ─── INIT ─────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,6 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCartItems();
   }
   updateTotals();
+
+  if (appliedPromo && PROMO_CODES[appliedPromo]) {
+    const input  = document.getElementById('coPromo');
+    const result = document.getElementById('coPromoResult');
+    input.value      = appliedPromo;
+    input.disabled   = true;
+    result.textContent = '✓ ' + PROMO_CODES[appliedPromo].label;
+    result.className   = 'co-promo-result success';
+  }
 
   document.querySelectorAll('input[name="coDelivery"]').forEach(r => {
     r.addEventListener('change', () => {
@@ -110,11 +119,13 @@ function applyPromo() {
   const promo = PROMO_CODES[code];
   if (promo) {
     appliedPromo = code;
+    localStorage.setItem('biopep_promo', code);
     result.textContent  = '✓ ' + promo.label;
     result.className    = 'co-promo-result success';
     input.disabled      = true;
   } else {
     appliedPromo = null;
+    localStorage.removeItem('biopep_promo');
     result.textContent = '✗ Invalid promo code.';
     result.className   = 'co-promo-result error';
   }
@@ -146,6 +157,15 @@ function validateForm() {
       valid = false;
     }
   });
+
+  const phoneEl = document.getElementById('coPhone');
+  if (phoneEl.value.trim() && !/^(09|\+639)\d{9}$/.test(phoneEl.value.trim())) {
+    phoneEl.classList.add('error');
+    phoneEl.addEventListener('input', () => phoneEl.classList.remove('error'), { once: true });
+    showToast('⚠️ Enter a valid PH number (e.g. 09XX XXX XXXX).');
+    return false;
+  }
+
   if (!valid) {
     showToast('⚠️ Please fill in all required fields.');
     document.querySelector('.co-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -186,6 +206,7 @@ function placeOrder() {
   };
 
   localStorage.setItem('biopep_order', JSON.stringify(order));
+  localStorage.removeItem('biopep_promo');
   window.location.href = 'payment.html';
 }
 
@@ -199,7 +220,9 @@ function showToast(msg) {
   document.body.appendChild(toast);
   requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
   setTimeout(() => {
-    toast.classList.remove('show');
-    setTimeout(() => toast.remove(), 350);
+    if (document.body.contains(toast)) {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 350);
+    }
   }, 2800);
 }
