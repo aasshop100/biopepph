@@ -95,9 +95,9 @@ button { font-family: inherit; cursor: pointer; }
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
 }
-.header-inner .mnav-btn { justify-self: start; }
-.header-inner .logo     { justify-self: center; }
-.header-inner .header-right { justify-self: end; }
+.header-inner .mnav-btn     { grid-column: 1; justify-self: start; }
+.header-inner .logo         { grid-column: 2; justify-self: center; }
+.header-inner .header-right { grid-column: 3; justify-self: end; }
 
 /* Header right group */
 .header-right { display: flex; align-items: center; gap: 4px; }
