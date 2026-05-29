@@ -1745,7 +1745,8 @@ footer {
 .co-field input:focus,
 .co-field textarea:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(244,114,182,0.12); }
 .co-field input.error { border-color: #dc2626; }
-.co-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.co-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; min-width: 0; }
+.co-field-row .co-field { min-width: 0; }
 
 /* Payment options */
 .co-payment-grid {
@@ -1878,8 +1879,10 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   background: var(--white);
   border-radius: var(--radius-lg);
   padding: 20px;
+  padding-right: 22px;
   box-shadow: var(--shadow-sm);
   border: 1.5px solid var(--pink-border);
+  overflow: hidden;
 }
 .page-card h2 { font-size: 1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 14px; }
 .page-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
