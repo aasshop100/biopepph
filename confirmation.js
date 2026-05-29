@@ -1,8 +1,8 @@
 // BIOPEP PH — confirmation.js
 
-const MESSENGER_PAGE = 'https://m.me/biopepph';   // TODO: update with your FB page URL
-const VIBER_NUMBER   = '+63XXXXXXXXXX';             // TODO: update with your Viber number
-const TELEGRAM_USER  = 'biopepph';                 // TODO: update with your Telegram username
+const WHATSAPP_NUMBER = '639171132273';
+const VIBER_NUMBER    = '+639171132273';
+const TELEGRAM_USER   = 'legitrche';
 
 document.addEventListener('DOMContentLoaded', () => {
   const order = JSON.parse(localStorage.getItem('biopep_order'));

@@ -1,8 +1,8 @@
 // BIOPEP PH — script.js
 
-const MESSENGER_PAGE = 'biopepph';
-const TELEGRAM_USER  = 'biopepph';
-const VIBER_NUMBER   = '+63XXXXXXXXXX'; // ← Update with your Viber number
+const TELEGRAM_USER  = 'legitrche';
+const VIBER_NUMBER   = '+639171132273';
+const WHATSAPP_NUMBER = '639171132273';
 
 // ─── PRODUCT DATA ─────────────────────────────
 // variants: Complete Set = listed price (priceAdd:0), Vial Set = listed price - 200 (priceAdd:-200)
