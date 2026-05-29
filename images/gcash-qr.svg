@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 260" width="220" height="260">
+  <!-- Background -->
+  <rect width="220" height="260" rx="12" fill="white" stroke="#e5e7eb" stroke-width="1.5"/>
+
+  <!-- GCash header -->
+  <rect x="0" y="0" width="220" height="36" rx="12" fill="#0061D5"/>
+  <rect x="0" y="24" width="220" height="12" fill="#0061D5"/>
+  <text x="110" y="23" font-family="Arial,sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">GCash</text>
+
+  <!-- QR code area (10px margin from sides, starts at y=46) -->
+  <!-- Top-left finder pattern -->
+  <rect x="18" y="46" width="42" height="42" rx="3" fill="#111"/>
+  <rect x="22" y="50" width="34" height="34" rx="2" fill="white"/>
+  <rect x="26" y="54" width="26" height="26" rx="1.5" fill="#111"/>
+
+  <!-- Top-right finder pattern -->
+  <rect x="160" y="46" width="42" height="42" rx="3" fill="#111"/>
+  <rect x="164" y="50" width="34" height="34" rx="2" fill="white"/>
+  <rect x="168" y="54" width="26" height="26" rx="1.5" fill="#111"/>
+
+  <!-- Bottom-left finder pattern -->
+  <rect x="18" y="162" width="42" height="42" rx="3" fill="#111"/>
+  <rect x="22" y="166" width="34" height="34" rx="2" fill="white"/>
+  <rect x="26" y="170" width="26" height="26" rx="1.5" fill="#111"/>
+
+  <!-- Timing patterns (horizontal) -->
+  <rect x="62" y="88" width="6" height="6" fill="#111"/>
+  <rect x="74" y="88" width="6" height="6" fill="#111"/>
+  <rect x="86" y="88" width="6" height="6" fill="#111"/>
+  <rect x="98" y="88" width="6" height="6" fill="#111"/>
+  <rect x="110" y="88" width="6" height="6" fill="#111"/>
+  <rect x="122" y="88" width="6" height="6" fill="#111"/>
+  <rect x="134" y="88" width="6" height="6" fill="#111"/>
+  <rect x="146" y="88" width="6" height="6" fill="#111"/>
+
+  <!-- Timing patterns (vertical) -->
+  <rect x="88" y="62" width="6" height="6" fill="#111"/>
+  <rect x="88" y="74" width="6" height="6" fill="#111"/>
+  <rect x="88" y="98" width="6" height="6" fill="#111"/>
+  <rect x="88" y="110" width="6" height="6" fill="#111"/>
+  <rect x="88" y="122" width="6" height="6" fill="#111"/>
+  <rect x="88" y="134" width="6" height="6" fill="#111"/>
+  <rect x="88" y="146" width="6" height="6" fill="#111"/>
+  <rect x="88" y="158" width="6" height="6" fill="#111"/>
+
+  <!-- Data modules (simulated pattern) -->
+  <rect x="62" y="62" width="6" height="6" fill="#111"/>
+  <rect x="74" y="62" width="6" height="6" fill="#111"/>
+  <rect x="98" y="62" width="6" height="6" fill="#111"/>
+  <rect x="110" y="62" width="6" height="6" fill="#111"/>
+  <rect x="134" y="62" width="6" height="6" fill="#111"/>
+  <rect x="146" y="62" width="6" height="6" fill="#111"/>
+  <rect x="158" y="62" width="6" height="6" fill="#111"/>
+
+  <rect x="62" y="74" width="6" height="6" fill="#111"/>
+  <rect x="98" y="74" width="6" height="6" fill="#111"/>
+  <rect x="122" y="74" width="6" height="6" fill="#111"/>
+  <rect x="146" y="74" width="6" height="6" fill="#111"/>
+
+  <rect x="74" y="98" width="6" height="6" fill="#111"/>
+  <rect x="98" y="98" width="6" height="6" fill="#111"/>
+  <rect x="110" y="98" width="6" height="6" fill="#111"/>
+  <rect x="134" y="98" width="6" height="6" fill="#111"/>
+  <rect x="158" y="98" width="6" height="6" fill="#111"/>
+
+  <rect x="62" y="110" width="6" height="6" fill="#111"/>
+  <rect x="86" y="110" width="6" height="6" fill="#111"/>
+  <rect x="110" y="110" width="6" height="6" fill="#111"/>
+  <rect x="122" y="110" width="6" height="6" fill="#111"/>
+  <rect x="146" y="110" width="6" height="6" fill="#111"/>
+
+  <rect x="74" y="122" width="6" height="6" fill="#111"/>
+  <rect x="98" y="122" width="6" height="6" fill="#111"/>
+  <rect x="122" y="122" width="6" height="6" fill="#111"/>
+  <rect x="134" y="122" width="6" height="6" fill="#111"/>
+  <rect x="158" y="122" width="6" height="6" fill="#111"/>
+
+  <rect x="62" y="134" width="6" height="6" fill="#111"/>
+  <rect x="86" y="134" width="6" height="6" fill="#111"/>
+  <rect x="110" y="134" width="6" height="6" fill="#111"/>
+  <rect x="146" y="134" width="6" height="6" fill="#111"/>
+
+  <rect x="74" y="146" width="6" height="6" fill="#111"/>
+  <rect x="98" y="146" width="6" height="6" fill="#111"/>
+  <rect x="122" y="146" width="6" height="6" fill="#111"/>
+  <rect x="134" y="146" width="6" height="6" fill="#111"/>
+  <rect x="158" y="146" width="6" height="6" fill="#111"/>
+
+  <rect x="98" y="158" width="6" height="6" fill="#111"/>
+  <rect x="110" y="158" width="6" height="6" fill="#111"/>
+  <rect x="134" y="158" width="6" height="6" fill="#111"/>
+  <rect x="146" y="158" width="6" height="6" fill="#111"/>
+  <rect x="158" y="158" width="6" height="6" fill="#111"/>
+
+  <!-- Footer label -->
+  <text x="110" y="222" font-family="Arial,sans-serif" font-size="10" fill="#6b7280" text-anchor="middle">Scan to pay via GCash</text>
+  <text x="110" y="238" font-family="Arial,sans-serif" font-size="10" font-weight="700" fill="#0061D5" text-anchor="middle">BIOPEP PH</text>
+  <text x="110" y="253" font-family="Arial,sans-serif" font-size="9" fill="#9ca3af" text-anchor="middle">Replace with your real QR code</text>
+</svg>

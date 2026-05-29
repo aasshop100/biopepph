@@ -2097,18 +2097,33 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
 .pay-amount-due strong { font-size: 1.5rem; font-weight: 900; color: var(--pink-deep); }
 
 .pay-qr {
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 14px;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 2px solid var(--pink-border);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: var(--light-grey);
+  margin: 0 auto 14px;
+  gap: 10px;
 }
-.pay-qr img { width: 100%; height: 100%; object-fit: cover; }
+.pay-qr-img {
+  width: 200px;
+  height: auto;
+  border-radius: 12px;
+  border: 2px solid var(--pink-border);
+  display: block;
+}
+.btn-download-qr {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  background: #0061D5;
+  color: white;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.btn-download-qr:hover { background: #004faf; }
 .pay-qr-placeholder { text-align: center; color: var(--grey); font-size: 0.78rem; padding: 12px; line-height: 1.6; }
 .pay-qr-placeholder span { font-size: 2.5rem; display: block; margin-bottom: 6px; }
 
