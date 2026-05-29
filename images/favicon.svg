@@ -9,21 +9,14 @@
   <!-- Rounded square background -->
   <rect width="32" height="32" rx="7" fill="url(#bg)"/>
 
-  <!-- B -->
+  <!-- BP centered -->
   <text
-    x="8"
-    y="22"
+    x="16"
+    y="21"
     font-family="Arial Black, Arial, sans-serif"
     font-size="15"
     font-weight="900"
     fill="white"
-    letter-spacing="-0.5">BP</text>
-
-  <!-- Small dot accent row (molecule feel) -->
-  <circle cx="6"  cy="27" r="1.2" fill="rgba(255,255,255,0.5)"/>
-  <circle cx="10" cy="27" r="1.2" fill="rgba(255,255,255,0.5)"/>
-  <circle cx="14" cy="27" r="1.2" fill="rgba(255,255,255,0.5)"/>
-  <circle cx="18" cy="27" r="1.2" fill="rgba(255,255,255,0.5)"/>
-  <circle cx="22" cy="27" r="1.2" fill="rgba(255,255,255,0.5)"/>
-  <circle cx="26" cy="27" r="1.2" fill="rgba(255,255,255,0.5)"/>
+    text-anchor="middle"
+    dominant-baseline="middle">BP</text>
 </svg>
