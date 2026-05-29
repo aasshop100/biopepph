@@ -2065,6 +2065,7 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   justify-content: center;
   gap: 4px;
   padding: 11px 8px;
+  height: 60px;
   border: 2px solid var(--pink-border);
   border-radius: 12px;
   font-size: 0.75rem;
@@ -2124,8 +2125,22 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   transition: var(--transition);
 }
 .btn-download-qr:hover { background: #004faf; }
-.pay-qr-placeholder { text-align: center; color: var(--grey); font-size: 0.78rem; padding: 12px; line-height: 1.6; }
-.pay-qr-placeholder span { font-size: 2.5rem; display: block; margin-bottom: 6px; }
+.pay-qr-placeholder {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--pink-border);
+  border-radius: 12px;
+  text-align: center;
+  color: var(--grey);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  background: var(--pink-light);
+}
+.pay-qr-placeholder span { font-size: 2rem; display: block; margin-bottom: 6px; }
 
 .pay-account-table { width: 100%; border-collapse: collapse; }
 .pay-account-table tr td { padding: 7px 10px; font-size: 0.85rem; border-bottom: 1px solid var(--pink-border); }
