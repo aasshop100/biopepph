@@ -76,11 +76,33 @@ function renderDeliveryInfo(order) {
 }
 
 function renderContactLinks(order) {
-  const msg = encodeURIComponent(
-    `Hi BIOPEP PH! Here is my payment proof for Order #${order.orderId}.\n` +
-    `Total Paid: ₱${order.total.toLocaleString('en-PH')}\n` +
-    `Payment Method: ${order.paymentMethod || '—'}`
-  );
+  const items = order.cart.map(i => `  • ${i.name} ×${i.qty} — ₱${(i.price * i.qty).toLocaleString('en-PH')}`).join('\n');
+  const address = [order.street, order.city, order.province].filter(Boolean).join(', ');
+
+  const lines = [
+    `🧬 NEW ORDER — BIOPEP PH`,
+    ``,
+    `🆔 Order ID: ${order.orderId}`,
+    `📅 Date: ${new Date(order.placedAt).toLocaleString('en-PH')}`,
+    ``,
+    `📦 ITEMS:`,
+    items,
+    ``,
+    `💰 Subtotal:  ₱${order.subtotal.toLocaleString('en-PH')}`,
+    order.discount > 0 ? `🎟️ Discount:  -₱${order.discount.toLocaleString('en-PH')}` : null,
+    `💳 TOTAL:     ₱${order.total.toLocaleString('en-PH')}`,
+    ``,
+    `👤 Name:      ${order.name}`,
+    `📱 Phone:     ${order.phone}`,
+    `📍 Address:   ${address}`,
+    `🚚 Delivery:  ${order.deliveryLabel || '—'}`,
+    `💳 Payment:   ${order.paymentMethod || '—'}`,
+    order.notes ? `📝 Notes:     ${order.notes}` : null,
+    ``,
+    `📸 Proof of payment attached.`,
+  ].filter(l => l !== null).join('\n');
+
+  const msg = encodeURIComponent(lines);
 
   document.getElementById('confMessenger').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
   document.getElementById('confViber').href     = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}&text=${msg}`;
