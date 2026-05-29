@@ -159,7 +159,8 @@ function validateForm() {
   });
 
   const phoneEl = document.getElementById('coPhone');
-  if (phoneEl.value.trim() && !/^(09|\+639)\d{9}$/.test(phoneEl.value.trim())) {
+  const phoneRaw = phoneEl.value.trim().replace(/[\s\-]/g, '');
+  if (phoneRaw && !/^(09|\+639)\d{9}$/.test(phoneRaw)) {
     phoneEl.classList.add('error');
     phoneEl.addEventListener('input', () => phoneEl.classList.remove('error'), { once: true });
     showToast('⚠️ Enter a valid PH number (e.g. 09XX XXX XXXX).');

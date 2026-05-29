@@ -235,6 +235,7 @@ function clearCart() {
   cart = [];
   saveCart();
   renderCart();
+  localStorage.removeItem('biopep_promo');
 }
 
 // ─── RENDER CART ──────────────────────────────
