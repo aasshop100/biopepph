@@ -105,19 +105,14 @@ function renderContactLinks(order) {
   const msg = encodeURIComponent(lines);
 
   document.getElementById('confMessenger').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+  document.getElementById('confViber').href     = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}`;
   document.getElementById('confTelegram').href  = `https://t.me/${TELEGRAM_USER}?text=${msg}`;
 
-  // Viber doesn't support pre-filled text reliably — copy to clipboard instead
-  document.getElementById('confViber').addEventListener('click', (e) => {
-    e.preventDefault();
+  document.getElementById('confCopyBtn').addEventListener('click', () => {
     navigator.clipboard.writeText(lines).then(() => {
-      showConfToast('📋 Order details copied! Open Viber and paste the message to send your order.');
-      setTimeout(() => {
-        window.location.href = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}`;
-      }, 2000);
+      showConfToast('📋 Copied! Now open Viber and paste.');
     }).catch(() => {
-      // Clipboard failed — just open Viber
-      window.location.href = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}`;
+      showConfToast('⚠️ Could not copy automatically. Please screenshot your order summary.');
     });
   });
 }

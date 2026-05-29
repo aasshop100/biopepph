@@ -2316,6 +2316,13 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
 .conf-step-text span   { font-size: 0.8rem; color: var(--grey); }
 
 .conf-contact-btns { display: flex; flex-direction: column; gap: 10px; }
+.conf-viber-note { font-size: 0.78rem; color: var(--grey); text-align: center; margin-top: 10px; }
+.conf-viber-copy {
+  background: none; border: none; padding: 0;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--pink-dark); cursor: pointer;
+  text-decoration: underline; font-family: inherit;
+}
 .conf-toast {
   position: fixed; bottom: 24px; left: 50%;
   transform: translateX(-50%) translateY(20px);
