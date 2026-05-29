@@ -105,6 +105,33 @@ function renderContactLinks(order) {
   const msg = encodeURIComponent(lines);
 
   document.getElementById('confMessenger').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-  document.getElementById('confViber').href     = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}&text=${msg}`;
   document.getElementById('confTelegram').href  = `https://t.me/${TELEGRAM_USER}?text=${msg}`;
+
+  // Viber doesn't support pre-filled text reliably — copy to clipboard instead
+  document.getElementById('confViber').addEventListener('click', (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(lines).then(() => {
+      showConfToast('📋 Order details copied! Open Viber and paste the message to send your order.');
+      setTimeout(() => {
+        window.location.href = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}`;
+      }, 2000);
+    }).catch(() => {
+      // Clipboard failed — just open Viber
+      window.location.href = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}`;
+    });
+  });
+}
+
+function showConfToast(msg) {
+  const existing = document.querySelector('.conf-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'conf-toast';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('show')));
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.remove(), 400);
+  }, 4000);
 }

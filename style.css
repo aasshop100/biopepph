@@ -2316,6 +2316,18 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
 .conf-step-text span   { font-size: 0.8rem; color: var(--grey); }
 
 .conf-contact-btns { display: flex; flex-direction: column; gap: 10px; }
+.conf-toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--charcoal); color: white;
+  padding: 13px 20px; border-radius: 12px;
+  font-size: 0.85rem; font-weight: 600;
+  max-width: 320px; text-align: center;
+  box-shadow: var(--shadow-md);
+  opacity: 0; transition: opacity 0.3s, transform 0.3s;
+  z-index: 9999; pointer-events: none;
+}
+.conf-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .conf-contact-btn {
   display: flex;
   align-items: center;
