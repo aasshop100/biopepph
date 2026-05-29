@@ -816,6 +816,14 @@ h2 span { color: var(--pink-dark); }
   justify-content: center;
   overflow: hidden;
 }
+.pcard-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+.pcard:hover .pcard-photo { transform: scale(1.05); }
 .pcard-emoji {
   font-size: 3rem;
   transition: transform 0.35s ease;
@@ -1301,6 +1309,7 @@ footer {
   flex-shrink: 0;
 }
 .pmodal-emoji { font-size: 4.5rem; pointer-events: none; }
+.pmodal-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 24px 24px 0 0; display: block; }
 
 .pmodal-badge {
   position: absolute;

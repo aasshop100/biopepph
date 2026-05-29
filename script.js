@@ -10,7 +10,7 @@ const PRODUCTS = {
 
   // ── AVAILABLE PRODUCTS ────────────────────────
   'retro-10mg': {
-    name: 'Retatrutide 15mg', price: 2000, origPrice: null, emoji: '💉',
+    name: 'Retatrutide 15mg', price: 2000, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
     desc: 'Triple receptor agonist targeting GLP-1, GIP, and Glucagon pathways simultaneously. Clinical trials report up to 24% body weight reduction — the most advanced weight loss peptide currently available.',
     variants: [
@@ -19,7 +19,7 @@ const PRODUCTS = {
     ],
   },
   'tirze-10mg': {
-    name: 'Tirzepatide 15mg', price: 1600, origPrice: null, emoji: '💉',
+    name: 'Tirzepatide 15mg', price: 1600, origPrice: null, emoji: '💉', image: 'images/tirzepatide15mg.jpg',
     tag: null, tagClass: '', cat: 'Weight Loss',
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
     variants: [
@@ -28,7 +28,7 @@ const PRODUCTS = {
     ],
   },
   'kpv-10mg': {
-    name: 'KPV 10mg', price: 1750, origPrice: null, emoji: '🧬',
+    name: 'KPV 10mg', price: 1750, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
     tag: null, tagClass: '', cat: 'Healing',
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
@@ -37,7 +37,7 @@ const PRODUCTS = {
     ],
   },
   'snap8-10mg': {
-    name: 'Snap-8 10mg', price: 1500, origPrice: null, emoji: '✨',
+    name: 'Snap-8 10mg', price: 1500, origPrice: null, emoji: '✨', image: 'images/snap810mg.jpg',
     tag: null, tagClass: '', cat: 'Anti-Aging',
     desc: 'Octapeptide-2 — peptide alternative to Botox. Reduces the depth of expression lines by relaxing facial muscle contractions. Popular in advanced anti-aging skincare protocols.',
     variants: [
@@ -46,7 +46,7 @@ const PRODUCTS = {
     ],
   },
   'ghkcu-50mg': {
-    name: 'GHK-Cu 50mg', price: 1520, origPrice: null, emoji: '✨',
+    name: 'GHK-Cu 50mg', price: 1520, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
     tag: 'Top Pick', tagClass: '', cat: 'Anti-Aging',
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
@@ -55,7 +55,7 @@ const PRODUCTS = {
     ],
   },
   'nad-100mg': {
-    name: 'NAD+ 100mg', price: 1400, origPrice: null, emoji: '⚡',
+    name: 'NAD+ 100mg', price: 1400, origPrice: null, emoji: '⚡', image: 'images/nad+100mg.jpg',
     tag: null, tagClass: '', cat: 'Anti-Aging',
     desc: 'Nicotinamide Adenine Dinucleotide — essential coenzyme for cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
@@ -64,7 +64,7 @@ const PRODUCTS = {
     ],
   },
   'bac-water-3ml': {
-    name: 'BAC Water 3mL', price: 100, origPrice: null, emoji: '💧',
+    name: 'BAC Water 3mL', price: 100, origPrice: null, emoji: '💧', image: 'images/bacwater3ml.jpg',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Pharmaceutical-grade bacteriostatic water for injection. Ideal for small-volume peptide reconstitution. Preserves solution for up to 4 weeks refrigerated.',
     variants: null,
@@ -255,7 +255,19 @@ function openModal(id) {
   modalQty        = 1;
   modalVariantIdx = 0;
 
-  document.getElementById('pmodalEmoji').textContent = prod.emoji;
+  const emojiEl  = document.getElementById('pmodalEmoji');
+  const imgWrap  = document.getElementById('pmodalImgWrap');
+  let   photoEl  = imgWrap.querySelector('.pmodal-photo');
+  if (prod.image) {
+    if (!photoEl) { photoEl = document.createElement('img'); photoEl.className = 'pmodal-photo'; imgWrap.prepend(photoEl); }
+    photoEl.src = prod.image; photoEl.alt = prod.name;
+    photoEl.style.display = 'block'; emojiEl.style.display = 'none';
+    imgWrap.style.background = 'none';
+  } else {
+    if (photoEl) photoEl.style.display = 'none';
+    emojiEl.textContent = prod.emoji; emojiEl.style.display = '';
+    imgWrap.style.background = '';
+  }
   document.getElementById('pmodalCat').textContent   = prod.cat;
   document.getElementById('pmodalName').textContent  = prod.name;
   document.getElementById('pmodalDesc').textContent  = prod.desc;
