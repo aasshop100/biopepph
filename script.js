@@ -5,191 +5,108 @@ const TELEGRAM_USER  = 'biopepph';
 const VIBER_NUMBER   = '+63XXXXXXXXXX'; // ← Update with your Viber number
 
 // ─── PRODUCT DATA ─────────────────────────────
-// variants: array of { label, desc, priceAdd } — priceAdd is added to base price
+// variants: Complete Set = listed price (priceAdd:0), Vial Set = listed price - 200 (priceAdd:-200)
 const PRODUCTS = {
-  'sema-5mg': {
-    name: 'Semaglutide 5mg', price: 2500, origPrice: 3000, emoji: '💉',
-    tag: 'Best Seller', tagClass: '', cat: 'Weight Loss',
-    desc: 'GLP-1 Receptor Agonist — the gold standard in weight loss peptides. Clinically proven to reduce appetite and promote significant fat loss. Ideal for individuals targeting 5–15% body weight reduction.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
+
+  // ── AVAILABLE PRODUCTS ────────────────────────
   'retro-10mg': {
-    name: 'Retatrutide 10mg', price: 4500, origPrice: null, emoji: '💉',
+    name: 'Retatrutide 15mg', price: 2000, origPrice: null, emoji: '💉',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
     desc: 'Triple receptor agonist targeting GLP-1, GIP, and Glucagon pathways simultaneously. Clinical trials report up to 24% body weight reduction — the most advanced weight loss peptide currently available.',
     variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
+      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
+      { label: 'Vial Set',     desc: 'Peptide vial only',                                     priceAdd: -200 },
     ],
   },
   'tirze-10mg': {
-    name: 'Tirzepatide 10mg', price: 4000, origPrice: null, emoji: '💉',
+    name: 'Tirzepatide 15mg', price: 1600, origPrice: null, emoji: '💉',
     tag: null, tagClass: '', cat: 'Weight Loss',
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
     variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
+      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
+      { label: 'Vial Set',     desc: 'Peptide vial only',                                     priceAdd: -200 },
     ],
   },
-  'cagri-10mg': {
-    name: 'Cagrilintide 10mg', price: 3800, origPrice: null, emoji: '💉',
-    tag: null, tagClass: '', cat: 'Weight Loss',
-    desc: 'Amylin analogue designed to work synergistically with Semaglutide (CagriSema combo). Enhances satiety signals and complements GLP-1 agonists for dramatically enhanced weight loss.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'survo-10mg': {
-    name: 'Survodutide 10mg', price: 4200, origPrice: null, emoji: '💉',
-    tag: null, tagClass: '', cat: 'Weight Loss',
-    desc: 'GLP-1/Glucagon dual agonist under clinical investigation for obesity. Promotes fat burning via glucagon signaling while suppressing appetite via GLP-1.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'bpc157-5mg': {
-    name: 'BPC-157 5mg', price: 1800, origPrice: 2200, emoji: '🧬',
-    tag: 'Popular', tagClass: '', cat: 'Healing',
-    desc: 'Body Protective Compound — a potent healing peptide. Accelerates repair of gut lining, tendons, ligaments, and muscles. Reduces inflammation and promotes angiogenesis.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'tb500-5mg': {
-    name: 'TB-500 5mg', price: 2000, origPrice: null, emoji: '🧬',
+  'kpv-10mg': {
+    name: 'KPV 10mg', price: 1750, origPrice: null, emoji: '🧬',
     tag: null, tagClass: '', cat: 'Healing',
-    desc: 'Thymosin Beta-4 fragment. Promotes cell migration for accelerated healing of muscles, tendons, and ligaments. Works synergistically with BPC-157.',
+    desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
+      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
+      { label: 'Vial Set',     desc: 'Peptide vial only',                                     priceAdd: -200 },
     ],
   },
-  'bpc-tb-blend': {
-    name: 'BPC-157 + TB-500 Blend', price: 3200, origPrice: null, emoji: '🧬',
-    tag: null, tagClass: '', cat: 'Healing',
-    desc: 'The ultimate healing stack combining both BPC-157 and TB-500 in one vial. Dual-action repair for athletes, post-surgery recovery, and chronic injury management.',
+  'snap8-10mg': {
+    name: 'Snap-8 10mg', price: 1500, origPrice: null, emoji: '✨',
+    tag: null, tagClass: '', cat: 'Anti-Aging',
+    desc: 'Octapeptide-2 — peptide alternative to Botox. Reduces the depth of expression lines by relaxing facial muscle contractions. Popular in advanced anti-aging skincare protocols.',
     variants: [
-      { label: 'Vials Set',    desc: 'Blend vial + bacteriostatic water',                           priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
+      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
+      { label: 'Vial Set',     desc: 'Peptide vial only',                                     priceAdd: -200 },
     ],
   },
   'ghkcu-50mg': {
-    name: 'GHK-Cu 50mg', price: 2200, origPrice: null, emoji: '✨',
+    name: 'GHK-Cu 50mg', price: 1520, origPrice: null, emoji: '✨',
     tag: 'Top Pick', tagClass: '', cat: 'Anti-Aging',
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + topical applicator & gloves',                     priceAdd: 200 },
+      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + topical applicator', priceAdd: 0    },
+      { label: 'Vial Set',     desc: 'Peptide vial only',                                        priceAdd: -200 },
     ],
   },
-  'epith-10mg': {
-    name: 'Epithalon 10mg', price: 2800, origPrice: null, emoji: '✨',
+  'nad-100mg': {
+    name: 'NAD+ 100mg', price: 1400, origPrice: null, emoji: '⚡',
     tag: null, tagClass: '', cat: 'Anti-Aging',
-    desc: 'Tetrapeptide from the pineal gland associated with telomere extension and cellular renewal. Research suggests improved sleep, immune modulation, and longevity benefits.',
+    desc: 'Nicotinamide Adenine Dinucleotide — essential coenzyme for cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
+      { label: 'Complete Set', desc: 'NAD+ vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
+      { label: 'Vial Set',     desc: 'NAD+ vial only',                                     priceAdd: -200 },
     ],
   },
-  'ta1-1.6mg': {
-    name: 'Thymosin Alpha-1', price: 3500, origPrice: null, emoji: '✨',
-    tag: null, tagClass: '', cat: 'Anti-Aging',
-    desc: 'Thymic peptide with powerful immune modulation and anti-inflammatory properties. Studied for immune support, infectious disease management, and longevity.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'ipa-5mg': {
-    name: 'Ipamorelin 5mg', price: 1600, origPrice: 2000, emoji: '💪',
-    tag: 'Popular', tagClass: '', cat: 'Growth',
-    desc: 'Selective GHRP that stimulates pulsatile GH release with minimal side effects. Promotes lean muscle, fat loss, and improved recovery. Best stacked with CJC-1295.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'cjc-2mg': {
-    name: 'CJC-1295 2mg', price: 1800, origPrice: null, emoji: '💪',
-    tag: null, tagClass: '', cat: 'Growth',
-    desc: 'Long-acting GHRH analogue that amplifies GH release over extended periods. Promotes muscle hypertrophy, fat loss, and improved sleep quality.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'hex-2mg': {
-    name: 'Hexarelin 2mg', price: 1500, origPrice: null, emoji: '💪',
-    tag: null, tagClass: '', cat: 'Growth',
-    desc: 'Potent GHRP-6 analogue with strong GH releasing properties and cardioprotective effects. Promotes lean muscle and supports recovery from intense training.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'igf1lr3-1mg': {
-    name: 'IGF-1 LR3 1mg', price: 2500, origPrice: null, emoji: '💪',
-    tag: null, tagClass: '', cat: 'Growth',
-    desc: 'IGF-1 Long Arg3 variant. Directly stimulates muscle cell proliferation and hypertrophy. Extended half-life vs. native IGF-1. Highly anabolic.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'stack-fat-loss': {
-    name: 'Fat Loss Starter Kit', price: 2600, origPrice: 2800, emoji: '🔥',
-    tag: 'Stack', tagClass: 'stack', cat: 'Stacks',
-    desc: 'Everything you need to start your weight loss journey. Includes Semaglutide 5mg + Bacteriostatic Water 10mL. Perfect for first-time peptide users. Save ₱200 vs. buying separately.',
-    variants: null,
-  },
-  'stack-recovery': {
-    name: 'Recovery Pro Stack', price: 3500, origPrice: 3800, emoji: '⚡',
-    tag: 'Stack', tagClass: 'stack', cat: 'Stacks',
-    desc: 'Dual-action healing combination. BPC-157 5mg + TB-500 5mg for synergistic tissue repair. Ideal for athletes, post-surgery recovery, or chronic injury. Save ₱300.',
-    variants: null,
-  },
-  'stack-glow': {
-    name: 'Anti-Aging Glow Stack', price: 4500, origPrice: 5000, emoji: '🌸',
-    tag: 'Stack', tagClass: 'stack', cat: 'Stacks',
-    desc: 'Complete anti-aging protocol. GHK-Cu 50mg + Epithalon 10mg for collagen synthesis, skin renewal, and cellular longevity simultaneously. Save ₱500.',
-    variants: null,
-  },
-  'stack-gh': {
-    name: 'GH Optimizer Stack', price: 3100, origPrice: 3400, emoji: '💥',
-    tag: 'Stack', tagClass: 'stack', cat: 'Stacks',
-    desc: 'Classic GH stack. Ipamorelin 5mg + CJC-1295 2mg — GHRP + GHRH synergy for maximum GH pulse amplitude. Ideal for lean muscle and fat loss. Save ₱300.',
-    variants: null,
-  },
-  'mt2-10mg': {
-    name: 'Melanotan II 10mg', price: 1800, origPrice: null, emoji: '🌙',
+  'bac-water-3ml': {
+    name: 'BAC Water 3mL', price: 100, origPrice: null, emoji: '💧',
     tag: null, tagClass: '', cat: 'Other',
-    desc: 'Melanocortin receptor agonist that promotes skin tanning via melanin production. Also studied for libido enhancement and appetite suppression.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
-  },
-  'pt141-10mg': {
-    name: 'PT-141 10mg', price: 2000, origPrice: null, emoji: '🌙',
-    tag: null, tagClass: '', cat: 'Other',
-    desc: 'Bremelanotide — MC4 receptor agonist that specifically targets sexual desire and arousal pathways in the central nervous system. Studied for male and female sexual dysfunction.',
-    variants: [
-      { label: 'Vials Set',    desc: 'Peptide vial + bacteriostatic water',                         priceAdd: 0   },
-      { label: 'Complete Kit', desc: 'Vials Set + 10 insulin syringes, alcohol pads & gloves',      priceAdd: 300 },
-    ],
+    desc: 'Pharmaceutical-grade bacteriostatic water for injection. Ideal for small-volume peptide reconstitution. Preserves solution for up to 4 weeks refrigerated.',
+    variants: null,
   },
   'bac-water': {
-    name: 'Bacteriostatic Water 10mL', price: 300, origPrice: null, emoji: '💧',
+    name: 'BAC Water 10mL', price: 200, origPrice: null, emoji: '💧',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Pharmaceutical-grade 0.9% benzyl alcohol water for injection. Required for reconstituting all lyophilized peptides. Preserves solution for up to 4 weeks refrigerated.',
     variants: null,
   },
+  'syringe-05ml': {
+    name: 'Syringe 31G 0.5mL (10 pcs)', price: 120, origPrice: null, emoji: '💉',
+    tag: null, tagClass: '', cat: 'Other',
+    desc: 'Sungshim insulin syringe 31G × 8mm, 0.5mL capacity. Ideal for precise low-volume peptide dosing. Pack of 10.',
+    variants: null,
+  },
+  'syringe-1ml': {
+    name: 'Syringe 31G 1mL (10 pcs)', price: 120, origPrice: null, emoji: '💉',
+    tag: null, tagClass: '', cat: 'Other',
+    desc: 'Sungshim insulin syringe 31G × 8mm, 1mL capacity. Suitable for larger volume peptide injections. Pack of 10.',
+    variants: null,
+  },
+
+  // ── HIDDEN (not currently available) ──────────
+  'sema-5mg':       { hidden: true, name: 'Semaglutide 5mg',        price: 2500, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
+  'cagri-10mg':     { hidden: true, name: 'Cagrilintide 10mg',      price: 3800, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
+  'survo-10mg':     { hidden: true, name: 'Survodutide 10mg',       price: 4200, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
+  'bpc157-5mg':     { hidden: true, name: 'BPC-157 5mg',            price: 1800, emoji: '🧬', cat: 'Healing',    desc: '', variants: null },
+  'tb500-5mg':      { hidden: true, name: 'TB-500 5mg',             price: 2000, emoji: '🧬', cat: 'Healing',    desc: '', variants: null },
+  'bpc-tb-blend':   { hidden: true, name: 'BPC-157 + TB-500 Blend', price: 3200, emoji: '🧬', cat: 'Healing',    desc: '', variants: null },
+  'epith-10mg':     { hidden: true, name: 'Epithalon 10mg',         price: 2800, emoji: '✨', cat: 'Anti-Aging', desc: '', variants: null },
+  'ta1-1.6mg':      { hidden: true, name: 'Thymosin Alpha-1',       price: 3500, emoji: '✨', cat: 'Anti-Aging', desc: '', variants: null },
+  'ipa-5mg':        { hidden: true, name: 'Ipamorelin 5mg',         price: 1600, emoji: '💪', cat: 'Growth',     desc: '', variants: null },
+  'cjc-2mg':        { hidden: true, name: 'CJC-1295 2mg',           price: 1800, emoji: '💪', cat: 'Growth',     desc: '', variants: null },
+  'hex-2mg':        { hidden: true, name: 'Hexarelin 2mg',          price: 1500, emoji: '💪', cat: 'Growth',     desc: '', variants: null },
+  'igf1lr3-1mg':    { hidden: true, name: 'IGF-1 LR3 1mg',          price: 2500, emoji: '💪', cat: 'Growth',     desc: '', variants: null },
+  'stack-fat-loss': { hidden: true, name: 'Fat Loss Starter Kit',   price: 2600, emoji: '🔥', cat: 'Stacks',     desc: '', variants: null },
+  'stack-recovery': { hidden: true, name: 'Recovery Pro Stack',     price: 3500, emoji: '⚡', cat: 'Stacks',     desc: '', variants: null },
+  'stack-glow':     { hidden: true, name: 'Anti-Aging Glow Stack',  price: 4500, emoji: '🌸', cat: 'Stacks',     desc: '', variants: null },
+  'stack-gh':       { hidden: true, name: 'GH Optimizer Stack',     price: 3100, emoji: '💥', cat: 'Stacks',     desc: '', variants: null },
+  'mt2-10mg':       { hidden: true, name: 'Melanotan II 10mg',      price: 1800, emoji: '🌙', cat: 'Other',      desc: '', variants: null },
+  'pt141-10mg':     { hidden: true, name: 'PT-141 10mg',            price: 2000, emoji: '🌙', cat: 'Other',      desc: '', variants: null },
 };
 
 // ─── CART STATE ───────────────────────────────
@@ -447,7 +364,7 @@ function renderAlsoLike(currentId) {
   const current = PRODUCTS[currentId];
   if (!current) { wrap.style.display = 'none'; return; }
 
-  const allIds  = Object.keys(PRODUCTS);
+  const allIds  = Object.keys(PRODUCTS).filter(id => !PRODUCTS[id].hidden);
   const sameCat = allIds.filter(id => id !== currentId && PRODUCTS[id].cat === current.cat);
   const diffCat = allIds.filter(id => id !== currentId && PRODUCTS[id].cat !== current.cat);
   const picks   = [...sameCat, ...diffCat].slice(0, 4);
