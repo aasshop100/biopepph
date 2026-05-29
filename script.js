@@ -70,7 +70,7 @@ const PRODUCTS = {
     variants: null,
   },
   'bac-water': {
-    name: 'BAC Water 10mL', price: 200, origPrice: null, emoji: '💧',
+    name: 'BAC Water 10mL', price: 200, origPrice: null, emoji: '💧', image: 'images/bacwater10ml.jpg',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Pharmaceutical-grade 0.9% benzyl alcohol water for injection. Required for reconstituting all lyophilized peptides. Preserves solution for up to 4 weeks refrigerated.',
     variants: null,
@@ -388,8 +388,11 @@ function renderAlsoLike(currentId) {
     const p   = PRODUCTS[id];
     const div = document.createElement('div');
     div.className = 'pmodal-also-card';
+    const thumb = p.image
+      ? `<div class="pmodal-also-thumb"><img src="${p.image}" alt="${p.name}" class="pmodal-also-img"></div>`
+      : `<div class="pmodal-also-thumb">${p.emoji}</div>`;
     div.innerHTML = `
-      <div class="pmodal-also-thumb">${p.emoji}</div>
+      ${thumb}
       <p class="pmodal-also-name">${p.name}</p>
       <p class="pmodal-also-price">₱${p.price.toLocaleString('en-PH')}</p>
     `;

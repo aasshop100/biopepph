@@ -1560,13 +1560,15 @@ footer {
   background: var(--pink-pale);
   border: 1.5px solid var(--pink-border);
   border-radius: 10px;
-  padding: 10px 6px 8px;
+  padding: 6px 6px 8px;
   text-align: center;
   cursor: pointer;
   transition: var(--transition);
+  overflow: hidden;
 }
 .pmodal-also-card:hover  { border-color: var(--pink-dark); background: var(--pink-light); transform: translateY(-2px); }
-.pmodal-also-thumb       { font-size: 1.6rem; margin-bottom: 5px; }
+.pmodal-also-thumb       { font-size: 1.6rem; margin-bottom: 5px; line-height: 1; }
+.pmodal-also-img         { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 5px; }
 .pmodal-also-name {
   font-size: 0.65rem;
   font-weight: 600;
