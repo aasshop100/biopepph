@@ -3,8 +3,8 @@
 const PROMO_CODES = {
   'WELCOME10': { type: 'percent', value: 10,  label: '10% off — Welcome discount!' },
   'BIOPEP20':  { type: 'percent', value: 20,  label: '20% off — BIOPEP20 applied!'  },
-  'FREESHIP':  { type: 'ship',    value: 0,   label: 'Free shipping applied!'        },
   'SAVE200':   { type: 'fixed',   value: 200, label: '₱200 off your order!'          },
+  '100OFF':    { type: 'fixed',   value: 100, label: '₱100 off your order!'          },
 };
 
 let cart        = JSON.parse(localStorage.getItem('biopep_cart')) || [];
@@ -84,7 +84,7 @@ function updateTotals() {
   const total     = Math.max(0, subtotal + delivery - discount);
 
   document.getElementById('coPageSubtotal').textContent = `₱${subtotal.toLocaleString('en-PH')}`;
-  document.getElementById('coPageDelivery').textContent = delivery === 0 ? 'Free' : `₱${delivery.toLocaleString('en-PH')}`;
+  document.getElementById('coPageDelivery').textContent = `₱${delivery.toLocaleString('en-PH')}`;
   document.getElementById('coPageTotal').textContent    = `₱${total.toLocaleString('en-PH')}`;
 
   const discRow = document.getElementById('coDiscountRow');
