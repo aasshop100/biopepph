@@ -417,6 +417,22 @@ function initCategoryTabs() {
   });
 }
 
+function filterSearch(query) {
+  const q = query.trim().toLowerCase();
+  const items = document.querySelectorAll('#productGrid .pgrid-item');
+  if (!q) {
+    const activeTab = document.querySelector('.cat-tab.active');
+    const cat = activeTab?.dataset.cat || 'all';
+    filterCat(cat);
+    return;
+  }
+  items.forEach(item => {
+    const name = item.querySelector('.pcard-name')?.textContent.toLowerCase() || '';
+    const desc = item.querySelector('.pcard-desc')?.textContent.toLowerCase() || '';
+    item.classList.toggle('hidden', !name.includes(q) && !desc.includes(q));
+  });
+}
+
 function filterCat(cat) {
   const tabs  = document.querySelectorAll('.cat-tab');
   const items = document.querySelectorAll('#productGrid .pgrid-item');
@@ -510,6 +526,21 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initPromoBar();
   initSmoothScroll();
+
+  // Search
+  const searchBar   = document.getElementById('headerSearchBar');
+  const searchInput = document.getElementById('headerSearchInput');
+  document.getElementById('searchToggle')?.addEventListener('click', () => {
+    searchBar.classList.toggle('open');
+    if (searchBar.classList.contains('open')) searchInput.focus();
+    else { searchInput.value = ''; filterSearch(''); }
+  });
+  document.getElementById('searchClose')?.addEventListener('click', () => {
+    searchBar.classList.remove('open');
+    searchInput.value = '';
+    filterSearch('');
+  });
+  searchInput?.addEventListener('input', e => filterSearch(e.target.value));
 
   // Cart
   document.getElementById('cartOpen')?.addEventListener('click', openCart);
