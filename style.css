@@ -1032,6 +1032,7 @@ h2 span { color: var(--pink-dark); }
 .contact-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 .contact-card strong { display: block; font-size: 0.9rem; font-weight: 700; }
 .contact-card span   { font-size: 0.78rem; opacity: 0.8; }
+.contact-card svg    { flex-shrink: 0; width: 28px; height: 28px; }
 
 /* ================================================
    FOOTER
