@@ -41,7 +41,7 @@ function renderOrder() {
 function renderTotals() {
   document.getElementById('paySubtotal').textContent      = `₱${order.subtotal.toLocaleString('en-PH')}`;
   document.getElementById('payDeliveryLabel').textContent = order.deliveryLabel || '—';
-  document.getElementById('payDelivery').textContent      = order.deliveryFee === 0 ? 'Free' : `₱${order.deliveryFee.toLocaleString('en-PH')}`;
+  document.getElementById('payDelivery').textContent      = `₱${order.deliveryFee.toLocaleString('en-PH')}`;
   document.getElementById('payTotal').textContent         = `₱${order.total.toLocaleString('en-PH')}`;
 
   if (order.discount > 0) {
@@ -58,7 +58,7 @@ function switchPanel(method) {
 
 function updateAmounts() {
   const amount = `₱${order.total.toLocaleString('en-PH')}`;
-  ['gcash', 'maya', 'bank', 'cod'].forEach(m => {
+  ['gcash', 'maya', 'bank', 'gotyme'].forEach(m => {
     const el = document.getElementById(`${m}Amount`);
     if (el) el.textContent = amount;
   });
@@ -68,10 +68,10 @@ function confirmPayment() {
   const method = document.querySelector('input[name="payMethod"]:checked')?.value || 'gcash';
 
   const methodLabels = {
-    gcash: 'GCash',
-    maya:  'Maya',
-    bank:  'Bank Transfer',
-    cod:   'Cash on Delivery',
+    gcash:  'GCash',
+    maya:   'Maya',
+    bank:   'Bank Transfer',
+    gotyme: 'GoTyme',
   };
 
   const updated = { ...order, paymentMethod: methodLabels[method] || method };

@@ -73,29 +73,26 @@
           <label class="pay-method-opt">
             <input type="radio" name="payMethod" value="gcash" checked>
             <div class="pay-method-card">
-              <span class="pay-method-icon">💙</span>
-              GCash
+              <svg class="pay-logo" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="32" rx="7" fill="#0061D5"/><text x="40" y="21" font-family="Arial,sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">GCash</text></svg>
             </div>
           </label>
           <label class="pay-method-opt">
             <input type="radio" name="payMethod" value="maya">
             <div class="pay-method-card">
-              <span class="pay-method-icon">💚</span>
-              Maya
+              <svg class="pay-logo" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="32" rx="7" fill="#04A96D"/><text x="40" y="21" font-family="Arial,sans-serif" font-size="13" font-weight="800" fill="white" text-anchor="middle">maya</text></svg>
             </div>
           </label>
           <label class="pay-method-opt">
             <input type="radio" name="payMethod" value="bank">
             <div class="pay-method-card">
-              <span class="pay-method-icon">🏦</span>
-              Bank
+              <svg class="pay-logo-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="#374151" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 10V21M19 10V21M10 10V21M14 10V21M12 3L2 10h20L12 3z"/></svg>
+              <span class="pay-logo-label">Bank</span>
             </div>
           </label>
           <label class="pay-method-opt">
-            <input type="radio" name="payMethod" value="cod">
+            <input type="radio" name="payMethod" value="gotyme">
             <div class="pay-method-card">
-              <span class="pay-method-icon">💵</span>
-              COD
+              <svg class="pay-logo" viewBox="0 0 80 32" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="32" rx="7" fill="#FF3131"/><text x="40" y="21" font-family="Arial,sans-serif" font-size="12" font-weight="800" fill="white" text-anchor="middle">GoTyme</text></svg>
             </div>
           </label>
         </div>
@@ -155,26 +152,17 @@
           <p class="pay-note">📸 Send a screenshot of your bank transfer confirmation to us via Messenger, Viber, or Telegram.</p>
         </div>
 
-        <!-- COD Panel -->
-        <div class="pay-detail-panel" id="panel-cod">
+        <!-- GoTyme Panel -->
+        <div class="pay-detail-panel" id="panel-gotyme">
           <div class="pay-amount-due">
-            <span>Amount to Prepare (Cash)</span>
-            <strong id="codAmount">₱0</strong>
+            <span>Amount to Pay via GoTyme</span>
+            <strong id="gotymeAmount">₱0</strong>
           </div>
-          <div class="pay-cod-info">
-            <div class="pay-cod-row">
-              <span>📦</span>
-              <span>Cash on Delivery is available for select areas. We will confirm availability when we process your order.</span>
-            </div>
-            <div class="pay-cod-row">
-              <span>💬</span>
-              <span>Please have the exact amount ready upon delivery.</span>
-            </div>
-            <div class="pay-cod-row">
-              <span>⚠️</span>
-              <span>COD orders may take 1–2 extra business days for verification before shipping.</span>
-            </div>
-          </div>
+          <table class="pay-account-table">
+            <tr><td>Account Name</td><td>BIOPEP PH</td></tr>
+            <tr><td>GoTyme Number</td><td>09XX XXX XXXX</td></tr>
+          </table>
+          <p class="pay-note">📸 Take a screenshot of your payment confirmation and send it to us via Messenger, Viber, or Telegram after clicking "I've Paid".</p>
         </div>
 
       </section>

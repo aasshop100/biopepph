@@ -2077,6 +2077,10 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
 .pay-method-opt input:checked + .pay-method-card { border-color: var(--pink-dark); background: var(--pink-light); color: var(--pink-deep); }
 .pay-method-card:hover { border-color: var(--pink); }
 .pay-method-icon { font-size: 1.4rem; }
+.pay-logo { width: 72px; height: 28px; display: block; }
+.pay-logo-icon { width: 24px; height: 24px; display: block; }
+.pay-logo-label { font-size: 0.7rem; font-weight: 700; color: var(--charcoal); margin-top: 2px; }
+.pay-method-opt input:checked + .pay-method-card .pay-logo-icon { stroke: var(--pink-dark); }
 
 /* Payment detail panels */
 .pay-detail-panel        { display: none; }
