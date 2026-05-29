@@ -55,12 +55,12 @@ function renderCartItems() {
 // ─── TOTALS ───────────────────────────────────
 function getDeliveryFee() {
   const checked = document.querySelector('input[name="coDelivery"]:checked');
-  return checked ? parseInt(checked.dataset.fee, 10) : 160;
+  return checked ? parseInt(checked.dataset.fee, 10) : 0;
 }
 
 function getDeliveryLabel() {
   const checked = document.querySelector('input[name="coDelivery"]:checked');
-  return checked ? checked.dataset.label : 'Via J&T Express';
+  return checked ? checked.dataset.label : 'Via Lalamove';
 }
 
 function getSubtotal() {
