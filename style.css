@@ -1033,6 +1033,13 @@ h2 span { color: var(--pink-dark); }
 .contact-card strong { display: block; font-size: 0.9rem; font-weight: 700; }
 .contact-card span   { font-size: 0.78rem; opacity: 0.8; }
 .contact-card svg    { flex-shrink: 0; width: 28px; height: 28px; }
+.contact-icon-wrap {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
 
 /* ================================================
    FOOTER
@@ -1053,6 +1060,9 @@ footer {
   .footer-inner { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; }
 }
 .footer-brand .logo { color: var(--white); margin-bottom: 10px; display: inline-block; }
+.footer-brand .logo-bio { color: var(--white); }
+.footer-brand .logo-pep { color: var(--pink); }
+.footer-brand .logo-ph  { color: var(--pink-light); }
 .footer-brand p { font-size: 0.8rem; max-width: 220px; line-height: 1.7; }
 .footer-links-col { display: flex; flex-direction: column; gap: 8px; }
 .footer-links-col strong {
