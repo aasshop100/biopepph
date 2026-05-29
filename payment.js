@@ -70,7 +70,7 @@ function confirmPayment() {
   const methodLabels = {
     gcash:  'GCash',
     maya:   'Maya',
-    bank:   'Bank Transfer',
+    bank:   'Maribank',
     gotyme: 'GoTyme',
   };
 
