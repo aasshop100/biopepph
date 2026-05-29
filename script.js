@@ -646,7 +646,7 @@ function filterCat(cat) {
   const tabs  = document.querySelectorAll('.cat-tab');
   const items = document.querySelectorAll('#productGrid .pgrid-item');
   tabs.forEach(t => t.classList.toggle('active', t.dataset.cat === cat));
-  items.forEach(i => i.classList.toggle('hidden', i.dataset.cat !== cat));
+  items.forEach(i => i.classList.toggle('hidden', cat !== 'all' && i.dataset.cat !== cat));
 }
 
 // ─── TOAST ────────────────────────────────────
