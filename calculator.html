@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peptide Dosage Calculator — BIOPEP PH</title>
+  <meta name="description" content="Calculate how many units to draw for your peptide dose. Enter your peptide amount, BAC water volume, and desired dose.">
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ── CALCULATOR SPECIFIC ── */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .calc-field { display: flex; flex-direction: column; gap: 6px; }
+    .calc-field label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .calc-field label span {
+      font-weight: 400;
+      color: var(--grey);
+      font-size: 0.72rem;
+    }
+    .calc-input-wrap {
+      display: flex;
+      align-items: center;
+      border: 2px solid var(--pink-border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+      background: var(--white);
+    }
+    .calc-input-wrap:focus-within { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(244,114,182,0.12); }
+    .calc-input-wrap input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--charcoal);
+      padding: 11px 12px;
+      background: transparent;
+      width: 100%;
+    }
+    .calc-unit {
+      padding: 0 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--grey);
+      white-space: nowrap;
+      border-left: 1.5px solid var(--pink-border);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      background: var(--pink-pale);
+    }
+    .btn-calculate {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 4px;
+    }
+    .btn-calculate:hover { opacity: 0.88; }
+    .btn-reset {
+      width: 100%;
+      padding: 11px;
+      background: transparent;
+      color: var(--grey);
+      border: 1.5px solid var(--pink-border);
+      border-radius: 14px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 8px;
+    }
+    .btn-reset:hover { border-color: var(--pink); color: var(--pink-dark); }
+
+    /* Result card */
+    .calc-result { display: none; }
+    .calc-result.show { display: block; }
+    .calc-result-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .calc-result-item {
+      background: var(--pink-pale);
+      border: 1.5px solid var(--pink-border);
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .calc-result-item.highlight {
+      background: linear-gradient(135deg, var(--pink-light), #fce7f3);
+      border-color: var(--pink);
+      grid-column: 1 / -1;
+    }
+    .calc-result-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--grey);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .calc-result-value {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--pink-dark);
+      line-height: 1;
+    }
+    .calc-result-value span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--grey);
+      margin-left: 4px;
+    }
+    .calc-result-sub {
+      font-size: 0.72rem;
+      color: var(--grey);
+      margin-top: 4px;
+    }
+
+    /* Syringe visual */
+    .syringe-wrap {
+      margin: 16px 0 8px;
+    }
+    .syringe-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    .syringe-track {
+      height: 28px;
+      background: var(--pink-pale);
+      border: 2px solid var(--pink-border);
+      border-radius: 100px;
+      overflow: hidden;
+      position: relative;
+    }
+    .syringe-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--pink), var(--pink-dark));
+      border-radius: 100px;
+      transition: width 0.5s ease;
+      min-width: 4px;
+    }
+    .syringe-markers {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4px;
+      padding: 0 2px;
+    }
+    .syringe-markers span {
+      font-size: 0.65rem;
+      color: var(--grey);
+    }
+
+    /* Info cards */
+    .calc-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .calc-info-card {
+      background: var(--pink-pale);
+      border: 1.5px solid var(--pink-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .calc-info-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+    .calc-info-text strong { display: block; font-size: 0.78rem; font-weight: 700; color: var(--charcoal); margin-bottom: 2px; }
+    .calc-info-text p { font-size: 0.72rem; color: var(--grey); line-height: 1.5; margin: 0; }
+
+    .calc-disclaimer {
+      font-size: 0.72rem;
+      color: var(--grey);
+      text-align: center;
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .calc-grid { grid-template-columns: 1fr; }
+      .calc-result-grid { grid-template-columns: 1fr 1fr; }
+      .calc-info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="inner-page">
+
+  <!-- ====== HEADER ====== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <span class="logo-bio">BIO</span><span class="logo-pep">PEP</span><span class="logo-ph">PH</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="inner-page-main">
+    <div class="inner-page-inner">
+
+      <div class="page-top-nav">
+        <a href="index.html" class="page-back-link">← Back to Shop</a>
+        <h1 class="page-title">Dosage Calculator</h1>
+      </div>
+
+      <!-- ====== INPUTS ====== -->
+      <section class="page-card">
+        <h2>Calculate Your Dose</h2>
+        <p style="font-size:0.82rem;color:var(--grey);margin-bottom:16px;margin-top:-6px;">Enter your peptide details below to find out how many units to draw.</p>
+
+        <div class="calc-grid">
+          <div class="calc-field">
+            <label for="peptideMg">Peptide in Vial <span>(total amount)</span></label>
+            <div class="calc-input-wrap">
+              <input type="number" id="peptideMg" placeholder="e.g. 5" min="0" step="0.1">
+              <span class="calc-unit">mg</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="bacWater">BAC Water Added <span>(to reconstitute)</span></label>
+            <div class="calc-input-wrap">
+              <input type="number" id="bacWater" placeholder="e.g. 2" min="0" step="0.1">
+              <span class="calc-unit">mL</span>
+            </div>
+          </div>
+          <div class="calc-field">
+            <label for="desiredDose">Desired Dose <span>(per injection)</span></label>
+            <div class="calc-input-wrap">
+              <input type="number" id="desiredDose" placeholder="e.g. 250" min="0" step="1">
+              <span class="calc-unit">mcg</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-calculate" onclick="calculate()">Calculate →</button>
+        <button class="btn-reset" onclick="resetCalc()">Reset</button>
+      </section>
+
+      <!-- ====== RESULT ====== -->
+      <section class="page-card calc-result" id="resultCard">
+        <h2>Your Result</h2>
+
+        <div class="calc-result-grid">
+          <div class="calc-result-item">
+            <div class="calc-result-label">Concentration</div>
+            <div class="calc-result-value" id="resConcentration">—<span>mcg/mL</span></div>
+          </div>
+          <div class="calc-result-item">
+            <div class="calc-result-label">Volume to Inject</div>
+            <div class="calc-result-value" id="resVolume">—<span>mL</span></div>
+          </div>
+          <div class="calc-result-item highlight">
+            <div class="calc-result-label">💉 Draw This Many Units</div>
+            <div class="calc-result-value" id="resUnits">—<span>units</span></div>
+            <div class="calc-result-sub" id="resUnitsSub"></div>
+          </div>
+        </div>
+
+        <div class="syringe-wrap">
+          <div class="syringe-label">Syringe fill level (100-unit scale)</div>
+          <div class="syringe-track">
+            <div class="syringe-fill" id="syringeFill" style="width:0%"></div>
+          </div>
+          <div class="syringe-markers">
+            <span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== HOW TO USE ====== -->
+      <section class="page-card">
+        <h2>How to Use</h2>
+        <div class="calc-info-grid">
+          <div class="calc-info-card">
+            <span class="calc-info-icon">💊</span>
+            <div class="calc-info-text">
+              <strong>Peptide in Vial</strong>
+              <p>The total amount of peptide in the lyophilized vial (e.g. 5mg or 10mg).</p>
+            </div>
+          </div>
+          <div class="calc-info-card">
+            <span class="calc-info-icon">💧</span>
+            <div class="calc-info-text">
+              <strong>BAC Water Added</strong>
+              <p>How much bacteriostatic water you injected into the vial to reconstitute it (e.g. 2mL).</p>
+            </div>
+          </div>
+          <div class="calc-info-card">
+            <span class="calc-info-icon">📏</span>
+            <div class="calc-info-text">
+              <strong>Desired Dose</strong>
+              <p>The dose you want per injection in micrograms (mcg). 1mg = 1000mcg.</p>
+            </div>
+          </div>
+          <div class="calc-info-card">
+            <span class="calc-info-icon">💉</span>
+            <div class="calc-info-text">
+              <strong>Units to Draw</strong>
+              <p>Based on a standard 100-unit insulin syringe. Draw to the unit number shown on the result.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== DISCLAIMER ====== -->
+      <section class="page-card">
+        <p class="calc-disclaimer">⚠️ This calculator is for <strong>research purposes only</strong>. Always follow your protocol guidelines. BIOPEP PH does not provide medical advice. Consult a qualified professional before use.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    function calculate() {
+      const peptideMg   = parseFloat(document.getElementById('peptideMg').value);
+      const bacWater    = parseFloat(document.getElementById('bacWater').value);
+      const desiredDose = parseFloat(document.getElementById('desiredDose').value);
+
+      if (isNaN(peptideMg) || isNaN(bacWater) || isNaN(desiredDose) ||
+          peptideMg <= 0 || bacWater <= 0 || desiredDose <= 0) {
+        alert('Please fill in all fields with valid numbers greater than 0.');
+        return;
+      }
+
+      const peptideMcg    = peptideMg * 1000;
+      const concentration = peptideMcg / bacWater;
+      const volumeMl      = desiredDose / concentration;
+      const units         = volumeMl * 100;
+
+      document.getElementById('resConcentration').innerHTML =
+        `${concentration.toLocaleString('en-PH', {maximumFractionDigits: 1})}<span>mcg/mL</span>`;
+      document.getElementById('resVolume').innerHTML =
+        `${volumeMl.toFixed(3)}<span>mL</span>`;
+      document.getElementById('resUnits').innerHTML =
+        `${units.toFixed(1)}<span>units</span>`;
+      document.getElementById('resUnitsSub').textContent =
+        units > 100
+          ? '⚠️ Exceeds 100 units — split dose or use a larger syringe.'
+          : units > 50
+          ? 'Use a 1mL (100-unit) insulin syringe.'
+          : 'A 0.5mL (50-unit) syringe works fine.';
+
+      const fillPct = Math.min((units / 100) * 100, 100);
+      document.getElementById('syringeFill').style.width = fillPct + '%';
+
+      const resultCard = document.getElementById('resultCard');
+      resultCard.classList.add('show');
+      resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function resetCalc() {
+      document.getElementById('peptideMg').value   = '';
+      document.getElementById('bacWater').value    = '';
+      document.getElementById('desiredDose').value = '';
+      document.getElementById('resultCard').classList.remove('show');
+      document.getElementById('syringeFill').style.width = '0%';
+    }
+
+    // Allow Enter key to calculate
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') calculate();
+    });
+  </script>
+</body>
+</html>
