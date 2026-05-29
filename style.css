@@ -871,6 +871,18 @@ h2 span { color: var(--pink-dark); }
   margin: 0 0 10px;
   flex: 1;
 }
+.pcard-variants {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--pink-dark);
+  background: var(--pink-light);
+  border: 1px solid var(--pink-border);
+  border-radius: 100px;
+  padding: 3px 10px;
+  display: inline-block;
+  margin: -4px 0 8px;
+  letter-spacing: 0.2px;
+}
 .pcard-foot {
   display: flex;
   align-items: center;
