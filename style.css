@@ -625,13 +625,11 @@ button { font-family: inherit; cursor: pointer; }
   background: var(--pink-pale);
   border-bottom: 1px solid var(--pink-border);
   padding: 12px 24px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
 }
 .trust-strip-inner {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  min-width: max-content;
   margin: 0 auto;
   max-width: 900px;
   justify-content: center;
