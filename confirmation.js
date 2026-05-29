@@ -82,7 +82,7 @@ function renderContactLinks(order) {
     `Payment Method: ${order.paymentMethod || '—'}`
   );
 
-  document.getElementById('confMessenger').href = MESSENGER_PAGE;
+  document.getElementById('confMessenger').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
   document.getElementById('confViber').href     = `viber://chat?number=${encodeURIComponent(VIBER_NUMBER)}&text=${msg}`;
   document.getElementById('confTelegram').href  = `https://t.me/${TELEGRAM_USER}?text=${msg}`;
 }
