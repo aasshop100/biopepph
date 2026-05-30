@@ -262,6 +262,7 @@
 
         <button class="btn-calculate" onclick="calculate()">Calculate →</button>
         <button class="btn-reset" onclick="resetCalc()">Reset</button>
+        <p id="calcError" style="display:none;margin-top:10px;font-size:0.82rem;color:#dc2626;font-weight:600;text-align:center;">⚠️ Please fill in all fields with valid numbers greater than 0.</p>
       </section>
 
       <!-- ====== RESULT ====== -->
@@ -285,12 +286,12 @@
         </div>
 
         <div class="syringe-wrap">
-          <div class="syringe-label">Syringe fill level (100-unit scale)</div>
+          <div class="syringe-label">Syringe fill level (50-unit scale)</div>
           <div class="syringe-track">
             <div class="syringe-fill" id="syringeFill" style="width:0%"></div>
           </div>
           <div class="syringe-markers">
-            <span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span>
+            <span>0</span><span>5</span><span>10</span><span>15</span><span>20</span><span>25</span><span>30</span><span>35</span><span>40</span><span>45</span><span>50</span>
           </div>
         </div>
       </section>
@@ -344,11 +345,13 @@
       const bacWater    = parseFloat(document.getElementById('bacWater').value);
       const desiredDose = parseFloat(document.getElementById('desiredDose').value);
 
+      const errEl = document.getElementById('calcError');
       if (isNaN(peptideMg) || isNaN(bacWater) || isNaN(desiredDose) ||
           peptideMg <= 0 || bacWater <= 0 || desiredDose <= 0) {
-        alert('Please fill in all fields with valid numbers greater than 0.');
+        errEl.style.display = 'block';
         return;
       }
+      errEl.style.display = 'none';
 
       const peptideMcg    = peptideMg * 1000;
       const concentration = peptideMcg / bacWater;
@@ -368,7 +371,7 @@
           ? 'Use a 1mL (100-unit) insulin syringe.'
           : 'A 0.5mL (50-unit) syringe works fine.';
 
-      const fillPct = Math.min((units / 100) * 100, 100);
+      const fillPct = Math.min((units / 50) * 100, 100);
       document.getElementById('syringeFill').style.width = fillPct + '%';
 
       const resultCard = document.getElementById('resultCard');
@@ -382,6 +385,7 @@
       document.getElementById('desiredDose').value = '';
       document.getElementById('resultCard').classList.remove('show');
       document.getElementById('syringeFill').style.width = '0%';
+      document.getElementById('calcError').style.display = 'none';
     }
 
     // Allow Enter key to calculate

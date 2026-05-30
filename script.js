@@ -557,24 +557,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('pmodalOverlay')?.addEventListener('click', closeModal);
   document.getElementById('pmodalAddBtn')?.addEventListener('click', addFromModal);
 
-  // Checkout panel
-  document.getElementById('checkoutBack')?.addEventListener('click', () => {
-    closeCheckout();
-    openCart();
-  });
-  document.getElementById('checkoutOverlay')?.addEventListener('click', closeCheckout);
-
-  // Delivery fee update triggers checkout total refresh
-  document.querySelectorAll('input[name="coDelivery"]').forEach(r => {
-    r.addEventListener('change', renderCheckoutSummary);
-  });
-
-  // ESC key closes everything
+  // ESC key closes modal or cart
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      if (document.getElementById('checkoutPanel')?.classList.contains('open')) {
-        closeCheckout(); openCart();
-      } else if (document.getElementById('pmodal')?.classList.contains('open')) {
+      if (document.getElementById('pmodal')?.classList.contains('open')) {
         closeModal();
       } else {
         closeCart();
