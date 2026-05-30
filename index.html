@@ -151,8 +151,7 @@
 <!-- ====== HERO ====== -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <canvas id="heroParticles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-  <div class="hero-content" style="position:relative;z-index:1;">
+  <div class="hero-content">
     <h1>Premium<br><em>Peptides</em></h1>
     <div class="hero-actions" style="justify-content:center;">
       <a href="#products" class="btn-primary">Shop Now →</a>
@@ -521,59 +520,79 @@
 
 <script src="script.js"></script>
 <script>
-(function() {
-  const canvas = document.getElementById('heroParticles');
-  if (!canvas) return;
+(function () {
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+  document.body.appendChild(canvas);
   const ctx = canvas.getContext('2d');
-  let W, H, particles;
+  let W, H;
 
-  const COLORS = ['rgba(244,114,182,', 'rgba(255,255,255,', 'rgba(236,72,153,'];
+  const COLORS = [
+    [255, 192, 210],
+    [255, 218, 228],
+    [255, 240, 245],
+    [244, 114, 182],
+    [253, 207, 232],
+  ];
 
   function resize() {
-    const hero = canvas.parentElement;
-    W = canvas.width  = hero.offsetWidth;
-    H = canvas.height = hero.offsetHeight;
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
   }
 
-  function makeParticle() {
+  function makePetal() {
+    const c = COLORS[Math.floor(Math.random() * COLORS.length)];
     return {
-      x:     Math.random() * W,
-      y:     H + Math.random() * H,
-      r:     Math.random() * 1.8 + 0.4,
-      speed: Math.random() * 0.4 + 0.15,
-      color: COLORS[Math.floor(Math.random() * COLORS.length)],
-      alpha: Math.random() * 0.5 + 0.1,
-      drift: (Math.random() - 0.5) * 0.3,
+      x:         Math.random() * W,
+      y:         -20 - Math.random() * H,
+      size:      Math.random() * 7 + 4,
+      speedY:    Math.random() * 0.8 + 0.3,
+      rotation:  Math.random() * Math.PI * 2,
+      rotSpeed:  (Math.random() - 0.5) * 0.03,
+      swing:     Math.random() * Math.PI * 2,
+      swingSpeed:Math.random() * 0.018 + 0.008,
+      swingAmp:  Math.random() * 1.2 + 0.4,
+      alpha:     Math.random() * 0.35 + 0.2,
+      r: c[0], g: c[1], b: c[2],
     };
   }
 
-  function init() {
-    resize();
-    particles = Array.from({ length: 55 }, () => {
-      const p = makeParticle();
-      p.y = Math.random() * H;
-      return p;
-    });
+  function drawPetal(p) {
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation);
+    ctx.globalAlpha = p.alpha;
+    ctx.fillStyle = `rgb(${p.r},${p.g},${p.b})`;
+    ctx.beginPath();
+    const s = p.size;
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo( s * 0.8, -s * 0.4,  s * 1.2,  s * 0.6,  0, s * 1.2);
+    ctx.bezierCurveTo(-s * 1.2,  s * 0.6, -s * 0.8, -s * 0.4,  0, 0);
+    ctx.fill();
+    ctx.restore();
   }
+
+  resize();
+  const petals = Array.from({ length: 28 }, () => {
+    const p = makePetal();
+    p.y = Math.random() * H;
+    return p;
+  });
 
   function draw() {
     ctx.clearRect(0, 0, W, H);
-    particles.forEach(p => {
-      p.y     -= p.speed;
-      p.x     += p.drift;
-      p.alpha += (Math.random() - 0.5) * 0.01;
-      p.alpha  = Math.max(0.05, Math.min(0.65, p.alpha));
-      if (p.y + p.r < 0) { Object.assign(p, makeParticle()); }
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.color + p.alpha + ')';
-      ctx.fill();
+    petals.forEach(p => {
+      p.swing     += p.swingSpeed;
+      p.x         += Math.sin(p.swing) * p.swingAmp;
+      p.y         += p.speedY;
+      p.rotation  += p.rotSpeed;
+      if (p.y > H + 30) Object.assign(p, makePetal());
+      drawPetal(p);
     });
     requestAnimationFrame(draw);
   }
 
-  window.addEventListener('resize', () => { resize(); });
-  init();
+  window.addEventListener('resize', resize);
   draw();
 })();
 </script>
