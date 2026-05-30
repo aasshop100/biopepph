@@ -2353,8 +2353,8 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   text-decoration: none;
 }
 .conf-contact-btn:hover           { transform: translateY(-2px); box-shadow: var(--shadow-md); }
-.conf-contact-btn.messenger       { background: #25D366; }
-.conf-contact-btn.messenger:hover { background: #1aad54; }
+.conf-contact-btn.whatsapp       { background: #25D366; }
+.conf-contact-btn.whatsapp:hover { background: #1aad54; }
 .conf-contact-btn.viber           { background: #7360F2; }
 .conf-contact-btn.viber:hover     { background: #5a4dd0; }
 .conf-contact-btn.telegram        { background: #0088cc; }

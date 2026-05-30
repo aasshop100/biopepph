@@ -511,18 +511,6 @@ function initMobileNav() {
   });
 }
 
-// ─── PROMO BAR ────────────────────────────────
-function initPromoBar() {
-  const bar = document.getElementById('promo-bar');
-  const btn = document.getElementById('closePromoBar');
-  if (!bar || !btn) return;
-  if (sessionStorage.getItem('promoClosed')) bar.style.display = 'none';
-  btn.addEventListener('click', () => {
-    bar.style.display = 'none';
-    sessionStorage.setItem('promoClosed', '1');
-  });
-}
-
 // ─── SMOOTH SCROLL ────────────────────────────
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(a => {
@@ -541,7 +529,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   initCategoryTabs();
   initMobileNav();
-  initPromoBar();
   initSmoothScroll();
 
   // Search
