@@ -151,7 +151,8 @@
 <!-- ====== HERO ====== -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-content">
+  <canvas id="heroParticles" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+  <div class="hero-content" style="position:relative;z-index:1;">
     <h1>Premium<br><em>Peptides</em></h1>
     <div class="hero-actions" style="justify-content:center;">
       <a href="#products" class="btn-primary">Shop Now →</a>
@@ -519,5 +520,62 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+(function() {
+  const canvas = document.getElementById('heroParticles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, particles;
+
+  const COLORS = ['rgba(244,114,182,', 'rgba(255,255,255,', 'rgba(236,72,153,'];
+
+  function resize() {
+    const hero = canvas.parentElement;
+    W = canvas.width  = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+
+  function makeParticle() {
+    return {
+      x:     Math.random() * W,
+      y:     H + Math.random() * H,
+      r:     Math.random() * 1.8 + 0.4,
+      speed: Math.random() * 0.4 + 0.15,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      alpha: Math.random() * 0.5 + 0.1,
+      drift: (Math.random() - 0.5) * 0.3,
+    };
+  }
+
+  function init() {
+    resize();
+    particles = Array.from({ length: 55 }, () => {
+      const p = makeParticle();
+      p.y = Math.random() * H;
+      return p;
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.y     -= p.speed;
+      p.x     += p.drift;
+      p.alpha += (Math.random() - 0.5) * 0.01;
+      p.alpha  = Math.max(0.05, Math.min(0.65, p.alpha));
+      if (p.y + p.r < 0) { Object.assign(p, makeParticle()); }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); });
+  init();
+  draw();
+})();
+</script>
 </body>
 </html>

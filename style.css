@@ -509,13 +509,13 @@ button { font-family: inherit; cursor: pointer; }
    HERO
    ================================================ */
 .hero {
-  min-height: 55vh;
+  min-height: 36vh;
   background: #1a0a12;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 60px 24px;
+  padding: 40px 24px;
   gap: 40px;
   max-width: 100%;
 }
@@ -2394,7 +2394,7 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   .logo-ph { font-size: 0.65rem; }
 
   /* Hero */
-  .hero { min-height: 45vh; padding: 44px 20px 36px; }
+  .hero { min-height: 30vh; padding: 32px 20px 28px; }
   .hero h1 { font-size: clamp(2.2rem, 10vw, 3rem); margin-bottom: 20px; }
   .hero-actions { gap: 10px; }
   .btn-primary, .btn-ghost { padding: 12px 22px; font-size: 0.88rem; }
