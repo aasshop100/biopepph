@@ -1800,7 +1800,8 @@ footer {
 .co-del-icon { font-size: 1.4rem; flex-shrink: 0; }
 .co-del-info { flex: 1; }
 .co-del-info strong { display: block; font-size: 0.85rem; font-weight: 700; color: var(--black); }
-.co-del-info span { font-size: 0.72rem; color: var(--grey); }
+.co-del-info span { font-size: 0.72rem; color: var(--grey); display: block; }
+.co-del-rates { font-size: 0.68rem !important; color: var(--grey); margin-top: 3px; line-height: 1.5; }
 .co-del-fee { font-size: 0.88rem; font-weight: 700; color: var(--pink-dark); flex-shrink: 0; }
 .co-del-soon { font-size: 0.72rem; font-weight: 700; color: var(--white); background: var(--grey); padding: 2px 8px; border-radius: 20px; flex-shrink: 0; }
 .co-delivery-opt--disabled { cursor: not-allowed; opacity: 0.5; pointer-events: none; }

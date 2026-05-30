@@ -69,7 +69,7 @@ function getDeliveryFee() {
 
 function getDeliveryLabel() {
   const checked = document.querySelector('input[name="coDelivery"]:checked');
-  return checked ? checked.dataset.label : 'Via Lalamove';
+  return checked ? checked.dataset.label : 'Via J&T Express';
 }
 
 function getSubtotal() {
