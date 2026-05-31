@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Tirzepatide Protocol | BIOPEP PH</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#fce7f3;font-family:'Inter',sans-serif;color:#1f2937;min-height:100vh}
+    a{text-decoration:none;color:inherit}
+
+    /* SAKURA */
+    #sakura{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:50}
+
+    /* NAVBAR */
+    .navbar{
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      background:rgba(26,10,16,.96);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,77,158,.2);
+      height:60px;display:flex;align-items:center;padding:0 18px;gap:12px;
+    }
+    .nav-logo{font-family:'Poppins',sans-serif;font-weight:800;font-size:1rem;color:#fff;white-space:nowrap}
+    .nav-logo .bio{color:#ff4d9e}.nav-logo .ph{color:rgba(255,255,255,.4);font-size:.8em}
+    .nav-center{flex:1;display:flex;justify-content:center}
+    .nav-proto{position:relative}
+    .nav-toggle{
+      display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;
+      font-family:'Inter',sans-serif;font-size:.8rem;font-weight:600;color:#ff4d9e;
+      padding:7px 13px;border-radius:8px;transition:background .2s;
+    }
+    .nav-toggle:hover{background:rgba(255,77,158,.12)}
+    .nav-toggle svg{width:12px;height:12px;transition:transform .2s;flex-shrink:0}
+    .nav-toggle.open svg{transform:rotate(180deg)}
+    .nav-dd{
+      position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);
+      min-width:176px;background:rgba(26,10,16,.98);backdrop-filter:blur(12px);
+      border:1px solid rgba(255,77,158,.2);border-radius:12px;overflow:hidden;
+      box-shadow:0 8px 32px rgba(0,0,0,.5);display:none;flex-direction:column;
+    }
+    .nav-dd.open{display:flex}
+    .nav-dd-item{
+      background:none;border:none;cursor:pointer;padding:10px 16px;text-align:left;
+      font-family:'Inter',sans-serif;font-size:.8rem;font-weight:500;color:rgba(255,255,255,.6);
+      transition:background .15s,color .15s;
+    }
+    .nav-dd-item:hover,.nav-dd-item.active{background:rgba(255,77,158,.1);color:#ff4d9e;font-weight:600}
+    .nav-back{
+      font-family:'Inter',sans-serif;font-size:.75rem;font-weight:600;
+      color:rgba(255,255,255,.4);padding:6px 10px;border-radius:7px;transition:color .2s,background .2s;white-space:nowrap;
+    }
+    .nav-back:hover{color:#ff4d9e;background:rgba(255,77,158,.1)}
+
+    /* PROTOCOL WRAPPER */
+    .proto{display:none;padding-top:60px;position:relative;z-index:1}
+    .proto.active{display:block}
+
+    /* ── DARK ZONE (hero + glance) ── */
+    .dark-zone{background:#2d0a1a;position:relative;overflow:hidden;padding-bottom:40px}
+
+    /* HERO */
+    .hero{
+      display:flex;flex-direction:column;align-items:center;
+      padding:32px 20px 0;text-align:center;position:relative;z-index:1;
+    }
+    .hero-img{
+      width:100%;max-width:340px;max-height:380px;object-fit:contain;
+      margin-bottom:24px;filter:drop-shadow(0 0 30px rgba(255,77,158,.25));
+    }
+    .hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:18px}
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:6px 14px;border-radius:20px;
+      font-size:.72rem;font-weight:600;
+      border:1px solid rgba(255,77,158,.4);color:rgba(255,255,255,.75);
+      background:rgba(255,77,158,.08);
+    }
+    .hero-badge svg{width:13px;height:13px;opacity:.7}
+    .hero-title{
+      font-family:'Poppins',sans-serif;font-weight:800;
+      font-size:1.9rem;color:#fff;line-height:1.15;margin-bottom:10px;
+    }
+    .hero-sub{font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:8px}
+    .hero-disc{font-size:.72rem;font-style:italic;color:rgba(255,77,158,.6)}
+
+    /* GLANCE */
+    .glance{padding:32px 20px 0;max-width:500px;margin:0 auto}
+    .glance-cat{font-size:.68rem;font-weight:700;color:#ff4d9e;text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:8px}
+    .glance-title{font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:800;color:#fff;text-align:center;margin-bottom:24px}
+    .glance-card{
+      background:rgba(255,255,255,.05);border:1px solid rgba(255,77,158,.2);
+      border-radius:16px;padding:20px;margin-bottom:14px;
+    }
+    .glance-card-title{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+    .glance-card-title svg{width:16px;height:16px;color:#ff4d9e}
+    .glance-item{display:flex;align-items:center;gap:9px;font-size:.84rem;color:rgba(255,255,255,.8);padding:5px 0}
+    .gdot{width:7px;height:7px;border-radius:50%;background:#ff4d9e;flex-shrink:0}
+
+    /* ── LIGHT ZONE ── */
+    .light-zone{background:#fce7f3;padding:0 16px 60px;max-width:500px;margin:0 auto}
+
+    /* SECTION CARD */
+    .scard{background:#fff;border-radius:20px;padding:22px;margin-top:18px;box-shadow:0 2px 16px rgba(236,72,153,.08)}
+
+    /* SECTION BADGE */
+    .sbadge{
+      display:inline-flex;align-items:center;gap:7px;
+      background:linear-gradient(135deg,#ec4899,#f472b6);
+      color:#fff;border-radius:20px;padding:5px 16px;
+      font-size:.74rem;font-weight:700;margin-bottom:16px;
+    }
+
+    /* STEPS */
+    .steps{display:flex;flex-direction:column;gap:12px}
+    .step{display:flex;gap:12px;align-items:flex-start}
+    .step-n{
+      width:28px;height:28px;min-width:28px;border-radius:50%;
+      background:linear-gradient(135deg,#ec4899,#f472b6);
+      color:#fff;display:flex;align-items:center;justify-content:center;
+      font-size:.74rem;font-weight:800;flex-shrink:0;margin-top:1px;
+    }
+    .step-t{font-size:.84rem;color:#374151;line-height:1.65;padding-top:4px}
+    .step-t strong{color:#ec4899}
+    .step-note{
+      margin-top:14px;background:#fef9c3;border:1px solid #fde68a;
+      border-radius:12px;padding:12px 14px;font-size:.79rem;color:#78350f;line-height:1.6;
+    }
+
+    /* DOSING TITLE (outside card) */
+    .dose-section-title{
+      text-align:center;margin-top:18px;margin-bottom:4px;
+      font-family:'Poppins',sans-serif;font-size:1.4rem;font-weight:800;color:#1f2937;
+    }
+    .dose-section-sub{text-align:center;font-size:.76rem;color:#ec4899;margin-bottom:16px;line-height:1.5}
+
+    /* DOSE CARDS (large, colored bg, stacked) */
+    .dose-cards{display:flex;flex-direction:column;gap:12px}
+    .dose-card{
+      border-radius:20px;padding:22px 20px 18px;text-align:center;position:relative;
+    }
+    .dose-card.mint{background:#d1fae5}
+    .dose-card.yellow{background:#fef9c3}
+    .dose-card.peach{background:#ffe4e6}
+    .dose-card.lavender{background:#ede9fe}
+    .dose-card.sky{background:#dbeafe}
+    .dose-phase{
+      display:inline-block;background:rgba(255,255,255,.75);
+      border-radius:20px;padding:3px 14px;font-size:.72rem;font-weight:600;color:#374151;
+      margin-bottom:8px;
+    }
+    .dose-week{font-size:.9rem;font-weight:700;color:#374151;margin-bottom:4px}
+    .dose-mg{
+      font-family:'Poppins',sans-serif;font-size:3rem;font-weight:800;
+      color:#ec4899;line-height:1;margin-bottom:8px;
+    }
+    .dose-divider{width:60px;height:2px;background:rgba(236,72,153,.3);margin:0 auto 10px}
+    .dose-units-label{font-size:.7rem;color:#6b7280;margin-bottom:3px}
+    .dose-units{font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:800;color:#ec4899}
+    .dose-foot{font-size:.76rem;color:#6b7280;font-style:italic;text-align:center;margin-top:12px;line-height:1.6}
+
+    /* INJECT */
+    .inject-label{font-size:.72rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+    .safe-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+    .safe-full{margin-top:8px}
+    .safe-chip{
+      background:#fdf2f8;border:1.5px solid rgba(236,72,153,.18);border-radius:12px;
+      padding:10px 8px;text-align:center;font-size:.78rem;font-weight:600;color:#1f2937;line-height:1.4;
+    }
+    .safe-chip small{display:block;font-size:.67rem;color:#6b7280;font-weight:400;margin-top:2px}
+    .tips{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+    .tip{display:flex;gap:10px;align-items:flex-start;font-size:.83rem;color:#374151;line-height:1.6}
+    .tip-n{
+      width:24px;height:24px;min-width:24px;border-radius:50%;
+      background:#fce7f3;color:#ec4899;
+      display:flex;align-items:center;justify-content:center;
+      font-size:.7rem;font-weight:800;flex-shrink:0;margin-top:1px;
+    }
+
+    /* SIDE EFFECTS */
+    .fx-label{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;margin-top:14px}
+    .fx-label.amber{color:#d97706}.fx-label.red{color:#dc2626}
+    .fx-item{display:flex;align-items:center;gap:8px;font-size:.83rem;color:#374151;padding:4px 0}
+    .fdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+    .fdot.amber{background:#f59e0b}.fdot.red{background:#ef4444}
+    .consult-box{background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:12px 14px;font-size:.79rem;color:#7f1d1d;line-height:1.65;margin-top:8px}
+
+    /* STORAGE */
+    .storage-list{display:flex;flex-direction:column;gap:11px}
+    .storage-item{display:flex;gap:10px;align-items:flex-start;font-size:.83rem;color:#374151;line-height:1.55}
+    .s-ico{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+
+    /* REMINDERS */
+    .reminders{
+      background:#fef9c3;border:1.5px solid #fde68a;border-radius:20px;
+      padding:18px 20px;margin-top:18px;
+    }
+    .rem-title{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:#92400e;margin-bottom:12px}
+    .rem-item{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:#78350f;line-height:1.55;padding:4px 0}
+    .r-ico{font-size:.95rem;flex-shrink:0;margin-top:1px}
+
+    /* DISCLAIMER */
+    .disclaimer{background:#fce7f3;border-radius:14px;padding:14px;font-size:.74rem;color:#6b7280;text-align:center;line-height:1.7;margin-top:14px}
+    .disclaimer strong{color:#1f2937}
+
+    /* TOPICAL ALERT */
+    .topical-alert{background:#fce7f3;border:1.5px solid rgba(236,72,153,.35);border-radius:12px;padding:10px 14px;font-size:.78rem;font-weight:700;color:#9d174d;margin-bottom:14px;text-align:center}
+
+    /* STORAGE LABELED CARDS */
+    .storage-section{display:flex;flex-direction:column;gap:14px}
+    .storage-lcard{background:#fff;border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(236,72,153,.07)}
+    .storage-lcard-title{font-size:.78rem;font-weight:800;color:#1f2937;margin-bottom:12px;padding-bottom:10px;border-bottom:1.5px solid #fce7f3}
+    .storage-lrow{display:flex;gap:9px;align-items:flex-start;font-size:.81rem;color:#374151;padding:4px 0;line-height:1.5}
+    .sl-ico{font-size:.95rem;flex-shrink:0;margin-top:1px}
+
+    /* REMINDER CARDS v2 */
+    .reminders-v2{background:#fce7f3;padding:20px 16px;margin-top:18px;max-width:500px;margin-left:auto;margin-right:auto}
+    .rem-v2-top{text-align:center;margin-bottom:16px}
+    .rem-v2-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#ec4899,#f472b6);color:#fff;border-radius:20px;padding:5px 16px;font-size:.72rem;font-weight:700;margin-bottom:10px}
+    .rem-v2-title{font-family:'Poppins',sans-serif;font-size:1.5rem;font-weight:800;color:#1f2937}
+    .rem-v2-cards{display:flex;flex-direction:column;gap:10px}
+    .rem-v2-card{background:#fff;border-radius:16px;padding:20px 16px;text-align:center;box-shadow:0 1px 8px rgba(236,72,153,.07)}
+    .rem-v2-icon{width:44px;height:44px;background:#fce7f3;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+    .rem-v2-icon svg{width:20px;height:20px;color:#ec4899}
+    .rem-v2-text{font-size:.84rem;color:#1f2937;line-height:1.55;font-weight:500}
+    .rem-v2-text.pink{color:#ec4899}
+
+    @media(max-width:480px){
+      .hero-title{font-size:1.6rem}
+      .dose-mg{font-size:2.4rem}
+      .safe-grid{grid-template-columns:1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+<canvas id="sakura"></canvas>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo"><span class="bio">BIO</span><span>PEP</span><span class="ph">PH</span></a>
+  <div class="nav-center">
+    <div class="nav-proto">
+      <button class="nav-toggle" id="navToggle" onclick="toggleDD()">
+        Protocols
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6,9 12,15 18,9"/></svg>
+      </button>
+      <div class="nav-dd" id="navDD">
+        <button class="nav-dd-item active" data-p="tirz"  onclick="go('tirz')">Tirzepatide 15mg</button>
+        <button class="nav-dd-item"        data-p="reta"  onclick="go('reta')">Retatrutide 15mg</button>
+        <button class="nav-dd-item"        data-p="kpv"   onclick="go('kpv')">KPV 10mg</button>
+        <button class="nav-dd-item"        data-p="snap8" onclick="go('snap8')">Snap-8 10mg</button>
+        <button class="nav-dd-item"        data-p="ghkcu" onclick="go('ghkcu')">GHK-Cu 50mg</button>
+        <button class="nav-dd-item"        data-p="nad"   onclick="go('nad')">NAD+ 100mg</button>
+      </div>
+    </div>
+  </div>
+  <a href="index.html" class="nav-back">← Shop</a>
+</nav>
+
+<!-- ════════════════ TIRZEPATIDE ════════════════ -->
+<div class="proto active" id="proto-tirz">
+  <div class="dark-zone">
+    <div class="hero">
+      <img src="images/hero-tirz.png" class="hero-img" alt="">
+      <div class="hero-badges">
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Research Grade</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Detailed Guide</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe Practices</span>
+      </div>
+      <h1 class="hero-title">Tirzepatide Protocol Guide</h1>
+      <p class="hero-sub">15mg Vial + 1.5mL BAC Water — Complete Dosing &amp; Injection Guide</p>
+      <p class="hero-disc">For research and educational purposes only</p>
+    </div>
+    <div class="glance">
+      <div class="glance-cat">Category: Weight Loss</div>
+      <div class="glance-title">Tirzepatide at a Glance</div>
+      <div class="glance-card">
+        <div class="glance-card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+          Common Uses
+        </div>
+        <div class="glance-item"><div class="gdot"></div>Weight management</div>
+        <div class="glance-item"><div class="gdot"></div>Appetite suppression</div>
+        <div class="glance-item"><div class="gdot"></div>Diabetes support</div>
+        <div class="glance-item"><div class="gdot"></div>Cravings reduction</div>
+        <div class="glance-item"><div class="gdot"></div>Metabolic health</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Common Effects
+        </div>
+        <div class="glance-item"><div class="gdot"></div>Reduced hunger</div>
+        <div class="glance-item"><div class="gdot"></div>Improved blood sugar</div>
+        <div class="glance-item"><div class="gdot"></div>Fat loss</div>
+        <div class="glance-item"><div class="gdot"></div>Slower digestion</div>
+        <div class="glance-item"><div class="gdot"></div>Improved insulin sensitivity</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="light-zone">
+    <div class="scard">
+      <div class="sbadge">🧪 Reconstitute</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Clean vial tops</strong> with alcohol pad</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Draw BAC water</strong> using the reconstitution syringe</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Slowly inject BAC water down the side wall</strong> (not directly on powder)</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Gently roll the vial between your hands — DO NOT SHAKE</strong></div></div>
+        <div class="step"><div class="step-n">5</div><div class="step-t">Let dissolve completely (solution should be clear)</div></div>
+        <div class="step"><div class="step-n">6</div><div class="step-t">Set aside and wait <strong>30 mins</strong> in room temp</div></div>
+        <div class="step"><div class="step-n">7</div><div class="step-t">After 30 mins you can get your first dose and <strong>refrigerate the rest</strong></div></div>
+      </div>
+      <div class="step-note">⚠️ Always check the vial for discoloration or particles before mixing.</div>
+    </div>
+
+    <div class="dose-section-title">Dosing Schedule</div>
+    <div class="dose-section-sub">Based on 15mg Vial + 1.5mL BAC Water Setup</div>
+    <div class="dose-cards">
+      <div class="dose-card mint">
+        <div class="dose-phase">Starter</div>
+        <div class="dose-week">Week 1–4</div>
+        <div class="dose-mg">2.5mg</div>
+        <div class="dose-divider"></div>
+        <div class="dose-units-label">Units on Syringe</div>
+        <div class="dose-units">25 UNITS</div>
+      </div>
+      <div class="dose-card yellow">
+        <div class="dose-phase">Intermediate</div>
+        <div class="dose-week">Week 5–8</div>
+        <div class="dose-mg">5mg</div>
+        <div class="dose-divider"></div>
+        <div class="dose-units-label">Units on Syringe</div>
+        <div class="dose-units">50 UNITS</div>
+      </div>
+      <div class="dose-card peach">
+        <div class="dose-phase">Advanced</div>
+        <div class="dose-week">Week 9–12</div>
+        <div class="dose-mg">7.5mg</div>
+        <div class="dose-divider"></div>
+        <div class="dose-units-label">Units on Syringe</div>
+        <div class="dose-units">75 UNITS</div>
+      </div>
+    </div>
+    <p class="dose-foot">Start low, go slow. Always listen to your body.<br>After week 12, consult your protocol advisor for maintenance dosing.</p>
+
+    <div class="scard">
+      <div class="sbadge">💉 How to Inject (Subcutaneous)</div>
+      <div class="inject-label">Safe Areas</div>
+      <div class="safe-grid">
+        <div class="safe-chip">🫃 Belly<small>2 in. from belly button</small></div>
+        <div class="safe-chip">🦵 Outer Thigh<small>Front or outer area</small></div>
+      </div>
+      <div class="safe-chip">💪 Upper Arm<small>Back of upper arm</small></div>
+      <div class="tips">
+        <div class="tip"><div class="tip-n">1</div>Clean skin with alcohol</div>
+        <div class="tip"><div class="tip-n">2</div><strong>Pinch fatty area</strong></div>
+        <div class="tip"><div class="tip-n">3</div><strong>Insert needle at 45° angle</strong></div>
+        <div class="tip"><div class="tip-n">4</div><strong>Inject slowly</strong></div>
+        <div class="tip"><div class="tip-n">5</div>Rotate sites weekly (don't repeat same exact spot)</div>
+        <div class="tip"><div class="tip-n">6</div><strong>Dispose of needle safely</strong> in sharps container</div>
+      </div>
+    </div>
+
+    <div class="scard">
+      <div class="sbadge">⚠️ Possible Side Effects</div>
+      <div class="fx-label amber">Common (Mild)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Nausea</div>
+      <div class="fx-item"><div class="fdot amber"></div>Diarrhea</div>
+      <div class="fx-item"><div class="fdot amber"></div>Decreased appetite</div>
+      <div class="fx-item"><div class="fdot amber"></div>Vomiting</div>
+      <div class="fx-item"><div class="fdot amber"></div>Constipation</div>
+      <div class="fx-item"><div class="fdot amber"></div>Indigestion</div>
+      <div class="fx-item"><div class="fdot amber"></div>Fatigue</div>
+      <div class="fx-label amber">Less Common</div>
+      <div class="fx-item"><div class="fdot amber"></div>Dizziness</div>
+      <div class="fx-item"><div class="fdot amber"></div>Headache</div>
+      <div class="fx-item"><div class="fdot amber"></div>Abdominal pain</div>
+      <div class="fx-item"><div class="fdot amber"></div>Injection site reactions (redness, swelling)</div>
+      <div class="fx-label red">When to Consult</div>
+      <div class="consult-box">If symptoms persist or worsen, please consult your doctor.<br><br><strong>Important note:</strong> Start low, go slow to minimize side effects. Most side effects improve over time as your body adjusts.</div>
+    </div>
+
+    <div class="scard">
+      <div class="sbadge">🌡️ Storage Guide</div>
+      <div class="storage-section">
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">❄️ Mixed Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🌡️</div><div>Store mixed vial in the refrigerator (2–8°C)</div></div>
+          <div class="storage-lrow"><div class="sl-ico">💡</div><div>Keep away from light</div></div>
+          <div class="storage-lrow"><div class="sl-ico">🚫</div><div>Do NOT freeze</div></div>
+          <div class="storage-lrow"><div class="sl-ico">📅</div><div>Use within 30 days after mixing</div></div>
+        </div>
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">📦 Unmixed Powder Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🏠</div><div>Store in a cool, dry place away from direct sunlight</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reminders-v2">
+      <div class="rem-v2-top">
+        <div class="rem-v2-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Important
+        </div>
+        <div class="rem-v2-title">Important Reminders</div>
+      </div>
+      <div class="rem-v2-cards">
+        <div class="rem-v2-card">
+          <div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg></div>
+          <div class="rem-v2-text">Start low, go slow</div>
+        </div>
+        <div class="rem-v2-card">
+          <div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-2.24 5-5 5S7 9.76 7 7a5 5 0 0 1 5-5z"/><path d="M12 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/></svg></div>
+          <div class="rem-v2-text">Stay hydrated</div>
+        </div>
+        <div class="rem-v2-card">
+          <div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="rem-v2-text pink">If symptoms persist or worsen, please consult your doctor</div>
+        </div>
+        <div class="rem-v2-card">
+          <div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <div class="rem-v2-text pink">For educational purposes only — not suitable for medical advice</div>
+        </div>
+        <div class="rem-v2-card">
+          <div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg></div>
+          <div class="rem-v2-text">Results vary per person. Always listen to your body.</div>
+        </div>
+      </div>
+    </div>
+    <div class="disclaimer"><strong>FOR EDUCATIONAL PURPOSES ONLY — NOT SUITABLE FOR MEDICAL ADVICE.</strong><br>This guide is for research purposes only. BIOPEP PH does not provide medical advice. Consult a qualified healthcare professional before use.</div>
+  </div>
+</div>
+
+<!-- ════════════════ RETATRUTIDE ════════════════ -->
+<div class="proto" id="proto-reta">
+  <div class="dark-zone">
+    <div class="hero">
+      <img src="images/hero-girl.png" class="hero-img" alt="">
+      <div class="hero-badges">
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Research Grade</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Detailed Guide</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe Practices</span>
+      </div>
+      <h1 class="hero-title">Retatrutide Protocol Guide</h1>
+      <p class="hero-sub">15mg Vial + 1.5mL BAC Water — Complete Dosing &amp; Injection Guide</p>
+      <p class="hero-disc">For research and educational purposes only</p>
+    </div>
+    <div class="glance">
+      <div class="glance-cat">Category: Weight Loss</div>
+      <div class="glance-title">Retatrutide at a Glance</div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>Common Uses</div>
+        <div class="glance-item"><div class="gdot"></div>Weight loss</div>
+        <div class="glance-item"><div class="gdot"></div>Fat loss</div>
+        <div class="glance-item"><div class="gdot"></div>Appetite suppression</div>
+        <div class="glance-item"><div class="gdot"></div>Blood glucose regulation</div>
+        <div class="glance-item"><div class="gdot"></div>Metabolic health</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Common Effects</div>
+        <div class="glance-item"><div class="gdot"></div>Reduced hunger</div>
+        <div class="glance-item"><div class="gdot"></div>Fat loss acceleration</div>
+        <div class="glance-item"><div class="gdot"></div>Improved blood sugar</div>
+        <div class="glance-item"><div class="gdot"></div>Slower digestion</div>
+        <div class="glance-item"><div class="gdot"></div>Improved insulin sensitivity</div>
+      </div>
+    </div>
+  </div>
+  <div class="light-zone">
+    <div class="scard">
+      <div class="sbadge">🧪 Reconstitute</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Clean vial tops</strong> with alcohol pad</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Draw BAC water</strong> using the reconstitution syringe</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Slowly inject BAC water down the side wall</strong> (not directly on powder)</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Gently roll the vial between your hands — DO NOT SHAKE</strong></div></div>
+        <div class="step"><div class="step-n">5</div><div class="step-t">Set aside and wait <strong>30 mins</strong> in room temp</div></div>
+        <div class="step"><div class="step-n">6</div><div class="step-t">After 30 mins get your first dose and <strong>refrigerate the rest</strong></div></div>
+      </div>
+      <div class="step-note">⚠️ Always check the vial for discoloration or particles before mixing.</div>
+    </div>
+    <div class="dose-section-title">Dosing Schedule</div>
+    <div class="dose-section-sub">Based on 15mg Vial + 1.5mL BAC Water Setup</div>
+    <div class="dose-cards">
+      <div class="dose-card mint"><div class="dose-phase">Starter</div><div class="dose-week">Week 1–2</div><div class="dose-mg">1.5mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe</div><div class="dose-units">15 UNITS</div></div>
+      <div class="dose-card yellow"><div class="dose-phase">Build Up</div><div class="dose-week">Week 3–4</div><div class="dose-mg">2mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe</div><div class="dose-units">20 UNITS</div></div>
+      <div class="dose-card peach"><div class="dose-phase">Intermediate</div><div class="dose-week">Week 5–6</div><div class="dose-mg">4mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe</div><div class="dose-units">40 UNITS</div></div>
+      <div class="dose-card lavender"><div class="dose-phase">Advanced</div><div class="dose-week">Week 7–8</div><div class="dose-mg">6mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe</div><div class="dose-units">60 UNITS</div></div>
+      <div class="dose-card sky"><div class="dose-phase">Intensive</div><div class="dose-week">Week 9+</div><div class="dose-mg">8mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe</div><div class="dose-units">80 UNITS</div></div>
+    </div>
+    <p class="dose-foot">⚠️ Start low, go slow. After week 12, consult your protocol advisor for maintenance dosing.</p>
+    <div class="scard">
+      <div class="sbadge">💉 How to Inject (Subcutaneous)</div>
+      <div class="inject-label">Safe Areas</div>
+      <div class="safe-grid"><div class="safe-chip">🫃 Belly<small>2 in. from belly button</small></div><div class="safe-chip">🦵 Outer Thigh<small>Front or outer area</small></div></div>
+      <div class="safe-chip">💪 Upper Arm<small>Back of upper arm</small></div>
+      <div class="tips">
+        <div class="tip"><div class="tip-n">1</div>Clean skin with alcohol pad and let dry</div>
+        <div class="tip"><div class="tip-n">2</div><strong>Pinch fatty area</strong> at injection site</div>
+        <div class="tip"><div class="tip-n">3</div><strong>Insert needle at 45° angle</strong></div>
+        <div class="tip"><div class="tip-n">4</div><strong>Inject slowly</strong></div>
+        <div class="tip"><div class="tip-n">5</div>Remove needle, press gently — do not rub</div>
+        <div class="tip"><div class="tip-n">6</div><strong>Dispose of needle safely</strong> in sharps container</div>
+        <div class="tip"><div class="tip-n">7</div>Rotate sites weekly</div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">⚠️ Possible Side Effects</div>
+      <div class="fx-label amber">Common (Mild)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Nausea</div>
+      <div class="fx-item"><div class="fdot amber"></div>Decreased appetite</div>
+      <div class="fx-item"><div class="fdot amber"></div>Indigestion</div>
+      <div class="fx-item"><div class="fdot amber"></div>Constipation</div>
+      <div class="fx-item"><div class="fdot amber"></div>Dizziness</div>
+      <div class="fx-item"><div class="fdot amber"></div>Fatigue</div>
+      <div class="fx-label red">When to Consult</div>
+      <div class="consult-box">If symptoms persist or worsen, please consult your doctor.<br><br>Start low, go slow. Most side effects improve over time.</div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">🌡️ Storage</div>
+      <div class="storage-list">
+        <div class="storage-item"><div class="s-ico">❄️</div><div><strong>Mixed Solution:</strong> Refrigerate at 2–8°C. Use within 4–6 weeks.</div></div>
+        <div class="storage-item"><div class="s-ico">🚫</div><div><strong>Do NOT freeze</strong> the liquid solution.</div></div>
+        <div class="storage-item"><div class="s-ico">📦</div><div><strong>Unmixed:</strong> Cool, dry place away from light. Stable 2–3 years.</div></div>
+      </div>
+    </div>
+    <div class="reminders">
+      <div class="rem-title">⚡ Important Reminders</div>
+      <div class="rem-item"><div class="r-ico">📅</div>Inject once weekly — same day each week recommended</div>
+      <div class="rem-item"><div class="r-ico">🔄</div>Rotate injection sites weekly</div>
+      <div class="rem-item"><div class="r-ico">🩺</div>After week 12, consult your protocol advisor</div>
+    </div>
+    <div class="disclaimer"><strong>FOR EDUCATIONAL PURPOSES ONLY — NOT SUITABLE FOR MEDICAL ADVICE.</strong><br>This guide is for research purposes only. BIOPEP PH does not provide medical advice.</div>
+  </div>
+</div>
+
+<!-- ════════════════ KPV ════════════════ -->
+<div class="proto" id="proto-kpv">
+  <div class="dark-zone">
+    <div class="hero">
+      <img src="images/hero-kpv.png" class="hero-img" alt="">
+      <div class="hero-badges">
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Research Grade</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Detailed Guide</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe Practices</span>
+      </div>
+      <h1 class="hero-title">KPV Protocol Guide</h1>
+      <p class="hero-sub">10mg Vial + 2mL BAC Water — Complete Dosing &amp; Injection Guide</p>
+      <p class="hero-disc">For research and educational purposes only</p>
+    </div>
+    <div class="glance">
+      <div class="glance-cat">Category: Inflammation / Gut</div>
+      <div class="glance-title">KPV at a Glance</div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>Common Uses</div>
+        <div class="glance-item"><div class="gdot"></div>Gut health</div>
+        <div class="glance-item"><div class="gdot"></div>Inflammation support</div>
+        <div class="glance-item"><div class="gdot"></div>Skin support</div>
+        <div class="glance-item"><div class="gdot"></div>Immune support</div>
+        <div class="glance-item"><div class="gdot"></div>Recovery</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Common Effects</div>
+        <div class="glance-item"><div class="gdot"></div>Reduced inflammation</div>
+        <div class="glance-item"><div class="gdot"></div>Gut support</div>
+        <div class="glance-item"><div class="gdot"></div>Skin calming</div>
+        <div class="glance-item"><div class="gdot"></div>Recovery support</div>
+        <div class="glance-item"><div class="gdot"></div>Immune modulation</div>
+      </div>
+    </div>
+  </div>
+  <div class="light-zone">
+    <div class="scard">
+      <div class="sbadge">🧪 Reconstitute</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Clean vial tops</strong> with alcohol pad</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Draw 2mL BAC water</strong> using the reconstitution syringe</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Slowly inject BAC water down the side wall</strong> (not directly on powder)</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Gently roll the vial between your hands — DO NOT SHAKE</strong></div></div>
+        <div class="step"><div class="step-n">5</div><div class="step-t">Let dissolve completely (solution should be clear)</div></div>
+        <div class="step"><div class="step-n">6</div><div class="step-t">Set aside and wait <strong>30 mins</strong> in room temp</div></div>
+        <div class="step"><div class="step-n">7</div><div class="step-t">After 30 mins you can get your first dose and <strong>refrigerate the rest</strong></div></div>
+      </div>
+      <div class="step-note">⚠️ Always check the vial for discoloration or particles before mixing.</div>
+    </div>
+    <div class="dose-section-title">Dosing Schedule</div>
+    <div class="dose-section-sub">Based on 10mg Vial + 2mL BAC Water Setup | Daily for 5 Days, 2 Days Off</div>
+    <div class="dose-cards">
+      <div class="dose-card mint"><div class="dose-phase">Phase 1</div><div class="dose-week">Week 1–2</div><div class="dose-mg">200mcg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe · Daily 5 on 2 off</div><div class="dose-units">4 UNITS</div></div>
+      <div class="dose-card yellow"><div class="dose-phase">Phase 2</div><div class="dose-week">Week 3–4</div><div class="dose-mg">300mcg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe · Daily 5 on 2 off</div><div class="dose-units">6 UNITS</div></div>
+      <div class="dose-card peach"><div class="dose-phase">Phase 3</div><div class="dose-week">Week 5–6</div><div class="dose-mg">400mcg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe · Daily 5 on 2 off</div><div class="dose-units">8 UNITS</div></div>
+      <div class="dose-card lavender"><div class="dose-phase">Phase 4</div><div class="dose-week">Week 7–8</div><div class="dose-mg">500mcg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe · Daily 5 on 2 off</div><div class="dose-units">10 UNITS</div></div>
+    </div>
+    <p class="dose-foot">Inject daily for 5 consecutive days, then take 2 days off.<br>Best taken in the morning on an empty stomach.<br>Start low, go slow. Always listen to your body.<br>After week 8, consult your protocol advisor for maintenance or continued dosing.</p>
+    <div class="scard">
+      <div class="sbadge">💉 How to Inject (Subcutaneous)</div>
+      <div class="inject-label">Safe Areas</div>
+      <div class="safe-grid"><div class="safe-chip">🫃 Belly<small>2 in. from belly button</small></div><div class="safe-chip">🦵 Outer Thigh<small>Front or outer area</small></div></div>
+      <div class="safe-chip">💪 Upper Arm<small>Back of upper arm</small></div>
+      <div class="tips">
+        <div class="tip"><div class="tip-n">1</div>Clean skin with alcohol</div>
+        <div class="tip"><div class="tip-n">2</div><strong>Pinch fatty area</strong></div>
+        <div class="tip"><div class="tip-n">3</div><strong>Insert needle at 45° angle</strong></div>
+        <div class="tip"><div class="tip-n">4</div><strong>Inject slowly</strong></div>
+        <div class="tip"><div class="tip-n">5</div>Rotate sites weekly (don't repeat same exact spot)</div>
+        <div class="tip"><div class="tip-n">6</div><strong>Dispose of needle safely</strong> in sharps container</div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">⚠️ Possible Side Effects</div>
+      <div class="fx-label amber">Common (Mild)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Slight nausea</div>
+      <div class="fx-item"><div class="fdot amber"></div>Headache</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild fatigue</div>
+      <div class="fx-item"><div class="fdot amber"></div>Injection site reactions (redness, itching, swelling)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild stomach discomfort</div>
+      <div class="fx-label amber">Less Common</div>
+      <div class="fx-item"><div class="fdot amber"></div>Dizziness</div>
+      <div class="fx-item"><div class="fdot amber"></div>Changes in appetite</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild skin rash</div>
+      <div class="fx-item"><div class="fdot amber"></div>Warm flushing sensation</div>
+      <div class="fx-label red">When to Consult</div>
+      <div class="consult-box">If symptoms persist or worsen, please consult your doctor.<br><br><strong>Important note:</strong> Start low, go slow to minimize side effects. Most side effects improve over time as your body adjusts.</div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">🌡️ Storage Guide</div>
+      <div class="storage-section">
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">❄️ Mixed Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🌡️</div><div>Store mixed vial in the refrigerator (2–8°C)</div></div>
+          <div class="storage-lrow"><div class="sl-ico">💡</div><div>Keep away from light</div></div>
+          <div class="storage-lrow"><div class="sl-ico">🚫</div><div>Do NOT freeze</div></div>
+          <div class="storage-lrow"><div class="sl-ico">📅</div><div>Use within 30 days after mixing</div></div>
+        </div>
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">📦 Unmixed Powder Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🏠</div><div>Store in a cool, dry place away from direct sunlight</div></div>
+          <div class="storage-lrow"><div class="sl-ico">⚠️</div><div>Always check the vial for discoloration or particles before mixing</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reminders-v2">
+      <div class="rem-v2-top">
+        <div class="rem-v2-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Important</div>
+        <div class="rem-v2-title">Important Reminders</div>
+      </div>
+      <div class="rem-v2-cards">
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg></div><div class="rem-v2-text">Start low, go slow</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="rem-v2-text">Inject daily for 5 days, rest 2 days</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10M4.93 4.93l7.07 7.07"/></svg></div><div class="rem-v2-text">Best taken in the morning</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-2.24 5-5 5S7 9.76 7 7a5 5 0 0 1 5-5z"/><path d="M12 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/></svg></div><div class="rem-v2-text">Stay hydrated</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="rem-v2-text pink">If symptoms persist or worsen, please consult your doctor</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rem-v2-text pink">For educational purposes only — not suitable for medical advice</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg></div><div class="rem-v2-text">Results vary per person. Always listen to your body.</div></div>
+      </div>
+    </div>
+    <div class="disclaimer"><strong>FOR EDUCATIONAL PURPOSES ONLY — NOT SUITABLE FOR MEDICAL ADVICE.</strong><br>This guide is for research purposes only. BIOPEP PH does not provide medical advice. Consult a qualified healthcare professional before use.</div>
+  </div>
+</div>
+
+<!-- ════════════════ SNAP-8 ════════════════ -->
+<div class="proto" id="proto-snap8">
+  <div class="dark-zone">
+    <div class="hero">
+      <img src="images/hero-snap8.png" class="hero-img" alt="">
+      <div class="hero-badges">
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Research Grade</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Detailed Guide</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe Practices</span>
+      </div>
+      <h1 class="hero-title">Snap-8 Protocol Guide</h1>
+      <p class="hero-sub">10mg Vial + 2mL BAC Water — Topical Anti-Aging &amp; Wrinkle Reduction Guide</p>
+      <p class="hero-disc">For research and educational purposes only</p>
+    </div>
+    <div class="glance">
+      <div class="glance-cat">Category: Cosmetic</div>
+      <div class="glance-title">Snap-8 at a Glance</div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>Common Uses</div>
+        <div class="glance-item"><div class="gdot"></div>Wrinkle support</div>
+        <div class="glance-item"><div class="gdot"></div>Anti-aging</div>
+        <div class="glance-item"><div class="gdot"></div>Skin smoothing</div>
+        <div class="glance-item"><div class="gdot"></div>Cosmetic rejuvenation</div>
+        <div class="glance-item"><div class="gdot"></div>Expression line reduction</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Common Effects</div>
+        <div class="glance-item"><div class="gdot"></div>Smoother skin</div>
+        <div class="glance-item"><div class="gdot"></div>Reduced fine lines</div>
+        <div class="glance-item"><div class="gdot"></div>Anti-aging appearance</div>
+        <div class="glance-item"><div class="gdot"></div>Skin softening</div>
+        <div class="glance-item"><div class="gdot"></div>Cosmetic support</div>
+      </div>
+    </div>
+  </div>
+  <div class="light-zone">
+    <div class="scard">
+      <div class="sbadge">🧪 Reconstitute</div>
+      <div class="topical-alert">🚫 TOPICAL APPLICATION ONLY — NOT FOR INJECTION</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Clean vial tops</strong> with alcohol pad</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Draw 2mL BAC water</strong> using the reconstitution syringe</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Slowly inject BAC water down the side wall</strong> (not directly on powder)</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Gently roll the vial between your hands — DO NOT SHAKE</strong></div></div>
+        <div class="step"><div class="step-n">5</div><div class="step-t">Let dissolve completely (solution should be clear)</div></div>
+        <div class="step"><div class="step-n">6</div><div class="step-t">Set aside and wait <strong>30 mins</strong> in room temp</div></div>
+        <div class="step"><div class="step-n">7</div><div class="step-t">After mixing, your solution is ready — <strong>10mg in 2mL = 5,000mcg/mL</strong></div></div>
+      </div>
+      <div class="step-note">Concentration: 10mg in 2mL = 5,000mcg per mL. This solution can be mixed into your skincare base (serum/cream) or applied directly as drops to target areas.</div>
+    </div>
+    <div class="dose-section-title">Application Schedule</div>
+    <div class="dose-section-sub">Based on 10mg Vial + 2mL BAC Water Setup | Topical Application Only</div>
+    <div class="dose-cards">
+      <div class="dose-card mint"><div class="dose-phase">Phase 1</div><div class="dose-week">Week 1–2</div><div class="dose-mg" style="font-size:2.2rem">2–3</div><div class="dose-divider"></div><div class="dose-units-label">drops · Once daily (evening)</div><div class="dose-units">Start Low</div></div>
+      <div class="dose-card yellow"><div class="dose-phase">Phase 2</div><div class="dose-week">Week 3–4</div><div class="dose-mg" style="font-size:2.2rem">3–5</div><div class="dose-divider"></div><div class="dose-units-label">drops · Twice daily</div><div class="dose-units">Build Up</div></div>
+      <div class="dose-card peach"><div class="dose-phase">Phase 3</div><div class="dose-week">Week 5–8</div><div class="dose-mg" style="font-size:2.2rem">5–7</div><div class="dose-divider"></div><div class="dose-units-label">drops · Twice daily</div><div class="dose-units">Standard</div></div>
+      <div class="dose-card lavender"><div class="dose-phase">Phase 4</div><div class="dose-week">Week 9+</div><div class="dose-mg" style="font-size:2.2rem">7–10</div><div class="dose-divider"></div><div class="dose-units-label">drops · Twice daily</div><div class="dose-units">Intensive</div></div>
+    </div>
+    <p class="dose-foot">Morning: Apply to clean, dry skin before moisturizer and sunscreen.<br>Evening: Apply after cleansing, before night cream — ideal for skin repair.<br>Pat gently into target areas — do not rub vigorously.<br>Visible results typically appear after 4–8 weeks of consistent use.<br>Start low, go slow. Always listen to your body. Patch test before full application.</p>
+    <div class="scard">
+      <div class="sbadge">✨ How to Apply (Topical)</div>
+      <div class="inject-label">Target Areas</div>
+      <div class="steps" style="margin-bottom:14px">
+        <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Forehead</strong> — Horizontal worry lines</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Between Eyebrows</strong> — Vertical frown lines / '11' lines</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Around Eyes</strong> — Crow's feet</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Around Mouth</strong> — Smile lines / nasolabial folds</div></div>
+      </div>
+      <div class="inject-label">Application Steps</div>
+      <div class="tips">
+        <div class="tip"><div class="tip-n">1</div>Cleanse and dry your face completely before application</div>
+        <div class="tip"><div class="tip-n">2</div>Apply <strong>2–10 drops (depending on your phase)</strong> to your fingertips</div>
+        <div class="tip"><div class="tip-n">3</div><strong>Gently pat and press</strong> into targeted wrinkle areas — do not rub vigorously</div>
+        <div class="tip"><div class="tip-n">4</div><strong>Allow to absorb for 1–2 minutes</strong> before applying other products</div>
+        <div class="tip"><div class="tip-n">5</div>Follow with moisturizer and sunscreen (morning) or night cream (evening)</div>
+        <div class="tip"><div class="tip-n">6</div>Always perform a patch test on a small area before full application</div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">⚠️ Possible Side Effects</div>
+      <div class="fx-label amber">Common (Mild)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild tingling sensation upon application (normal, usually fades within minutes)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Temporary redness at application site</div>
+      <div class="fx-item"><div class="fdot amber"></div>Skin dryness (especially at higher concentrations)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Slight warmth or flushing feeling</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild tightness after application</div>
+      <div class="fx-label amber">Less Common</div>
+      <div class="fx-item"><div class="fdot amber"></div>Contact irritation or itching</div>
+      <div class="fx-item"><div class="fdot amber"></div>Skin sensitivity or reactive skin</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild peeling (rare)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Uneven skin texture in treated areas</div>
+      <div class="step-note" style="margin-top:12px"><strong>Patch Test Recommended:</strong> Apply a small amount to a discreet area (behind the ear or inner forearm), cover, and leave for 24 hours. If no redness, itching, or irritation occurs, the formulation is likely safe for broader application.</div>
+      <div class="fx-label red">When to Consult</div>
+      <div class="consult-box">If symptoms persist or worsen, please consult your doctor or dermatologist.<br><br>Start low, go slow to minimize side effects. Most side effects improve over time as your skin adjusts. Always follow with a good moisturizer. Reduce frequency or concentration if irritation occurs.</div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">🌡️ Storage Guide</div>
+      <div class="storage-section">
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">❄️ Reconstituted Solution</div>
+          <div class="storage-lrow"><div class="sl-ico">🌡️</div><div>Store mixed solution in the refrigerator (2–8°C)</div></div>
+          <div class="storage-lrow"><div class="sl-ico">💡</div><div>Keep away from light</div></div>
+          <div class="storage-lrow"><div class="sl-ico">🚫</div><div>Do NOT freeze the liquid solution</div></div>
+          <div class="storage-lrow"><div class="sl-ico">📅</div><div>Use within 30–60 days after mixing</div></div>
+        </div>
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">📦 Unmixed Powder Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">❄️</div><div>Store in a freezer at -20°C for long-term stability</div></div>
+          <div class="storage-lrow"><div class="sl-ico">🟤</div><div>Keep in original amber or opaque container</div></div>
+          <div class="storage-lrow"><div class="sl-ico">☀️</div><div>Protect from direct sunlight and heat</div></div>
+          <div class="storage-lrow"><div class="sl-ico">✅</div><div>Properly stored, remains stable for 2–3 years</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reminders-v2">
+      <div class="rem-v2-top">
+        <div class="rem-v2-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Important</div>
+        <div class="rem-v2-title">Important Reminders</div>
+      </div>
+      <div class="rem-v2-cards">
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg></div><div class="rem-v2-text">Start low, go slow</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-2.24 5-5 5S7 9.76 7 7a5 5 0 0 1 5-5z"/><path d="M12 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/></svg></div><div class="rem-v2-text">Apply to clean, dry skin</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div><div class="rem-v2-text">Evening application is ideal for skin repair</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="rem-v2-text">Allow 1–2 minutes to absorb before other products</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="rem-v2-text">Pat gently — do not rub vigorously</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83"/></svg></div><div class="rem-v2-text">Always follow with moisturizer</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div><div class="rem-v2-text">Perform a patch test before full application</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rem-v2-text pink">For educational purposes only — not suitable for medical advice</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg></div><div class="rem-v2-text">Results vary per person. Visible changes in 4–8 weeks.</div></div>
+      </div>
+    </div>
+    <div class="disclaimer"><strong>FOR EDUCATIONAL PURPOSES ONLY — NOT SUITABLE FOR MEDICAL ADVICE.</strong><br>This guide is for research purposes only. BIOPEP PH does not provide medical advice. Consult a qualified healthcare professional before use.</div>
+  </div>
+</div>
+
+<!-- ════════════════ GHK-Cu ════════════════ -->
+<div class="proto" id="proto-ghkcu">
+  <div class="dark-zone">
+    <div class="hero">
+      <img src="images/hero-girl.png" class="hero-img" alt="">
+      <div class="hero-badges">
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Research Grade</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Detailed Guide</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe Practices</span>
+      </div>
+      <h1 class="hero-title">GHK-Cu Protocol Guide</h1>
+      <p class="hero-sub">50mg Vial + 3mL BAC Water — Complete Dosing &amp; Injection Guide</p>
+      <p class="hero-disc">For research and educational purposes only</p>
+    </div>
+    <div class="glance">
+      <div class="glance-cat">Category: Skin / Healing</div>
+      <div class="glance-title">GHK-Cu at a Glance</div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>Common Uses</div>
+        <div class="glance-item"><div class="gdot"></div>Anti aging</div>
+        <div class="glance-item"><div class="gdot"></div>Skin repair</div>
+        <div class="glance-item"><div class="gdot"></div>Collagen support</div>
+        <div class="glance-item"><div class="gdot"></div>Hair support</div>
+        <div class="glance-item"><div class="gdot"></div>Wound healing</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Common Effects</div>
+        <div class="glance-item"><div class="gdot"></div>Better skin texture</div>
+        <div class="glance-item"><div class="gdot"></div>Collagen boost</div>
+        <div class="glance-item"><div class="gdot"></div>Improved healing</div>
+        <div class="glance-item"><div class="gdot"></div>Reduced inflammation</div>
+        <div class="glance-item"><div class="gdot"></div>Healthier hair</div>
+      </div>
+    </div>
+  </div>
+  <div class="light-zone">
+    <div class="scard">
+      <div class="sbadge">🧪 Reconstitute</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Clean vial tops</strong> with alcohol pad</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Draw BAC water</strong> using the reconstitution syringe</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Slowly inject BAC water down the side wall</strong> (not directly on powder)</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Gently roll the vial between your hands — DO NOT SHAKE</strong></div></div>
+        <div class="step"><div class="step-n">5</div><div class="step-t">Let dissolve completely (solution should be clear / may have slight blue tint — this is normal for copper peptides)</div></div>
+        <div class="step"><div class="step-n">6</div><div class="step-t">Set aside and wait <strong>30 mins</strong> in room temp</div></div>
+        <div class="step"><div class="step-n">7</div><div class="step-t">After 30 mins you can get your first dose and <strong>refrigerate the rest</strong></div></div>
+      </div>
+      <div class="step-note">⚠️ Always check the vial for discoloration or particles before mixing.</div>
+    </div>
+
+    <div class="dose-section-title">Dosing Schedule</div>
+    <div class="dose-section-sub">Based on 50mg Vial + 3mL BAC Water Setup | Daily for 5 Days, 2 Days Off</div>
+    <div class="dose-cards">
+      <div class="dose-card mint"><div class="dose-phase">Starter</div><div class="dose-week">Week 1–4</div><div class="dose-mg">1mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe (0.06mL / 1,000mcg)</div><div class="dose-units">6 UNITS</div></div>
+      <div class="dose-card yellow"><div class="dose-phase">Intermediate</div><div class="dose-week">Week 5–8</div><div class="dose-mg">1.5mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe (0.09mL / 1,500mcg)</div><div class="dose-units">9 UNITS</div></div>
+      <div class="dose-card peach"><div class="dose-phase">Advanced</div><div class="dose-week">Week 9–12+</div><div class="dose-mg">2.0mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe (0.12mL / 2,000mcg)</div><div class="dose-units">12 UNITS</div></div>
+    </div>
+    <p class="dose-foot">Inject daily for 5 consecutive days, then take 2 days off.<br>Best taken in the morning on an empty stomach.<br>Start low, go slow. Always listen to your body.<br>After week 12, consult your protocol advisor for maintenance dosing.</p>
+
+    <div class="scard">
+      <div class="sbadge">💉 How to Inject (Subcutaneous)</div>
+      <div class="inject-label">Safe Areas</div>
+      <div class="safe-grid">
+        <div class="safe-chip">🫃 Belly<small>2 in. from belly button</small></div>
+        <div class="safe-chip">🦵 Outer Thigh<small>Front or outer area</small></div>
+      </div>
+      <div class="safe-chip">💪 Upper Arm<small>Back of upper arm</small></div>
+      <div class="tips">
+        <div class="tip"><div class="tip-n">1</div>Clean skin with alcohol</div>
+        <div class="tip"><div class="tip-n">2</div><strong>Pinch fatty area</strong></div>
+        <div class="tip"><div class="tip-n">3</div><strong>Insert needle at 45° angle</strong></div>
+        <div class="tip"><div class="tip-n">4</div><strong>Inject slowly</strong></div>
+        <div class="tip"><div class="tip-n">5</div>Rotate sites weekly (don't repeat same exact spot)</div>
+        <div class="tip"><div class="tip-n">6</div><strong>Dispose of needle safely</strong> in sharps container</div>
+      </div>
+    </div>
+
+    <div class="scard">
+      <div class="sbadge">⚠️ Possible Side Effects</div>
+      <div class="fx-label amber">Common (Mild)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Slight nausea</div>
+      <div class="fx-item"><div class="fdot amber"></div>Headache</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild fatigue</div>
+      <div class="fx-item"><div class="fdot amber"></div>Warm flushing sensation</div>
+      <div class="fx-item"><div class="fdot amber"></div>Dizziness</div>
+      <div class="fx-label amber">Less Common</div>
+      <div class="fx-item"><div class="fdot amber"></div>Injection site reactions (redness, swelling, itching)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Changes in appetite</div>
+      <div class="fx-item"><div class="fdot amber"></div>Skin sensitivity</div>
+      <div class="fx-label red">When to Consult</div>
+      <div class="consult-box">If symptoms persist or worsen, please consult your doctor.<br><br><strong>Important note:</strong> Start low, go slow to minimize side effects. Most side effects improve over time as your body adjusts.</div>
+    </div>
+
+    <div class="scard">
+      <div class="sbadge">🌡️ Storage Guide</div>
+      <div class="storage-section">
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">❄️ Mixed Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🌡️</div><div>Store mixed vial in the refrigerator (2–8°C)</div></div>
+          <div class="storage-lrow"><div class="sl-ico">💡</div><div>Keep away from light</div></div>
+          <div class="storage-lrow"><div class="sl-ico">🚫</div><div>Do NOT freeze</div></div>
+          <div class="storage-lrow"><div class="sl-ico">📅</div><div>Use within 30 days after mixing</div></div>
+        </div>
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">📦 Unmixed Powder Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🏠</div><div>Store in a cool, dry place away from direct sunlight</div></div>
+          <div class="storage-lrow"><div class="sl-ico">⚠️</div><div>Always check the vial for discoloration or particles before mixing</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reminders-v2">
+      <div class="rem-v2-top">
+        <div class="rem-v2-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Important</div>
+        <div class="rem-v2-title">Important Reminders</div>
+      </div>
+      <div class="rem-v2-cards">
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg></div><div class="rem-v2-text">Start low, go slow</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="rem-v2-text">Inject daily for 5 days, rest 2 days</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10M4.93 4.93l7.07 7.07"/></svg></div><div class="rem-v2-text">Best taken in the morning</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-2.24 5-5 5S7 9.76 7 7a5 5 0 0 1 5-5z"/><path d="M12 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/></svg></div><div class="rem-v2-text">Stay hydrated</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="rem-v2-text pink">If symptoms persist or worsen, please consult your doctor</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rem-v2-text pink">For educational purposes only — not suitable for medical advice</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg></div><div class="rem-v2-text">Results vary per person. Always listen to your body.</div></div>
+      </div>
+    </div>
+    <div class="disclaimer"><strong>FOR EDUCATIONAL PURPOSES ONLY — NOT SUITABLE FOR MEDICAL ADVICE.</strong><br>This guide is for research purposes only. BIOPEP PH does not provide medical advice. Consult a qualified healthcare professional before use.</div>
+  </div>
+</div>
+
+<!-- ════════════════ NAD+ ════════════════ -->
+<div class="proto" id="proto-nad">
+  <div class="dark-zone">
+    <div class="hero">
+      <img src="images/hero-nad.png" class="hero-img" alt="">
+      <div class="hero-badges">
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Research Grade</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Detailed Guide</span>
+        <span class="hero-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Safe Practices</span>
+      </div>
+      <h1 class="hero-title">NAD+ Protocol Guide</h1>
+      <p class="hero-sub">100mg Vial + 1mL BAC Water — Complete Dosing &amp; Injection Guide</p>
+      <p class="hero-disc">For research and educational purposes only</p>
+    </div>
+    <div class="glance">
+      <div class="glance-cat">Category: Cellular Energy</div>
+      <div class="glance-title">NAD+ at a Glance</div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>Common Uses</div>
+        <div class="glance-item"><div class="gdot"></div>Energy support</div>
+        <div class="glance-item"><div class="gdot"></div>Anti-aging</div>
+        <div class="glance-item"><div class="gdot"></div>Brain support</div>
+        <div class="glance-item"><div class="gdot"></div>Recovery</div>
+        <div class="glance-item"><div class="gdot"></div>Cellular repair</div>
+      </div>
+      <div class="glance-card">
+        <div class="glance-card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>Common Effects</div>
+        <div class="glance-item"><div class="gdot"></div>Improved energy</div>
+        <div class="glance-item"><div class="gdot"></div>Mental clarity</div>
+        <div class="glance-item"><div class="gdot"></div>Recovery support</div>
+        <div class="glance-item"><div class="gdot"></div>Cellular health</div>
+        <div class="glance-item"><div class="gdot"></div>Reduced fatigue</div>
+      </div>
+    </div>
+  </div>
+  <div class="light-zone">
+    <div class="scard">
+      <div class="sbadge">🧪 Reconstitute</div>
+      <div class="steps">
+        <div class="step"><div class="step-n">1</div><div class="step-t"><strong>Clean vial tops</strong> with alcohol pad</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t"><strong>Draw BAC water</strong> using the reconstitution syringe</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t"><strong>Slowly inject BAC water down the side wall</strong> (not directly on powder)</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t"><strong>Gently roll the vial between your hands — DO NOT SHAKE</strong></div></div>
+        <div class="step"><div class="step-n">5</div><div class="step-t">Let dissolve completely (solution should be clear)</div></div>
+        <div class="step"><div class="step-n">6</div><div class="step-t">Set aside and wait <strong>30 mins</strong> in room temp</div></div>
+        <div class="step"><div class="step-n">7</div><div class="step-t">After 30 mins you can get your first dose and <strong>refrigerate the rest</strong></div></div>
+      </div>
+      <div class="step-note">⚠️ Always check the vial for discoloration or particles before mixing.</div>
+    </div>
+    <div class="dose-section-title">Dosing Schedule</div>
+    <div class="dose-section-sub">Based on 100mg Vial + 1mL BAC Water Setup | 2–3 Times Per Week, Morning Only | 12 Weeks Max</div>
+    <div class="dose-cards">
+      <div class="dose-card mint"><div class="dose-phase">Phase 1</div><div class="dose-week">Week 1–2</div><div class="dose-mg">25mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe (0.25mL)</div><div class="dose-units">25 UNITS</div></div>
+      <div class="dose-card yellow"><div class="dose-phase">Phase 2</div><div class="dose-week">Week 3–4</div><div class="dose-mg">50mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe (0.50mL)</div><div class="dose-units">50 UNITS</div></div>
+      <div class="dose-card peach"><div class="dose-phase">Phase 3</div><div class="dose-week">Week 5–6</div><div class="dose-mg">100mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe (1.0mL)</div><div class="dose-units">100 UNITS</div></div>
+      <div class="dose-card lavender"><div class="dose-phase">Phase 4</div><div class="dose-week">Week 7–12</div><div class="dose-mg">100mg</div><div class="dose-divider"></div><div class="dose-units-label">Units on Syringe (1.0mL) · Maintenance</div><div class="dose-units">100 UNITS</div></div>
+    </div>
+    <p class="dose-foot">Inject 2–3 times per week, in the morning.<br>Best taken on an empty stomach.<br>Maximum protocol duration: 12 weeks.<br>After week 12, take a <strong>4-week break</strong> before considering another cycle.<br>Start low, go slow. Always listen to your body.</p>
+    <div class="scard">
+      <div class="sbadge">💉 How to Inject (Subcutaneous)</div>
+      <div class="inject-label">Safe Areas</div>
+      <div class="safe-grid"><div class="safe-chip">🫃 Belly<small>2 in. from belly button</small></div><div class="safe-chip">🦵 Outer Thigh<small>Front or outer area</small></div></div>
+      <div class="safe-chip">💪 Upper Arm<small>Back of upper arm</small></div>
+      <div class="tips">
+        <div class="tip"><div class="tip-n">1</div>Clean skin with alcohol</div>
+        <div class="tip"><div class="tip-n">2</div><strong>Pinch fatty area</strong></div>
+        <div class="tip"><div class="tip-n">3</div><strong>Insert needle at 45° angle</strong></div>
+        <div class="tip"><div class="tip-n">4</div><strong>Inject slowly</strong></div>
+        <div class="tip"><div class="tip-n">5</div>Rotate sites weekly (don't repeat same exact spot)</div>
+        <div class="tip"><div class="tip-n">6</div><strong>Dispose of needle safely</strong> in sharps container</div>
+      </div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">⚠️ Possible Side Effects</div>
+      <div class="fx-label amber">Common (Mild)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Flushing / warm sensation (most common — usually harmless)</div>
+      <div class="fx-item"><div class="fdot amber"></div>Slight nausea</div>
+      <div class="fx-item"><div class="fdot amber"></div>Headache</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild fatigue</div>
+      <div class="fx-item"><div class="fdot amber"></div>Dizziness</div>
+      <div class="fx-item"><div class="fdot amber"></div>Injection site reactions (redness, itching, swelling)</div>
+      <div class="fx-label amber">Less Common</div>
+      <div class="fx-item"><div class="fdot amber"></div>Stomach discomfort</div>
+      <div class="fx-item"><div class="fdot amber"></div>Changes in appetite</div>
+      <div class="fx-item"><div class="fdot amber"></div>Mild anxiety or jitteriness</div>
+      <div class="fx-item"><div class="fdot amber"></div>Trouble sleeping (if taken late in the day)</div>
+      <div class="step-note" style="margin-top:12px"><strong>About flushing:</strong> Flushing is the most common NAD+ side effect and is usually harmless. It typically subsides within 15–30 minutes. Taking the injection slowly can help reduce flushing intensity.</div>
+      <div class="fx-label red">When to Consult</div>
+      <div class="consult-box">If symptoms persist or worsen, please consult your doctor.<br><br>Start low, go slow to minimize side effects. Most side effects improve over time as your body adjusts. Take in the morning to avoid sleep disruption.</div>
+    </div>
+    <div class="scard">
+      <div class="sbadge">🌡️ Storage Guide</div>
+      <div class="storage-section">
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">❄️ Mixed Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🌡️</div><div>Store mixed vial in the refrigerator (2–8°C)</div></div>
+          <div class="storage-lrow"><div class="sl-ico">💡</div><div>Keep away from light</div></div>
+          <div class="storage-lrow"><div class="sl-ico">🚫</div><div>Do NOT freeze</div></div>
+          <div class="storage-lrow"><div class="sl-ico">📅</div><div>Use within 30 days after mixing</div></div>
+        </div>
+        <div class="storage-lcard">
+          <div class="storage-lcard-title">📦 Unmixed Powder Vial</div>
+          <div class="storage-lrow"><div class="sl-ico">🏠</div><div>Store in a cool, dry place away from direct sunlight</div></div>
+          <div class="storage-lrow"><div class="sl-ico">⚠️</div><div>Always check the vial for discoloration or particles before mixing</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="reminders-v2">
+      <div class="rem-v2-top">
+        <div class="rem-v2-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Important</div>
+        <div class="rem-v2-title">Important Reminders</div>
+      </div>
+      <div class="rem-v2-cards">
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg></div><div class="rem-v2-text">Start low, go slow</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="rem-v2-text">Inject 2–3 times per week only</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v10M4.93 4.93l7.07 7.07"/></svg></div><div class="rem-v2-text">Best taken in the morning on an empty stomach</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="rem-v2-text">12 weeks maximum duration</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1,4 1,10 7,10"/><path d="M3.51 15a9 9 0 1 0 .49-3.78"/></svg></div><div class="rem-v2-text">Take a 4-week break after completing a cycle</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-2.24 5-5 5S7 9.76 7 7a5 5 0 0 1 5-5z"/><path d="M12 14c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/></svg></div><div class="rem-v2-text">Stay hydrated</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><div class="rem-v2-text pink">If symptoms persist or worsen, please consult your doctor</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="rem-v2-text pink">For educational purposes only — not suitable for medical advice</div></div>
+        <div class="rem-v2-card"><div class="rem-v2-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/></svg></div><div class="rem-v2-text">Results vary per person. Always listen to your body.</div></div>
+      </div>
+    </div>
+    <div class="disclaimer"><strong>FOR EDUCATIONAL PURPOSES ONLY — NOT SUITABLE FOR MEDICAL ADVICE.</strong><br>This guide is for research purposes only. BIOPEP PH does not provide medical advice. Consult a qualified healthcare professional before use.</div>
+  </div>
+</div>
+
+<script>
+function go(name){
+  document.querySelectorAll('.proto').forEach(p=>p.classList.remove('active'));
+  document.getElementById('proto-'+name).classList.add('active');
+  document.querySelectorAll('.nav-dd-item').forEach(b=>b.classList.toggle('active',b.dataset.p===name));
+  document.getElementById('navDD').classList.remove('open');
+  document.getElementById('navToggle').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+  const t={tirz:'Tirzepatide Protocol | BIOPEP PH',reta:'Retatrutide Protocol | BIOPEP PH',kpv:'KPV Protocol | BIOPEP PH',snap8:'Snap-8 Protocol | BIOPEP PH',ghkcu:'GHK-Cu Protocol | BIOPEP PH',nad:'NAD+ Protocol | BIOPEP PH'};
+  document.title=t[name]||'Peptide Guidelines | BIOPEP PH';
+}
+function toggleDD(){
+  document.getElementById('navDD').classList.toggle('open');
+  document.getElementById('navToggle').classList.toggle('open');
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.nav-proto')){
+    document.getElementById('navDD').classList.remove('open');
+    document.getElementById('navToggle').classList.remove('open');
+  }
+});
+(function(){
+  const cv=document.getElementById('sakura'),cx=cv.getContext('2d');
+  let ps=[];
+  function resize(){cv.width=innerWidth;cv.height=innerHeight}
+  function P(){
+    this.x=Math.random()*cv.width;this.y=-12;this.sz=Math.random()*5+3;
+    this.vx=(Math.random()-.5)*.9;this.vy=Math.random()*1.2+.6;
+    this.r=Math.random()*Math.PI*2;this.vr=(Math.random()-.5)*.035;
+    this.op=Math.random()*.35+.1;this.sw=Math.random()*.4;
+    this.ss=Math.random()*.018+.007;this.so=Math.random()*Math.PI*2;
+    this.pink=Math.random()>.35;
+  }
+  P.prototype.tick=function(){this.so+=this.ss;this.x+=this.vx+Math.sin(this.so)*this.sw;this.y+=this.vy;this.r+=this.vr};
+  P.prototype.draw=function(){
+    cx.save();cx.globalAlpha=this.op;cx.translate(this.x,this.y);cx.rotate(this.r);cx.beginPath();
+    const s=this.sz;cx.fillStyle=this.pink?'rgba(236,72,153,.9)':'rgba(251,207,232,.85)';
+    cx.moveTo(0,-s);cx.bezierCurveTo(s*.8,-s,s*.8,s*.5,0,s);cx.bezierCurveTo(-s*.8,s*.5,-s*.8,-s,0,-s);
+    cx.fill();cx.restore();
+  };
+  function frame(){
+    cx.clearRect(0,0,cv.width,cv.height);
+    if(ps.length<35&&Math.random()<.25)ps.push(new P());
+    ps=ps.filter(p=>{p.tick();p.draw();return p.y<cv.height+15});
+    requestAnimationFrame(frame);
+  }
+  resize();addEventListener('resize',resize);frame();
+})();
+</script>
+</body>
+</html>
