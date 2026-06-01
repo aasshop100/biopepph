@@ -87,6 +87,12 @@ const PRODUCTS = {
     desc: 'Sungshim insulin syringe 31G × 8mm, 1mL capacity. Suitable for larger volume peptide injections. Pack of 10.',
     variants: null,
   },
+  'alcohol-swab': {
+    name: 'Alcohol Swab (10 pcs)', price: 10, origPrice: null, emoji: '🧴',
+    tag: null, tagClass: '', cat: 'Other',
+    desc: 'Sterile 70% isopropyl alcohol swabs. Essential for sanitizing injection sites before peptide administration. Pack of 10.',
+    variants: null,
+  },
 
   // ── HIDDEN (not currently available) ──────────
   'sema-5mg':       { hidden: true, name: 'Semaglutide 5mg',        price: 2500, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
