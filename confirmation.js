@@ -3,6 +3,7 @@
 const WHATSAPP_NUMBER = '639171132273';
 const VIBER_NUMBER    = '+639171132273';
 const TELEGRAM_USER   = 'legitrche';
+const WEBHOOK_URL     = 'https://script.google.com/macros/s/AKfycbwq6RPckD4svmh2G41NZPO9ekULuPGn4BTyBgXsmbeq7_fW7-nRWjzQBVMahGlAehnT/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
   const order = JSON.parse(localStorage.getItem('biopep_order'));
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTotals(order);
   renderDeliveryInfo(order);
   renderContactLinks(order);
+  sendToSheet(order);
 });
 
 function renderHero(order) {
@@ -115,6 +117,31 @@ function renderContactLinks(order) {
       showConfToast('⚠️ Could not copy automatically. Please screenshot your order summary.');
     });
   });
+}
+
+function sendToSheet(order) {
+  const address = [order.street, order.city, order.province].filter(Boolean).join(', ');
+  const items = order.cart.map(i => `${i.name} ×${i.qty} — ₱${(i.price * i.qty).toLocaleString('en-PH')}`).join('\n');
+  const date = new Date(order.placedAt).toLocaleString('en-PH', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  });
+
+  const payload = {
+    orderId:  order.orderId,
+    date:     date,
+    name:     order.name,
+    phone:    order.phone,
+    address:  address,
+    items:    items,
+    total:    '₱' + order.total.toLocaleString('en-PH'),
+    payment:  order.paymentMethod || '—',
+  };
+
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  }).catch(() => {});
 }
 
 function showConfToast(msg) {
