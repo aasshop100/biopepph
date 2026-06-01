@@ -15,7 +15,7 @@ const PRODUCTS = {
     desc: 'Triple receptor agonist targeting GLP-1, GIP, and Glucagon pathways simultaneously. Clinical trials report up to 24% body weight reduction — the most advanced weight loss peptide currently available.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
     ],
   },
   'tirze-10mg': {
@@ -24,25 +24,25 @@ const PRODUCTS = {
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
     ],
   },
   'kpv-10mg': {
-    name: 'KPV 10mg', price: 1750, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
+    name: 'KPV 10mg', price: 1250, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
     tag: null, tagClass: '', cat: 'Healing',
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
     ],
   },
   'snap8-10mg': {
-    name: 'Snap-8 10mg', price: 1500, origPrice: null, emoji: '✨', image: 'images/snap810mg.jpg',
+    name: 'Snap-8 10mg', price: 1200, origPrice: null, emoji: '✨', image: 'images/snap810mg.jpg',
     tag: null, tagClass: '', cat: 'Anti-Aging',
     desc: 'Octapeptide-2 — peptide alternative to Botox. Reduces the depth of expression lines by relaxing facial muscle contractions. Popular in advanced anti-aging skincare protocols.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
     ],
   },
   'ghkcu-50mg': {
@@ -51,7 +51,7 @@ const PRODUCTS = {
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + topical applicator', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                        priceAdd: -200 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                        priceAdd: -400 },
     ],
   },
   'nad-100mg': {
@@ -60,7 +60,7 @@ const PRODUCTS = {
     desc: 'Nicotinamide Adenine Dinucleotide — essential coenzyme for cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
       { label: 'Complete Set', desc: 'NAD+ vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'NAD+ Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Set',     desc: 'NAD+ Vial + BAC Water 3mL only',                                     priceAdd: -400 },
     ],
   },
   'bac-water-3ml': {
