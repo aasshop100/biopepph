@@ -10,12 +10,12 @@ const PRODUCTS = {
 
   // ── AVAILABLE PRODUCTS ────────────────────────
   'retro-10mg': {
-    name: 'Retatrutide 15mg', price: 2000, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
+    name: 'Retatrutide 15mg', price: 1600, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
     desc: 'Triple receptor agonist targeting GLP-1, GIP, and Glucagon pathways simultaneously. Clinical trials report up to 24% body weight reduction — the most advanced weight loss peptide currently available.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
     ],
   },
   'tirze-10mg': {
@@ -24,7 +24,7 @@ const PRODUCTS = {
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
     ],
   },
   'kpv-10mg': {
@@ -33,7 +33,7 @@ const PRODUCTS = {
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
     ],
   },
   'snap8-10mg': {
@@ -42,25 +42,25 @@ const PRODUCTS = {
     desc: 'Octapeptide-2 — peptide alternative to Botox. Reduces the depth of expression lines by relaxing facial muscle contractions. Popular in advanced anti-aging skincare protocols.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -400 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
     ],
   },
   'ghkcu-50mg': {
-    name: 'GHK-Cu 50mg', price: 1520, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
+    name: 'GHK-Cu 50mg', price: 1120, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
     tag: 'Top Pick', tagClass: '', cat: 'Anti-Aging',
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + topical applicator', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                        priceAdd: -400 },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                        priceAdd: -200 },
     ],
   },
   'nad-100mg': {
-    name: 'NAD+ 100mg', price: 1400, origPrice: null, emoji: '⚡', image: 'images/nad+100mg.jpg',
+    name: 'NAD+ 100mg', price: 1000, origPrice: null, emoji: '⚡', image: 'images/nad+100mg.jpg',
     tag: null, tagClass: '', cat: 'Anti-Aging',
     desc: 'Nicotinamide Adenine Dinucleotide — essential coenzyme for cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
       { label: 'Complete Set', desc: 'NAD+ vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'NAD+ Vial + BAC Water 3mL only',                                     priceAdd: -400 },
+      { label: 'Vial Set',     desc: 'NAD+ Vial + BAC Water 3mL only',                                     priceAdd: -200 },
     ],
   },
   'bac-water-3ml': {
