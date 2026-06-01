@@ -19,7 +19,7 @@ const PRODUCTS = {
     ],
   },
   'tirze-10mg': {
-    name: 'Tirzepatide 15mg', price: 1600, origPrice: null, emoji: '💉', image: 'images/tirzepatide15mg.jpg',
+    name: 'Tirzepatide 15mg', price: 1200, origPrice: null, emoji: '💉', image: 'images/tirzepatide15mg.jpg',
     tag: null, tagClass: '', cat: 'Weight Loss',
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
     variants: [
