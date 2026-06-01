@@ -140,6 +140,7 @@ function sendToSheet(order) {
 
   fetch(WEBHOOK_URL, {
     method: 'POST',
+    mode: 'no-cors',
     body: JSON.stringify(payload),
   }).catch(() => {});
 }
