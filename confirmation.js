@@ -21,7 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTotals(order);
   renderDeliveryInfo(order);
   renderContactLinks(order);
-  sendToSheet(order);
+
+  const sentKey = 'biopep_sent_' + order.orderId;
+  if (!localStorage.getItem(sentKey)) {
+    sendToSheet(order);
+    localStorage.setItem(sentKey, '1');
+  }
 });
 
 function renderHero(order) {
