@@ -97,8 +97,22 @@ button { font-family: inherit; cursor: pointer; }
   align-items: center;
 }
 .header-inner .mnav-btn     { grid-column: 1; justify-self: start; }
+.header-inner .desktop-nav  { grid-column: 1; justify-self: start; }
 .header-inner .logo         { grid-column: 2; justify-self: center; }
 .header-inner .header-right { grid-column: 3; justify-self: end; }
+
+/* Desktop nav links */
+.desktop-nav { display: flex; align-items: center; gap: 24px; }
+.desktop-nav-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--charcoal);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+.desktop-nav-link:hover { color: var(--pink); }
+@media (max-width: 768px) { .desktop-nav { display: none; } }
 
 /* Header right group */
 .header-right { display: flex; align-items: center; gap: 4px; }
