@@ -411,7 +411,7 @@ function renderAlsoLike(currentId) {
     div.innerHTML = `
       ${thumb}
       <p class="pmodal-also-name">${p.name}</p>
-      <p class="pmodal-also-price">₱${p.price.toLocaleString('en-PH')}</p>
+      <p class="pmodal-also-price">${p.variants ? '<small style="font-size:.75em;opacity:.7">from </small>' : ''}₱${(p.variants ? p.price + p.variants[1].priceAdd : p.price).toLocaleString('en-PH')}</p>
     `;
     div.addEventListener('click', () => {
       document.getElementById('pmodal').scrollTop = 0;
