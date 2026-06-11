@@ -76,13 +76,13 @@ const PRODUCTS = {
     variants: null,
   },
   'syringe-05ml': {
-    name: 'Syringe 31G 0.5mL (10 pcs)', price: 120, origPrice: null, emoji: '💉',
+    name: 'Syringe 31G 0.5mL (10 pcs)', price: 120, origPrice: null, emoji: '💉', image: 'images/Syringe31G0.5mL.jpg',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Sungshim insulin syringe 31G × 8mm, 0.5mL capacity. Ideal for precise low-volume peptide dosing. Pack of 10.',
     variants: null,
   },
   'syringe-1ml': {
-    name: 'Syringe 31G 1mL (10 pcs)', price: 120, origPrice: null, emoji: '💉',
+    name: 'Syringe 31G 1mL (10 pcs)', price: 120, origPrice: null, emoji: '💉', image: 'images/Syringe31G1mL.jpg',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Sungshim insulin syringe 31G × 8mm, 1mL capacity. Suitable for larger volume peptide injections. Pack of 10.',
     variants: null,
