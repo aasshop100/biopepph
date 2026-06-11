@@ -93,6 +93,15 @@ const PRODUCTS = {
     desc: 'Sterile 70% isopropyl alcohol swabs. Essential for sanitizing injection sites before peptide administration. Pack of 10.',
     variants: null,
   },
+  'glutathione-1200mg': {
+    name: 'Korean Glutathione 1200mg', price: 700, origPrice: null, emoji: '✨', image: 'images/kgtt1200mg.jpg',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'High-dose Korean glutathione for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade — one of the most potent whitening formulations available.',
+    variants: [
+      { label: 'Complete Set', desc: 'Glutathione vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
+      { label: 'Vial Only',    desc: 'Glutathione vial only',                                     priceAdd: -150 },
+    ],
+  },
 
   // ── HIDDEN (not currently available) ──────────
   'sema-5mg':       { hidden: true, name: 'Semaglutide 5mg',        price: 2500, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
