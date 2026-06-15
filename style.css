@@ -861,6 +861,26 @@ h2 span { color: var(--pink-dark); }
   letter-spacing: 0.5px;
 }
 .pcard-tag.new { background: #7c3aed; }
+.pcard-tag.sold-out { background: #6b7280; }
+.btn-add.sold-out { background: #d1d5db; color: #9ca3af; cursor: not-allowed; pointer-events: none; }
+.soldout-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.52);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  border-radius: inherit;
+}
+.soldout-overlay span {
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+}
 
 .pcard-body {
   padding: 12px;
