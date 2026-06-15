@@ -27,6 +27,15 @@ const PRODUCTS = {
       { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
     ],
   },
+  'tirze-30mg': {
+    name: 'Tirzepatide 30mg', price: 1350, origPrice: null, emoji: '💉', image: 'images/tirzepatide30mg.jpg',
+    tag: 'New', tagClass: 'new', cat: 'Weight Loss',
+    desc: 'Higher-dose dual GLP-1/GIP agonist for patients who have completed the 15mg titration phase. Designed for accelerated and sustained weight loss at advanced protocol stages.',
+    variants: [
+      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
+      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                     priceAdd: -200 },
+    ],
+  },
   'kpv-10mg': {
     name: 'KPV 10mg', price: 1250, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
     tag: null, tagClass: '', cat: 'Healing',
@@ -62,6 +71,12 @@ const PRODUCTS = {
       { label: 'Complete Set', desc: 'NAD+ vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
       { label: 'Vial Set',     desc: 'NAD+ Vial + BAC Water 3mL only',                                     priceAdd: -200 },
     ],
+  },
+  'pharma-bac-10ml': {
+    name: 'Pharma BAC Water 10mL', price: 150, origPrice: null, emoji: '💧', image: 'images/PharmaBac10ml.jpg',
+    tag: 'New', tagClass: 'new', cat: 'Other',
+    desc: 'Pharmaceutical-grade bacteriostatic water for injection. 10mL multi-use capacity — ideal for reconstituting larger peptide vials. Benzyl alcohol preservative maintains sterility for up to 4 weeks refrigerated.',
+    variants: null,
   },
   'bac-water-3ml': {
     name: 'BAC Water 3mL', price: 100, origPrice: null, emoji: '💧', image: 'images/bacwater3ml.jpg',
@@ -101,6 +116,12 @@ const PRODUCTS = {
       { label: 'Complete Set', desc: 'Gtt Korean 1200mg + Saline water 50ml + 4x 1ml 25Gx5/8" needle + 4x 25G x 1" needle replacement', priceAdd: 0    },
       { label: 'Vial Only',    desc: 'Glutathione vial only',                                                                              priceAdd: -150 },
     ],
+  },
+  'glutathione-1200mg-box': {
+    name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'Premium box set of Korean Glutathione 1200mg for extended whitening protocols. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
+    variants: null,
   },
 
   // ── HIDDEN (not currently available) ──────────
