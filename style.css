@@ -1511,6 +1511,7 @@ footer {
   box-shadow: var(--shadow-pink);
 }
 .pmodal-add-btn:hover { background: var(--pink-dark); transform: translateY(-1px); }
+.pmodal-add-btn.sold-out { background: #d1d5db; color: #9ca3af; cursor: not-allowed; pointer-events: none; box-shadow: none; transform: none; }
 
 @media (min-width: 600px) {
   .pmodal {

@@ -119,7 +119,7 @@ const PRODUCTS = {
   },
   'glutathione-1200mg-box': {
     name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
-    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging', soldOut: true,
     desc: 'Premium box set of Korean Glutathione 1200mg for extended whitening protocols. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
     variants: null,
   },
@@ -338,6 +338,17 @@ function openModal(id) {
   };
   document.getElementById('pmodalImgWrap').style.background =
     gradients[prod.cat] || gradients['Other'];
+
+  const addBtn = document.getElementById('pmodalAddBtn');
+  if (prod.soldOut) {
+    addBtn.textContent = 'Sold Out';
+    addBtn.classList.add('sold-out');
+    addBtn.disabled = true;
+  } else {
+    addBtn.textContent = 'Add to Cart';
+    addBtn.classList.remove('sold-out');
+    addBtn.disabled = false;
+  }
 
   document.getElementById('pmodal').classList.add('open');
   document.getElementById('pmodalOverlay').classList.add('active');
