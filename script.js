@@ -123,6 +123,18 @@ const PRODUCTS = {
     desc: 'Premium box set of Korean Glutathione 1200mg for extended whitening protocols. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
     variants: null,
   },
+  'glutathione-1200mg-box-preorder': {
+    name: 'Korean Glutathione 1200mg Box', price: 3200, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    desc: 'Premium box set of Korean Glutathione 1200mg for extended whitening protocols. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
+    variants: null,
+  },
+  'glutathione-1200mg-box-preorder-10x': {
+    name: 'Korean Glutathione 1200mg Box (10x)', price: 30000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    desc: 'Bulk pre-order of 10 boxes of Korean Glutathione 1200mg. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
+    variants: null,
+  },
 
   // ── HIDDEN (not currently available) ──────────
   'sema-5mg':       { hidden: true, name: 'Semaglutide 5mg',        price: 2500, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
