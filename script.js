@@ -125,13 +125,13 @@ const PRODUCTS = {
   },
   'glutathione-1200mg-box-preorder': {
     name: 'Korean Glutathione 1200mg Box', price: 3200, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
-    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', soldOut: 'Closed',
     desc: 'Premium box set of Korean Glutathione 1200mg for extended whitening protocols. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
     variants: null,
   },
   'glutathione-1200mg-box-preorder-10x': {
     name: 'Korean Glutathione 1200mg Box (10x)', price: 30000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
-    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', soldOut: 'Closed',
     desc: 'Bulk pre-order of 10 boxes of Korean Glutathione 1200mg. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
     variants: null,
   },
@@ -353,7 +353,7 @@ function openModal(id) {
 
   const addBtn = document.getElementById('pmodalAddBtn');
   if (prod.soldOut) {
-    addBtn.textContent = 'Sold Out';
+    addBtn.textContent = typeof prod.soldOut === 'string' ? prod.soldOut : 'Sold Out';
     addBtn.classList.add('sold-out');
     addBtn.disabled = true;
   } else {
