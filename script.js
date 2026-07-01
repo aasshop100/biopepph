@@ -108,6 +108,18 @@ const PRODUCTS = {
     desc: 'Sterile 70% isopropyl alcohol swabs. Essential for sanitizing injection sites before peptide administration. Pack of 10.',
     variants: null,
   },
+  'normal-saline-20ml': {
+    name: 'Korean Pharma Normal Saline 0.9% 20mL', price: 150, origPrice: null, emoji: '💧', image: 'images/Korean Pharma - Normal Saline.jpg',
+    tag: null, tagClass: '', cat: 'Other',
+    desc: 'Korean Pharma pharmaceutical-grade normal saline solution. 0.9% NaCl, 20mL — suitable for peptide reconstitution and injection preparation.',
+    variants: null,
+  },
+  'pink-syringe-preorder': {
+    name: 'Pink Insulin Syringe (10 pcs)', price: 50, origPrice: null, emoji: '💉', image: 'images/Pink Insulin Syringe (10pcs).jpg',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Other',
+    desc: 'Pink insulin syringe pack of 10. Pre-order batch — secure yours before the cut-off.',
+    variants: null,
+  },
   'glutathione-1200mg': {
     name: 'Korean Glutathione 1200mg', price: 700, origPrice: null, emoji: '✨', image: 'images/kgtt1200mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
