@@ -65,7 +65,7 @@ const PRODUCTS = {
   },
   'nad-100mg': {
     name: 'NAD+ 100mg', price: 1000, origPrice: null, emoji: '⚡', image: 'images/nad+100mg.jpg',
-    tag: null, tagClass: '', cat: 'Anti-Aging',
+    tag: null, tagClass: '', cat: 'Anti-Aging', soldOut: true,
     desc: 'Nicotinamide Adenine Dinucleotide — essential coenzyme for cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
       { label: 'Complete Set', desc: 'NAD+ vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
