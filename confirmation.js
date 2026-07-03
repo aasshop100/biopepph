@@ -141,6 +141,7 @@ function sendToSheet(order) {
     items:    items,
     total:    '₱' + order.total.toLocaleString('en-PH'),
     payment:  order.paymentMethod || '—',
+    delivery: order.deliveryLabel || '—',
     notes:    order.notes || '',
   };
 
