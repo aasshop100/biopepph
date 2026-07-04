@@ -10,8 +10,130 @@ const PROMO_CODES = {
 let cart         = JSON.parse(localStorage.getItem('biopep_cart')) || [];
 let appliedPromo = localStorage.getItem('biopep_promo') || null;
 
+// ─── J&T REGION RATES ─────────────────────────
+const JNT_REGION_FEES   = { ncr: 160, luzon: 190, visayas: 200, mindanao: 220 };
+const JNT_REGION_LABELS = { ncr: 'NCR', luzon: 'Luzon', visayas: 'Visayas', mindanao: 'Mindanao' };
+
+// ─── PROVINCE / CITY SEARCHABLE COMBOBOXES ────
+let selectedProvinceObj = null; // { code, name, region }
+
+function setupCombo({ inputId, hiddenId, listId, getOptions, onSelect, emptyText }) {
+  const input  = document.getElementById(inputId);
+  const hidden = document.getElementById(hiddenId);
+  const list   = document.getElementById(listId);
+  if (!input || !hidden || !list) return;
+
+  function render(query) {
+    const options = getOptions();
+    const q = (query || '').trim().toLowerCase();
+    const filtered = q ? options.filter(o => o.toLowerCase().includes(q)) : options;
+
+    list.innerHTML = '';
+    if (filtered.length === 0) {
+      list.innerHTML = `<div class="co-combo-empty">${emptyText || 'No matches found'}</div>`;
+    } else {
+      filtered.slice(0, 200).forEach(name => {
+        const item = document.createElement('div');
+        item.className = 'co-combo-option';
+        item.textContent = name;
+        item.addEventListener('mousedown', (e) => {
+          e.preventDefault();
+          input.value = name;
+          hidden.value = name;
+          list.classList.remove('show');
+          onSelect(name);
+        });
+        list.appendChild(item);
+      });
+    }
+    list.classList.add('show');
+  }
+
+  input.addEventListener('input', () => {
+    hidden.value = '';
+    render(input.value);
+  });
+
+  input.addEventListener('focus', () => {
+    if (!input.disabled) render(input.value);
+  });
+
+  input.addEventListener('blur', () => {
+    setTimeout(() => list.classList.remove('show'), 150);
+  });
+
+  return { render };
+}
+
+function resetCityCombo(placeholderText) {
+  const cityInput  = document.getElementById('coCityInput');
+  const cityHidden = document.getElementById('coCity');
+  cityInput.value  = '';
+  cityHidden.value = '';
+  cityInput.placeholder = placeholderText;
+  cityInput.disabled = !selectedProvinceObj;
+}
+
+function initProvinceCombo() {
+  if (typeof PH_PROVINCES === 'undefined') return;
+
+  setupCombo({
+    inputId: 'coProvinceInput',
+    hiddenId: 'coProvince',
+    listId: 'coProvinceList',
+    getOptions: () => PH_PROVINCES.map(p => p.name),
+    emptyText: 'No province found',
+    onSelect: (name) => {
+      selectedProvinceObj = PH_PROVINCES.find(p => p.name === name) || null;
+      resetCityCombo('Type to search city / municipality...');
+      updateJntFee();
+    },
+  });
+}
+
+function initCityCombo() {
+  setupCombo({
+    inputId: 'coCityInput',
+    hiddenId: 'coCity',
+    listId: 'coCityList',
+    getOptions: () => {
+      if (!selectedProvinceObj || typeof PH_CITIES_BY_PROVINCE === 'undefined') return [];
+      return PH_CITIES_BY_PROVINCE[selectedProvinceObj.code] || [];
+    },
+    emptyText: 'No city found',
+    onSelect: () => {},
+  });
+}
+
+function updateJntFee() {
+  const jntInput = document.querySelector('input[name="coDelivery"][value="jnt"]');
+  if (!jntInput) return;
+
+  const region = selectedProvinceObj?.region || null;
+  const fee    = region ? JNT_REGION_FEES[region] : 160;
+  const label  = region ? JNT_REGION_LABELS[region] : null;
+
+  jntInput.dataset.fee = fee;
+
+  const feeDisplay = document.getElementById('jntFeeDisplay');
+  const feeSummary = document.getElementById('jntFeeSummary');
+  const detectedNote = document.getElementById('jntDetectedNote');
+  if (feeDisplay) feeDisplay.textContent = `₱${fee}`;
+  if (feeSummary) feeSummary.textContent = `Flat rate — ₱${fee}`;
+  if (detectedNote) {
+    detectedNote.textContent = label
+      ? `📌 Detected area: ${label} — J&T fee automatically set to ₱${fee}.`
+      : `📌 Select your Province below and we'll auto-select the right rate for your area.`;
+  }
+
+  if (jntInput.checked) updateTotals();
+}
+
 // ─── INIT ─────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
+  initProvinceCombo();
+  initCityCombo();
+
   if (cart.length === 0) {
     document.getElementById('coCartItems').style.display = 'none';
     document.getElementById('coEmptyMsg').style.display  = 'block';
@@ -145,15 +267,17 @@ function validateForm() {
     { id: 'coName',   label: 'Full Name'         },
     { id: 'coPhone',  label: 'Phone Number'       },
     { id: 'coStreet', label: 'Street & Barangay'  },
-    { id: 'coCity',   label: 'City / Municipality'},
+    { id: 'coProvince', label: 'Province',          display: 'coProvinceInput' },
+    { id: 'coCity',   label: 'City / Municipality', display: 'coCityInput'     },
   ];
   let valid = true;
   required.forEach(f => {
     const el = document.getElementById(f.id);
-    el.classList.remove('error');
+    const displayEl = document.getElementById(f.display || f.id);
+    displayEl.classList.remove('error');
     if (!el.value.trim()) {
-      el.classList.add('error');
-      el.addEventListener('input', () => el.classList.remove('error'), { once: true });
+      displayEl.classList.add('error');
+      displayEl.addEventListener('input', () => displayEl.classList.remove('error'), { once: true });
       valid = false;
     }
   });

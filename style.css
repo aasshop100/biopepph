@@ -862,6 +862,8 @@ h2 span { color: var(--pink-dark); }
 }
 .pcard-tag.new { background: #7c3aed; }
 .pcard-tag.sold-out { background: #6b7280; }
+.pcard-tag.preorder { background: #d97706; }
+.pcard-cutoff { font-size: 0.7rem; color: #d97706; font-weight: 600; margin: 4px 0 0; }
 .btn-add.sold-out { background: #d1d5db; color: #9ca3af; cursor: not-allowed; pointer-events: none; }
 .soldout-overlay {
   position: absolute;
@@ -1855,6 +1857,7 @@ footer {
 .co-req { color: var(--pink-dark); }
 .co-opt { color: var(--grey); font-weight: 400; }
 .co-field input,
+.co-field select,
 .co-field textarea {
   font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
@@ -1867,9 +1870,12 @@ footer {
   background: var(--white);
   resize: none;
 }
+.co-field select:disabled { opacity: 0.6; cursor: not-allowed; }
 .co-field input:focus,
+.co-field select:focus,
 .co-field textarea:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(244,114,182,0.12); }
-.co-field input.error { border-color: #dc2626; }
+.co-field input.error,
+.co-field select.error { border-color: #dc2626; }
 .co-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; min-width: 0; }
 .co-field-row .co-field { min-width: 0; }
 
@@ -2053,7 +2059,7 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
 .co-field label { font-size: 0.82rem; font-weight: 600; color: var(--charcoal); }
 .co-req { color: var(--pink-dark); }
 .co-opt { color: var(--grey); font-weight: 400; font-size: 0.78rem; }
-.co-field input, .co-field textarea {
+.co-field input, .co-field select, .co-field textarea {
   padding: 10px 13px;
   border: 1.5px solid var(--pink-border);
   border-radius: 10px;
@@ -2064,8 +2070,41 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   transition: var(--transition);
   outline: none;
 }
-.co-field input:focus, .co-field textarea:focus { border-color: var(--pink-dark); box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
-.co-field input.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+.co-field select:disabled, .co-field input:disabled { opacity: 0.6; cursor: not-allowed; }
+.co-field input:focus, .co-field select:focus, .co-field textarea:focus { border-color: var(--pink-dark); box-shadow: 0 0 0 3px rgba(236,72,153,0.1); }
+.co-field input.error, .co-field select.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+
+/* Searchable Province/City combobox */
+.co-combo-field { position: relative; }
+.co-combo-wrap { position: relative; }
+.co-combo-wrap input[type="text"] { width: 100%; box-sizing: border-box; }
+.co-combo-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border: 1.5px solid var(--pink-border);
+  border-radius: 10px;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 40;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.co-combo-list.show { display: block; }
+.co-combo-option {
+  padding: 9px 13px;
+  font-size: 0.85rem;
+  color: var(--charcoal);
+  cursor: pointer;
+}
+.co-combo-option:hover,
+.co-combo-option.active { background: var(--pink-light); }
+.co-combo-empty { padding: 9px 13px; font-size: 0.82rem; color: var(--grey); }
+
+/* .page-card clips overflow for rounded corners — this card needs the combobox dropdown to escape it */
+#coDetailsCard { overflow: visible; }
 .co-field textarea { resize: vertical; min-height: 64px; }
 .co-field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 

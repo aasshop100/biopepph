@@ -69,7 +69,7 @@
               <span class="co-del-icon">📦</span>
               <div class="co-del-info">
                 <strong>VIA J&T EXPRESS</strong>
-                <span>Flat rate starting at ₱160</span>
+                <span id="jntFeeSummary">Flat rate starting at ₱160</span>
                 <span class="co-del-rates">
                   Note: Our packaging fits J&T medium pouch.<br>
                   Rates:<br>
@@ -77,10 +77,10 @@
                   Luzon – ₱190<br>
                   Visayas – ₱200<br>
                   Mindanao – ₱220<br><br>
-                  📌 Base fee of ₱160 is charged at checkout. Any remaining balance based on your location is to be settled by the buyer.
+                  <span id="jntDetectedNote">📌 Enter your City/Province below and we'll auto-select the right rate for your area.</span>
                 </span>
               </div>
-              <span class="co-del-fee">₱160</span>
+              <span class="co-del-fee" id="jntFeeDisplay">₱160</span>
             </div>
           </label>
 
@@ -100,7 +100,7 @@
       </section>
 
       <!-- ====== CUSTOMER DETAILS + DELIVERY ADDRESS ====== -->
-      <section class="page-card">
+      <section class="page-card" id="coDetailsCard">
         <h2>Your Details</h2>
         <div class="co-form">
           <div class="co-field">
@@ -116,13 +116,21 @@
             <input type="text" id="coStreet" placeholder="123 Rizal St., Brgy. Santo Niño" autocomplete="address-line1">
           </div>
           <div class="co-field-row">
-            <div class="co-field">
-              <label for="coCity">City / Municipality <span class="co-req">*</span></label>
-              <input type="text" id="coCity" placeholder="Makati City" autocomplete="address-level2">
+            <div class="co-field co-combo-field">
+              <label for="coProvinceInput">Province <span class="co-req">*</span></label>
+              <div class="co-combo-wrap">
+                <input type="text" id="coProvinceInput" placeholder="Type to search province..." autocomplete="off">
+                <input type="hidden" id="coProvince">
+                <div class="co-combo-list" id="coProvinceList"></div>
+              </div>
             </div>
-            <div class="co-field">
-              <label for="coProvince">Province</label>
-              <input type="text" id="coProvince" placeholder="Metro Manila" autocomplete="address-level1">
+            <div class="co-field co-combo-field">
+              <label for="coCityInput">City / Municipality <span class="co-req">*</span></label>
+              <div class="co-combo-wrap">
+                <input type="text" id="coCityInput" placeholder="Select province first" autocomplete="off" disabled>
+                <input type="hidden" id="coCity">
+                <div class="co-combo-list" id="coCityList"></div>
+              </div>
             </div>
           </div>
           <div class="co-field">
@@ -161,6 +169,7 @@
     </div>
   </main>
 
+  <script src="ph-address-data.js"></script>
   <script src="checkout.js"></script>
 </body>
 </html>
