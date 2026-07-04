@@ -38,7 +38,7 @@ const PRODUCTS = {
   },
   'kpv-10mg': {
     name: 'KPV 10mg', price: 1250, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
-    tag: null, tagClass: '', cat: 'Healing',
+    tag: null, tagClass: '', cat: 'Healing', soldOut: true,
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
       { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
