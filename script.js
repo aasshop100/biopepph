@@ -125,7 +125,10 @@ const PRODUCTS = {
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose Korean glutathione for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade — one of the most potent whitening formulations available.',
     variants: [
-      { label: 'Complete Set', desc: 'Gtt Korean 1200mg + Saline water 50ml + 4x 1ml 25Gx5/8" needle + 4x 25G x 1" needle replacement', priceAdd: 0    },
+      { label: 'Complete Set - SUBQ', desc: '', priceAdd: 0    },
+      { label: 'Complete Set - IM - Option 1', desc: '', priceAdd: 0    },
+      { label: 'Complete Set - IM - Option 2', desc: '', priceAdd: 0    },
+      { label: 'Complete Set - IM - Option 3', desc: '', priceAdd: 700  },
       { label: 'Vial Only',    desc: 'Glutathione vial only',                                                                              priceAdd: -150 },
     ],
   },
