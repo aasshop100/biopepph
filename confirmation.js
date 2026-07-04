@@ -96,6 +96,7 @@ function renderContactLinks(order) {
     items,
     ``,
     `💰 Subtotal:  ₱${order.subtotal.toLocaleString('en-PH')}`,
+    order.deliveryFee > 0 ? `🚚 Shipping:  ₱${order.deliveryFee.toLocaleString('en-PH')} (${order.deliveryLabel || 'Delivery'})` : null,
     order.discount > 0 ? `🎟️ Discount:  -₱${order.discount.toLocaleString('en-PH')}` : null,
     `💳 TOTAL:     ₱${order.total.toLocaleString('en-PH')}`,
     ``,
@@ -133,16 +134,18 @@ function sendToSheet(order) {
   });
 
   const payload = {
-    orderId:  order.orderId,
-    date:     date,
-    name:     order.name,
-    phone:    order.phone,
-    address:  address,
-    items:    items,
-    total:    '₱' + order.total.toLocaleString('en-PH'),
-    payment:  order.paymentMethod || '—',
-    delivery: order.deliveryLabel || '—',
-    notes:    order.notes || '',
+    orderId:      order.orderId,
+    date:         date,
+    name:         order.name,
+    phone:        order.phone,
+    address:      address,
+    items:        items,
+    subtotal:     '₱' + order.subtotal.toLocaleString('en-PH'),
+    shippingFee:  order.deliveryFee > 0 ? '₱' + order.deliveryFee.toLocaleString('en-PH') : '',
+    total:        '₱' + order.total.toLocaleString('en-PH'),
+    payment:      order.paymentMethod || '—',
+    delivery:     order.deliveryLabel || '—',
+    notes:        order.notes || '',
   };
 
   fetch(WEBHOOK_URL, {
