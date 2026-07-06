@@ -5,17 +5,18 @@ const VIBER_NUMBER   = '+639171132273';
 const WHATSAPP_NUMBER = '639171132273';
 
 // ─── PRODUCT DATA ─────────────────────────────
-// variants: Complete Set = listed price (priceAdd:0), Vial Set = listed price - 200 (priceAdd:-200)
+// variants: Complete Set = listed price (priceAdd:0), Vial and Bac = complete - 100 (priceAdd:-100), Vial Only = complete - 200 (priceAdd:-200)
 const PRODUCTS = {
 
   // ── AVAILABLE PRODUCTS ────────────────────────
   'retro-10mg': {
-    name: 'Retatrutide 15mg', price: 1600, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
+    name: 'Retatrutide 15mg', price: 1650, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
     desc: 'Triple receptor agonist targeting GLP-1, GIP, and Glucagon pathways simultaneously. Clinical trials report up to 24% body weight reduction — the most advanced weight loss peptide currently available.',
     variants: [
-      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
   'tirze-10mg': {
@@ -23,26 +24,29 @@ const PRODUCTS = {
     tag: null, tagClass: '', cat: 'Weight Loss',
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
     variants: [
-      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
   'tirze-30mg': {
-    name: 'Tirzepatide 30mg', price: 1350, origPrice: null, emoji: '💉', image: 'images/tirzepatide30mg.jpg',
+    name: 'Tirzepatide 30mg', price: 1400, origPrice: null, emoji: '💉', image: 'images/tirzepatide30mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
     desc: 'Higher-dose dual GLP-1/GIP agonist for patients who have completed the 15mg titration phase. Designed for accelerated and sustained weight loss at advanced protocol stages.',
     variants: [
-      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                     priceAdd: -200 },
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
   'kpv-10mg': {
-    name: 'KPV 10mg', price: 1250, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
+    name: 'KPV 10mg', price: 1500, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
     tag: null, tagClass: '', cat: 'Healing', soldOut: true,
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
-      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
   'snap8-10mg': {
@@ -50,17 +54,19 @@ const PRODUCTS = {
     tag: null, tagClass: '', cat: 'Anti-Aging',
     desc: 'Octapeptide-2 — peptide alternative to Botox. Reduces the depth of expression lines by relaxing facial muscle contractions. Popular in advanced anti-aging skincare protocols.',
     variants: [
-      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
   'ghkcu-50mg': {
-    name: 'GHK-Cu 50mg', price: 1120, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
+    name: 'GHK-Cu 50mg', price: 1000, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
     tag: 'Top Pick', tagClass: '', cat: 'Anti-Aging',
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
-      { label: 'Complete Set', desc: 'Peptide vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'Peptide Vial + BAC Water 3mL only',                                        priceAdd: -200 },
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
   'nad-100mg': {
@@ -68,8 +74,49 @@ const PRODUCTS = {
     tag: null, tagClass: '', cat: 'Anti-Aging', soldOut: true,
     desc: 'Nicotinamide Adenine Dinucleotide — essential coenzyme for cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
-      { label: 'Complete Set', desc: 'NAD+ vial + bacteriostatic water + insulin syringe', priceAdd: 0    },
-      { label: 'Vial Set',     desc: 'NAD+ Vial + BAC Water 3mL only',                                     priceAdd: -200 },
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + insulin syringe',                  priceAdd: 0    },
+    ],
+  },
+  'nad-500mg': {
+    name: 'NAD+ 500mg', price: 1600, origPrice: null, emoji: '⚡', image: 'images/nad+500mg.jpg',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'Higher-dose Nicotinamide Adenine Dinucleotide for enhanced cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -300 },
+      { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -200 },
+      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + insulin syringe',                  priceAdd: 0    },
+    ],
+  },
+  'cuv-110mg': {
+    name: 'GHK-CU 100mg + KPV 10mg', price: 1800, origPrice: null, emoji: '✨', image: 'images/cuv110mg.jpg',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'Combination peptide blend — GHK-Cu 100mg for collagen synthesis and skin renewal, plus KPV 10mg for anti-inflammatory and antimicrobial support. Dual-action formula for skin and gut health.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+    ],
+  },
+  'nad-1000mg': {
+    name: 'NAD+ 1000mg', price: 1700, origPrice: null, emoji: '⚡', image: 'images/nad+1000mg.jpg',
+    tag: 'Soon', tagClass: 'sold-out', cat: 'Anti-Aging', soldOut: 'SOON',
+    desc: 'Highest-dose Nicotinamide Adenine Dinucleotide for maximum cellular energy production and DNA repair support. Coming soon.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -200 },
+      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + insulin syringe',                  priceAdd: 0    },
+    ],
+  },
+  'cagri-10mg-soon': {
+    name: 'Cagrilintide 10mg', price: 1900, origPrice: null, emoji: '💉', image: 'images/cagrilintide10mg.jpg',
+    tag: 'Soon', tagClass: 'sold-out', cat: 'Weight Loss', soldOut: 'SOON',
+    desc: 'Amylin analog for appetite regulation and satiety enhancement. Often paired with GLP-1 therapy for synergistic weight loss. Coming soon.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
   'pharma-bac-10ml': {
@@ -139,13 +186,13 @@ const PRODUCTS = {
     variants: null,
   },
   'glutathione-1200mg-box-preorder': {
-    name: 'Korean Glutathione 1200mg Box', price: 3200, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
+    name: 'Korean Glutathione 1200mg Box Pre-Order', price: 3200, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', soldOut: 'Closed',
     desc: 'Premium box set of Korean Glutathione 1200mg for extended whitening protocols. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
     variants: null,
   },
   'glutathione-1200mg-box-preorder-10x': {
-    name: 'Korean Glutathione 1200mg Box (10x)', price: 30000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
+    name: 'Korean Glutathione 1200mg Box Pre-Order 10x', price: 30000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', soldOut: 'Closed',
     desc: 'Bulk pre-order of 10 boxes of Korean Glutathione 1200mg. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
     variants: null,
@@ -153,7 +200,6 @@ const PRODUCTS = {
 
   // ── HIDDEN (not currently available) ──────────
   'sema-5mg':       { hidden: true, name: 'Semaglutide 5mg',        price: 2500, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
-  'cagri-10mg':     { hidden: true, name: 'Cagrilintide 10mg',      price: 3800, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
   'survo-10mg':     { hidden: true, name: 'Survodutide 10mg',       price: 4200, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
   'bpc157-5mg':     { hidden: true, name: 'BPC-157 5mg',            price: 1800, emoji: '🧬', cat: 'Healing',    desc: '', variants: null },
   'tb500-5mg':      { hidden: true, name: 'TB-500 5mg',             price: 2000, emoji: '🧬', cat: 'Healing',    desc: '', variants: null },
@@ -470,7 +516,7 @@ function renderAlsoLike(currentId) {
     div.innerHTML = `
       ${thumb}
       <p class="pmodal-also-name">${p.name}</p>
-      <p class="pmodal-also-price">${p.variants ? '<small style="font-size:.75em;opacity:.7">from </small>' : ''}₱${(p.variants ? p.price + p.variants[1].priceAdd : p.price).toLocaleString('en-PH')}</p>
+      <p class="pmodal-also-price">${p.variants ? '<small style="font-size:.75em;opacity:.7">from </small>' : ''}₱${(p.variants ? p.price + Math.min(...p.variants.map(v => v.priceAdd)) : p.price).toLocaleString('en-PH')}</p>
     `;
     div.addEventListener('click', () => {
       document.getElementById('pmodal').scrollTop = 0;
@@ -598,12 +644,180 @@ function initSmoothScroll() {
   });
 }
 
+// ─── LIVE PRICE/STOCK SYNC (Google Sheet) ─────
+// Sheet must be published/shared as "Anyone with the link — Viewer".
+// Columns: Name | SRP vial only | SRP vial/bac | SRP complete set | STOCKS LEFT | (tag, unused)
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1uzA0Hyg0Y-c9irJKrL-IFZXjxrGjDM_2ozueOP6B3mo/export?format=csv&gid=0';
+
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else {
+      if (c === '"') inQuotes = true;
+      else if (c === ',') { row.push(field); field = ''; }
+      else if (c === '\r') { /* skip */ }
+      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+      else field += c;
+    }
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+function parsePriceCell(str) {
+  if (!str) return null;
+  const n = parseFloat(str.replace(/[₱,]/g, '').trim());
+  return isNaN(n) ? null : n;
+}
+
+function parseStockCell(str) {
+  const s = (str || '').trim();
+  if (!s) return undefined; // no stock info given — leave product's soldOut untouched
+  if (/^sold\s*out$/i.test(s)) return true;
+  if (/^soon$/i.test(s)) return 'SOON';
+  if (/^closed$/i.test(s)) return 'Closed';
+  const n = parseFloat(s.replace(/,/g, ''));
+  if (!isNaN(n)) return n <= 0 ? true : false;
+  return undefined; // unrecognized text — don't touch
+}
+
+function normalizeName(name) {
+  return (name || '').replace(/^\([^)]*\)\s*/, '').trim().toLowerCase();
+}
+
+async function syncCatalogFromSheet() {
+  let rows;
+  try {
+    const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    rows = parseCSV(await res.text());
+  } catch (err) {
+    console.warn('Sheet sync skipped — could not fetch pricing sheet:', err.message);
+    return;
+  }
+
+  const productList = Object.entries(PRODUCTS).filter(([, p]) => !p.hidden);
+  const touchedIds = new Set();
+
+  rows.slice(1).forEach(row => {
+    const rawName = (row[0] || '').trim();
+    if (!rawName) return; // spacer row
+
+    const vialOnly = parsePriceCell(row[1]);
+    const vialBac  = parsePriceCell(row[2]);
+    const complete = parsePriceCell(row[3]);
+    const stock    = parseStockCell(row[4]);
+    const normSheetName = normalizeName(rawName);
+
+    // Case 1: full 3-tier row (all three price columns present) — matches a top-level product
+    if (vialOnly !== null && vialBac !== null && complete !== null) {
+      const match = productList.find(([, p]) => normalizeName(p.name) === normSheetName);
+      if (!match) { console.warn('Sheet sync: no product match for', rawName); return; }
+      const [id, prod] = match;
+      prod.price = complete;
+      (prod.variants || []).forEach(v => {
+        if (v.label === 'Vial Only') v.priceAdd = vialOnly - complete;
+        else if (v.label === 'Vial and Bac') v.priceAdd = vialBac - complete;
+        else if (v.label === 'Complete Set') v.priceAdd = 0;
+      });
+      if (stock !== undefined) prod.soldOut = stock === false ? false : stock;
+      touchedIds.add(id);
+      return;
+    }
+
+    // Case 2: single price present — either a flat-price product, or "Product Name - Variant Label" row
+    const singlePrice = [vialOnly, vialBac, complete].find(v => v !== null);
+    if (singlePrice === undefined) return;
+
+    const subVariantMatch = productList.find(([, p]) =>
+      p.variants && normSheetName.startsWith(normalizeName(p.name) + ' - ')
+    );
+    if (subVariantMatch) {
+      const [id, prod] = subVariantMatch;
+      const suffix = rawName.slice(prod.name.length + 3).trim().toLowerCase();
+      const variant = prod.variants.find(v => v.label.toLowerCase() === suffix);
+      if (variant) { variant.priceAdd = singlePrice - prod.price; touchedIds.add(id); }
+      else console.warn('Sheet sync: no variant match for', rawName);
+      return;
+    }
+
+    const flatMatch = productList.find(([, p]) => !p.variants && normalizeName(p.name) === normSheetName);
+    if (flatMatch) {
+      const [id, prod] = flatMatch;
+      prod.price = singlePrice;
+      if (stock !== undefined) prod.soldOut = stock === false ? false : stock;
+      touchedIds.add(id);
+    } else {
+      console.warn('Sheet sync: no product match for', rawName);
+    }
+  });
+
+  touchedIds.forEach(refreshProductCardUI);
+}
+
+function refreshProductCardUI(id) {
+  const prod = PRODUCTS[id];
+  const card = document.querySelector(`.pcard[data-id="${id}"]`);
+  if (!prod || !card) return;
+
+  const priceEl = card.querySelector('.pcard-price');
+  if (priceEl) {
+    const shownPrice = prod.variants
+      ? prod.price + Math.min(...prod.variants.map(v => v.priceAdd))
+      : prod.price;
+    priceEl.innerHTML = (prod.variants
+      ? '<small style="font-size:.65em;font-weight:500;opacity:.7">from </small>'
+      : '') + `₱${shownPrice.toLocaleString('en-PH')}`;
+  }
+
+  const imgWrap = card.querySelector('.pcard-img');
+  const btn     = card.querySelector('.btn-add');
+  let overlay   = imgWrap?.querySelector('.soldout-overlay');
+
+  if (prod.soldOut) {
+    const label = typeof prod.soldOut === 'string' ? prod.soldOut : 'Sold Out';
+    if (imgWrap) {
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'soldout-overlay';
+        overlay.innerHTML = '<span></span>';
+        imgWrap.appendChild(overlay);
+      }
+      overlay.querySelector('span').textContent = label;
+    }
+    if (btn) { btn.classList.add('sold-out'); btn.disabled = true; btn.textContent = label; }
+  } else {
+    if (overlay) overlay.remove();
+    if (btn) {
+      btn.classList.remove('sold-out');
+      btn.disabled = false;
+      btn.textContent = prod.tag === 'Pre-Order' ? 'Pre-Order' : 'Add';
+    }
+    // Product came back in stock — unlock a previously "SOON" card for clicking
+    if (card.classList.contains('pcard-locked')) {
+      card.classList.remove('pcard-locked');
+      const nameEl = card.querySelector('.pcard-name');
+      if (imgWrap) imgWrap.onclick = () => openModal(id);
+      if (nameEl)  nameEl.onclick  = () => openModal(id);
+      if (btn)     btn.onclick     = () => openModal(id);
+    }
+  }
+}
+
 // ─── INIT ─────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   initCategoryTabs();
   initMobileNav();
   initSmoothScroll();
+  syncCatalogFromSheet();
 
   // Search
   const searchBar   = document.getElementById('headerSearchBar');

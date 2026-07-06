@@ -1332,6 +1332,10 @@ footer {
 .pcard-name { cursor: pointer; }
 .pcard-name:hover { color: var(--pink-dark); }
 
+.pcard-locked .pcard-img,
+.pcard-locked .pcard-name { cursor: default; pointer-events: none; }
+.pcard-locked .pcard-name:hover { color: inherit; }
+
 /* ================================================
    PRODUCT DETAIL MODAL
    ================================================ */
