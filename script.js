@@ -799,6 +799,9 @@ function refreshProductCardUI(id) {
       btn.classList.remove('sold-out');
       btn.disabled = false;
       btn.textContent = prod.tag === 'Pre-Order' ? 'Pre-Order' : 'Add';
+      // A button that started out disabled/sold-out (e.g. KPV) has no onclick baked in —
+      // always (re)wire it here so a sold-out → in-stock flip is actually clickable.
+      btn.onclick = () => openModal(id);
     }
     // Product came back in stock — unlock a previously "SOON" card for clicking
     if (card.classList.contains('pcard-locked')) {
@@ -806,7 +809,6 @@ function refreshProductCardUI(id) {
       const nameEl = card.querySelector('.pcard-name');
       if (imgWrap) imgWrap.onclick = () => openModal(id);
       if (nameEl)  nameEl.onclick  = () => openModal(id);
-      if (btn)     btn.onclick     = () => openModal(id);
     }
   }
 }
