@@ -863,6 +863,7 @@ h2 span { color: var(--pink-dark); }
 .pcard-tag.new { background: #7c3aed; }
 .pcard-tag.sold-out { background: #6b7280; }
 .pcard-tag.preorder { background: #d97706; }
+.pcard-tag.sale { background: #e11d48; }
 .pcard-cutoff { font-size: 0.7rem; color: #d97706; font-weight: 600; margin: 4px 0 0; }
 .btn-add.sold-out { background: #d1d5db; color: #9ca3af; cursor: not-allowed; pointer-events: none; }
 .soldout-overlay {
@@ -1395,6 +1396,7 @@ footer {
 }
 .pmodal-badge.stack { background: linear-gradient(135deg, #a855f7, #ec4899); }
 .pmodal-badge.new { background: #7c3aed; }
+.pmodal-badge.sale { background: #e11d48; }
 .pmodal-badge:empty { display: none; }
 
 .pmodal-close {
@@ -2744,4 +2746,80 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   height: 220px;
   display: block;
   border: none;
+}
+
+/* ================================================
+   PROMO POPUP (time-limited sale banner)
+   ================================================ */
+.promo-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 4000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.promo-popup-overlay.active { opacity: 1; pointer-events: all; }
+
+.promo-popup {
+  position: relative;
+  max-width: 420px;
+  width: 100%;
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  transform: scale(0.92);
+  transition: transform 0.3s cubic-bezier(0.32, 0, 0.25, 1);
+}
+.promo-popup-overlay.active .promo-popup { transform: scale(1); }
+
+.promo-popup-img {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+}
+
+.promo-popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.55);
+  color: var(--white);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.promo-popup-close:hover { background: rgba(0,0,0,0.75); }
+
+.promo-popup-shop-btn {
+  display: block;
+  width: 100%;
+  border: none;
+  background: var(--pink-dark);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.promo-popup-shop-btn:hover { background: var(--pink-deep); }
+
+@media (max-width: 480px) {
+  .promo-popup { max-width: 92vw; }
 }

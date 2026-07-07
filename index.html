@@ -28,6 +28,14 @@
 </head>
 <body>
 
+<!-- ====== 7.7 SALE PROMO POPUP (time-limited — ends July 7 2026 midnight PH time) ====== -->
+<div class="promo-popup-overlay" id="promoPopupOverlay">
+  <div class="promo-popup">
+    <button class="promo-popup-close" id="promoPopupClose" aria-label="Close">&times;</button>
+    <img src="images/77sale.jpg" alt="BIOPEP PH 7.7 Sale — Korean Glutathione 1200mg" class="promo-popup-img" id="promoPopupImg">
+    <button class="promo-popup-shop-btn" id="promoPopupShopBtn">Shop the Sale →</button>
+  </div>
+</div>
 
 <!-- ====== MOBILE NAV ====== -->
 <div class="mnav-overlay" id="mnavOverlay"></div>
@@ -204,6 +212,26 @@
 
   <!-- Product Grid -->
   <div class="pgrid" id="productGrid">
+
+    <!-- 7.7 SALE (time-limited — ends July 7 2026 midnight PH time) -->
+    <div class="pgrid-item" data-cat="AntiAging" id="promoCardWrap">
+      <div class="pcard" data-id="promo-77-glutathione">
+        <div class="pcard-img" onclick="openModal('promo-77-glutathione')">
+          <img src="images/77sale.jpg" alt="7.7 Sale — Korean Glutathione 1200mg" class="pcard-photo">
+          <span class="pcard-tag sale">Sale</span>
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Anti-Aging</p>
+          <h6 class="pcard-name" onclick="openModal('promo-77-glutathione')">KGTT 1200 Glutaone — 7.7 Sale</h6>
+          <p class="pcard-desc">Ends tonight at midnight · Vial Only ₱400 · Box ₱3,500</p>
+          <p class="pcard-variants">Vial Only · Box (10 Vials)</p>
+          <div class="pcard-foot">
+            <span class="pcard-price"><small style="font-size:.65em;font-weight:500;opacity:.7">from </small>₱400</span>
+            <button class="btn-add" onclick="openModal('promo-77-glutathione')">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- ANTI-AGING -->
     <div class="pgrid-item" data-cat="AntiAging">

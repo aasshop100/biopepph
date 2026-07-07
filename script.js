@@ -9,6 +9,16 @@ const WHATSAPP_NUMBER = '639171132273';
 const PRODUCTS = {
 
   // ── AVAILABLE PRODUCTS ────────────────────────
+  // Time-limited promo — ends PROMO_777_END (see below). Not synced from the pricing sheet.
+  'promo-77-glutathione': {
+    name: 'KGTT 1200 Glutaone — 7.7 Sale', price: 400, origPrice: null, emoji: '✨', image: 'images/77sale.jpg',
+    tag: 'Sale', tagClass: 'sale', cat: 'Anti-Aging',
+    desc: '7.7 Sale — Korean Glutathione 1200mg (Glutaone), Ethical Drug, IM/IV. Promo ends 12 midnight tonight!',
+    variants: [
+      { label: 'Vial Only',        desc: 'Glutathione vial only', priceAdd: 0,    origPrice: 550  },
+      { label: 'Box (10 Vials)',   desc: '10 Vials box set',      priceAdd: 3100, origPrice: 4000 },
+    ],
+  },
   'retro-10mg': {
     name: 'Retatrutide 15mg', price: 1650, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
@@ -388,16 +398,6 @@ function openModal(id) {
   badge.textContent = prod.tag || '';
   badge.className   = 'pmodal-badge' + (prod.tagClass ? ` ${prod.tagClass}` : '');
 
-  const origEl = document.getElementById('pmodalOrigPrice');
-  const saveEl = document.getElementById('pmodalSaveBadge');
-  if (prod.origPrice) {
-    origEl.textContent = `₱${prod.origPrice.toLocaleString('en-PH')}`;
-    saveEl.textContent = `Save ₱${(prod.origPrice - prod.price).toLocaleString('en-PH')}`;
-  } else {
-    origEl.textContent = '';
-    saveEl.textContent = '';
-  }
-
   updateModalPrice();
   renderVariants(prod);
 
@@ -468,9 +468,20 @@ function selectVariant(idx) {
 function updateModalPrice() {
   const prod = PRODUCTS[modalCurrentId];
   if (!prod) return;
-  const add  = prod.variants ? (prod.variants[modalVariantIdx]?.priceAdd || 0) : 0;
-  const price = prod.price + add;
+  const variant = prod.variants ? prod.variants[modalVariantIdx] : null;
+  const price = prod.price + (variant?.priceAdd || 0);
   document.getElementById('pmodalPrice').textContent = `₱${price.toLocaleString('en-PH')}`;
+
+  const origEl = document.getElementById('pmodalOrigPrice');
+  const saveEl = document.getElementById('pmodalSaveBadge');
+  const origPrice = variant?.origPrice ?? prod.origPrice;
+  if (origPrice) {
+    origEl.textContent = `₱${origPrice.toLocaleString('en-PH')}`;
+    saveEl.textContent = `Save ₱${(origPrice - price).toLocaleString('en-PH')}`;
+  } else {
+    origEl.textContent = '';
+    saveEl.textContent = '';
+  }
 }
 
 function closeModal() {
@@ -813,12 +824,55 @@ function refreshProductCardUI(id) {
   }
 }
 
+// ─── 7.7 SALE PROMO POPUP ──────────────────────
+// Time-limited — auto-hides itself and the promo card after this date/time (PH time).
+const PROMO_777_END = new Date('2026-07-07T23:59:59+08:00').getTime();
+
+function initPromoPopup() {
+  if (Date.now() > PROMO_777_END) {
+    // Promo over — remove the popup, the promo card, and the PRODUCTS entry itself so it
+    // can't resurface in search or "You may also like" after it's no longer purchasable.
+    document.getElementById('promoPopupOverlay')?.remove();
+    document.getElementById('promoCardWrap')?.remove();
+    delete PRODUCTS['promo-77-glutathione'];
+    return;
+  }
+
+  document.getElementById('promoPopupClose')?.addEventListener('click', closePromoPopup);
+  document.getElementById('promoPopupOverlay')?.addEventListener('click', e => {
+    if (e.target.id === 'promoPopupOverlay') closePromoPopup();
+  });
+  const goToPromoCard = () => {
+    closePromoPopup();
+    document.getElementById('promoCardWrap')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+  document.getElementById('promoPopupShopBtn')?.addEventListener('click', goToPromoCard);
+  document.getElementById('promoPopupImg')?.addEventListener('click', goToPromoCard);
+
+  if (!sessionStorage.getItem('biopep_promo_777_closed')) {
+    setTimeout(() => {
+      document.getElementById('promoPopupOverlay')?.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }, 500);
+  }
+}
+
+function closePromoPopup() {
+  document.getElementById('promoPopupOverlay')?.classList.remove('active');
+  if (!document.getElementById('cartDrawer')?.classList.contains('open') &&
+      !document.getElementById('pmodal')?.classList.contains('open')) {
+    document.body.style.overflow = '';
+  }
+  sessionStorage.setItem('biopep_promo_777_closed', '1');
+}
+
 // ─── INIT ─────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   renderCart();
   initCategoryTabs();
   initMobileNav();
   initSmoothScroll();
+  initPromoPopup();
   syncCatalogFromSheet();
 
   // Search
