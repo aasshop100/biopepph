@@ -189,6 +189,18 @@ const PRODUCTS = {
       { label: 'Vial Only',    desc: 'Glutathione vial only',                                                                              priceAdd: -150 },
     ],
   },
+  'glutathione-1200mg-vialcase': {
+    name: 'KGTT 1200mg w/ Vial Case', price: 900, origPrice: null, emoji: '✨', image: 'images/kgtt1200mg-vialcase.jpg',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'High-dose Korean glutathione for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade, now with a protective pink vial case for safer storage and travel.',
+    variants: [
+      { label: 'Complete Set - SUBQ - w/ Vial Case', desc: '', priceAdd: 0    },
+      { label: 'Complete Set - IM - Option 1 - w/ Vial Case', desc: '', priceAdd: 0    },
+      { label: 'Complete Set - IM - Option 2 - w/ Vial Case', desc: '', priceAdd: 0    },
+      { label: 'Complete Set - IM - Option 3 - w/ Vial Case', desc: '', priceAdd: 700  },
+      { label: 'Vial Only - w/ Vial Case', desc: 'Glutathione vial + case only',                                                            priceAdd: -150 },
+    ],
+  },
   'glutathione-1200mg-box': {
     name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
