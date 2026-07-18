@@ -231,6 +231,17 @@ const PRODUCTS = {
       { label: 'Vial Only - w/ Vial Case', desc: 'Glutathione vial + case only',                                                            priceAdd: -150 },
     ],
   },
+  'fuan-glutathione-1500mg': {
+    name: 'Fuan Glutathione 1500mg', price: 900, origPrice: null, emoji: '✨', cat: 'Anti-Aging',
+    tag: 'New', tagClass: 'new',
+    desc: 'High-dose Fuan glutathione for skin brightening, antioxidant protection, and cellular detox. 1500mg pharmaceutical-grade formulation.',
+    variants: [
+      { label: 'Complete Set - SUBQ', desc: '', priceAdd: 0    },
+      { label: 'Complete Set - IM - Option 1', desc: '', priceAdd: -100 },
+      { label: 'Complete Set - IM - Option 2', desc: '', priceAdd: -100 },
+      { label: 'Vial Only', desc: 'Glutathione vial only', priceAdd: -200 },
+    ],
+  },
   'glutathione-1200mg-box': {
     name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
