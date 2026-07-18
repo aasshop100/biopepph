@@ -109,6 +109,16 @@ const PRODUCTS = {
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
+  'cuv-55mg': {
+    name: 'GHK-CU 50mg + KPV 5mg', price: 1300, origPrice: null, emoji: '✨', cat: 'Anti-Aging',
+    tag: 'New', tagClass: 'new',
+    desc: 'Combination peptide blend — GHK-Cu 50mg for collagen synthesis and skin renewal, plus KPV 5mg for anti-inflammatory and antimicrobial support. Lower-dose dual-action formula for skin and gut health.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+    ],
+  },
   'nad-1000mg': {
     name: 'NAD+ 1000mg', price: 1700, origPrice: null, emoji: '⚡', image: 'images/nad+1000mg.jpg',
     tag: 'Soon', tagClass: 'sold-out', cat: 'Anti-Aging', soldOut: 'SOON',
@@ -123,6 +133,16 @@ const PRODUCTS = {
     name: 'Cagrilintide 10mg', price: 1900, origPrice: null, emoji: '💉', image: 'images/cagrilintide10mg.jpg',
     tag: 'Soon', tagClass: 'sold-out', cat: 'Weight Loss', soldOut: 'SOON',
     desc: 'Amylin analog for appetite regulation and satiety enhancement. Often paired with GLP-1 therapy for synergistic weight loss. Coming soon.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+    ],
+  },
+  '5-amino-1mq-5mg': {
+    name: '5-Amino-1MQ 5mg', price: 1100, origPrice: null, emoji: '🔥', cat: 'Weight Loss',
+    tag: 'New', tagClass: 'new',
+    desc: 'NNMT enzyme inhibitor that supports fat metabolism and lean muscle preservation. Popular pairing with GLP-1/GIP therapies for enhanced fat loss.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
