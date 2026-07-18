@@ -290,15 +290,15 @@ function saveCart() {
 
 // ─── ADD ITEM ─────────────────────────────────
 // variantLabel is optional (e.g. "Complete Kit")
-function addItem(id, name, price, variantLabel) {
+function addItem(id, name, price, variantLabel, qty = 1) {
   const cartId = variantLabel ? `${id}__${variantLabel}` : id;
   const displayName = variantLabel ? `${name} (${variantLabel})` : name;
   const existing = cart.find(i => i.id === cartId);
   if (existing) {
     if (existing.qty >= 20) { showToast('⚠️ Maximum 20 per item.'); return; }
-    existing.qty += 1;
+    existing.qty = Math.min(20, existing.qty + qty);
   } else {
-    cart.push({ id: cartId, baseId: id, name: displayName, price, qty: 1 });
+    cart.push({ id: cartId, baseId: id, name: displayName, price, qty: Math.min(20, qty) });
   }
   saveCart();
   renderCart();
@@ -597,7 +597,7 @@ function addFromModal() {
   if (!prod) return;
   const variant = prod.variants ? prod.variants[modalVariantIdx] : null;
   const price   = prod.price + (variant?.priceAdd || 0);
-  addItem(modalCurrentId, prod.name, price, variant?.label || null);
+  addItem(modalCurrentId, prod.name, price, variant?.label || null, modalQty);
   closeModal();
 }
 
