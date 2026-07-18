@@ -69,6 +69,16 @@ const PRODUCTS = {
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
+  'aod-9604-5mg': {
+    name: 'AOD-9604 5mg', price: 1300, origPrice: null, emoji: '🔥', image: 'images/aod.jpg', cat: 'Weight Loss',
+    tag: 'New', tagClass: 'new',
+    desc: 'Modified fragment of human growth hormone (HGH 176-191) studied for fat metabolism support without the growth-promoting effects of full HGH. Often paired with GLP-1/GIP therapies.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+    ],
+  },
   'ghkcu-50mg': {
     name: 'GHK-Cu 50mg', price: 1000, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
     tag: 'Top Pick', tagClass: '', cat: 'Anti-Aging',
