@@ -110,7 +110,7 @@ const PRODUCTS = {
     ],
   },
   'cuv-55mg': {
-    name: 'GHK-CU 50mg + KPV 5mg', price: 1300, origPrice: null, emoji: '✨', cat: 'Anti-Aging',
+    name: 'GHK-CU 50mg + KPV 5mg', price: 1300, origPrice: null, emoji: '✨', image: 'images/cuv55mg.jpg', cat: 'Anti-Aging',
     tag: 'New', tagClass: 'new',
     desc: 'Combination peptide blend — GHK-Cu 50mg for collagen synthesis and skin renewal, plus KPV 5mg for anti-inflammatory and antimicrobial support. Lower-dose dual-action formula for skin and gut health.',
     variants: [
@@ -140,7 +140,7 @@ const PRODUCTS = {
     ],
   },
   '5-amino-1mq-5mg': {
-    name: '5-Amino-1MQ 5mg', price: 1100, origPrice: null, emoji: '🔥', cat: 'Weight Loss',
+    name: '5-Amino-1MQ 5mg', price: 1100, origPrice: null, emoji: '🔥', image: 'images/5amino.jpg', cat: 'Weight Loss',
     tag: 'New', tagClass: 'new',
     desc: 'NNMT enzyme inhibitor that supports fat metabolism and lean muscle preservation. Popular pairing with GLP-1/GIP therapies for enhanced fat loss.',
     variants: [
