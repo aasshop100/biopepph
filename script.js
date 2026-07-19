@@ -232,7 +232,7 @@ const PRODUCTS = {
     ],
   },
   'fuan-glutathione-1500mg': {
-    name: 'Fuan Glutathione 1500mg', price: 900, origPrice: null, emoji: '✨', cat: 'Anti-Aging',
+    name: 'Fuan Glutathione 1500mg', price: 900, origPrice: null, emoji: '✨', image: 'images/fuan.jpg', cat: 'Anti-Aging',
     tag: 'New', tagClass: 'new',
     desc: 'High-dose Fuan glutathione for skin brightening, antioxidant protection, and cellular detox. 1500mg pharmaceutical-grade formulation.',
     variants: [
