@@ -260,6 +260,12 @@ const PRODUCTS = {
     desc: 'KGTT Glutaone 1200mg — Bulk (10 kits)\nPer Kit: 10 vials\n❌ BAC Water is NOT included\n💰 ₱30,000 total (10 kits)\n🚚 ETA to PH: 5 days\n📅 Order Deadline: August 2',
     variants: null,
   },
+  'fuan-glutathione-1500mg-box-preorder': {
+    name: 'FUAN Reduced Glutathione 1500mg Box Pre-Order', price: 3600, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱3,600 per kit\n🚚 ETA to PH: 3 weeks\n📅 Order Deadline: August 7',
+    variants: null,
+  },
 
   // ── HIDDEN (not currently available) ──────────
   'sema-5mg':       { hidden: true, name: 'Semaglutide 5mg',        price: 2500, emoji: '💉', cat: 'Weight Loss', desc: '', variants: null },
