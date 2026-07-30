@@ -129,6 +129,19 @@ function updateJntFee() {
   if (jntInput.checked) updateTotals();
 }
 
+// ─── SHOPEE CHECKOUT: ADDRESS NOT REQUIRED ────
+function isShopeeDelivery() {
+  return document.querySelector('input[name="coDelivery"]:checked')?.value === 'shopee';
+}
+
+function updateAddressRequirement() {
+  const isShopee     = isShopeeDelivery();
+  const addressFields = document.getElementById('coAddressFields');
+  const shopeeNote     = document.getElementById('coAddressShopeeNote');
+  if (addressFields) addressFields.style.display = isShopee ? 'none' : '';
+  if (shopeeNote)     shopeeNote.style.display    = isShopee ? 'block' : 'none';
+}
+
 // ─── INIT ─────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   initProvinceCombo();
@@ -157,8 +170,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input[name="coDelivery"]').forEach(r => {
     r.addEventListener('change', () => {
       updateTotals();
+      updateAddressRequirement();
     });
   });
+  updateAddressRequirement();
 
   document.getElementById('coPromo').addEventListener('keydown', e => {
     if (e.key === 'Enter') applyPromo();
@@ -266,10 +281,14 @@ function validateForm() {
   const required = [
     { id: 'coName',   label: 'Full Name'         },
     { id: 'coPhone',  label: 'Phone Number'       },
-    { id: 'coStreet', label: 'Street & Barangay'  },
-    { id: 'coProvince', label: 'Province',          display: 'coProvinceInput' },
-    { id: 'coCity',   label: 'City / Municipality', display: 'coCityInput'     },
   ];
+  if (!isShopeeDelivery()) {
+    required.push(
+      { id: 'coStreet', label: 'Street & Barangay'  },
+      { id: 'coProvince', label: 'Province',          display: 'coProvinceInput' },
+      { id: 'coCity',   label: 'City / Municipality', display: 'coCityInput'     },
+    );
+  }
   let valid = true;
   required.forEach(f => {
     const el = document.getElementById(f.id);

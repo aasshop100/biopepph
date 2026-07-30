@@ -97,6 +97,18 @@
             </div>
           </label>
 
+          <label class="co-delivery-opt">
+            <input type="radio" name="coDelivery" value="shopee" data-fee="0" data-label="Via Shopee Checkout">
+            <div class="co-delivery-card">
+              <span class="co-del-icon">🛍️</span>
+              <div class="co-del-info">
+                <strong>VIA SHOPEE CHECKOUT</strong>
+                <span>Shipped and tracked through Shopee</span>
+                <span>We'll coordinate your Shopee order using your phone number</span>
+              </div>
+            </div>
+          </label>
+
         </div>
         <p class="co-delivery-note">⚠️ Delivery fee is shouldered by the buyer. Exact fee will be confirmed upon order.</p>
       </section>
@@ -113,28 +125,31 @@
             <label for="coPhone">Phone Number <span class="co-req">*</span></label>
             <input type="tel" id="coPhone" placeholder="09XX XXX XXXX" autocomplete="tel">
           </div>
-          <div class="co-field">
-            <label for="coStreet">Street &amp; Barangay <span class="co-req">*</span></label>
-            <input type="text" id="coStreet" placeholder="123 Rizal St., Brgy. Santo Niño" autocomplete="address-line1">
-          </div>
-          <div class="co-field-row">
-            <div class="co-field co-combo-field">
-              <label for="coProvinceInput">Province <span class="co-req">*</span></label>
-              <div class="co-combo-wrap">
-                <input type="text" id="coProvinceInput" placeholder="Type to search province..." autocomplete="off">
-                <input type="hidden" id="coProvince">
-                <div class="co-combo-list" id="coProvinceList"></div>
+          <div id="coAddressFields">
+            <div class="co-field">
+              <label for="coStreet">Street &amp; Barangay <span class="co-req">*</span></label>
+              <input type="text" id="coStreet" placeholder="123 Rizal St., Brgy. Santo Niño" autocomplete="address-line1">
+            </div>
+            <div class="co-field-row">
+              <div class="co-field co-combo-field">
+                <label for="coProvinceInput">Province <span class="co-req">*</span></label>
+                <div class="co-combo-wrap">
+                  <input type="text" id="coProvinceInput" placeholder="Type to search province..." autocomplete="off">
+                  <input type="hidden" id="coProvince">
+                  <div class="co-combo-list" id="coProvinceList"></div>
+                </div>
+              </div>
+              <div class="co-field co-combo-field">
+                <label for="coCityInput">City / Municipality <span class="co-req">*</span></label>
+                <div class="co-combo-wrap">
+                  <input type="text" id="coCityInput" placeholder="Select province first" autocomplete="off" disabled>
+                  <input type="hidden" id="coCity">
+                  <div class="co-combo-list" id="coCityList"></div>
+                </div>
               </div>
             </div>
-            <div class="co-field co-combo-field">
-              <label for="coCityInput">City / Municipality <span class="co-req">*</span></label>
-              <div class="co-combo-wrap">
-                <input type="text" id="coCityInput" placeholder="Select province first" autocomplete="off" disabled>
-                <input type="hidden" id="coCity">
-                <div class="co-combo-list" id="coCityList"></div>
-              </div>
-            </div>
           </div>
+          <p class="co-address-shopee-note" id="coAddressShopeeNote" style="display:none;">📦 Address not needed for Shopee Checkout — we'll coordinate your delivery through Shopee using your phone number.</p>
           <div class="co-field">
             <label for="coNotes">Landmarks / Notes <span class="co-opt">(optional)</span></label>
             <textarea id="coNotes" rows="2" placeholder="e.g. Blue gate, near 7-Eleven, preferred delivery time..."></textarea>

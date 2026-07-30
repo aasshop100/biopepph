@@ -74,7 +74,7 @@ function renderDeliveryInfo(order) {
   document.getElementById('confPaymentMethod').textContent = order.paymentMethod  || '—';
 
   const addrParts = [order.street, order.city, order.province].filter(Boolean);
-  document.getElementById('confAddress').textContent = addrParts.join(', ');
+  document.getElementById('confAddress').textContent = addrParts.join(', ') || 'N/A — Shopee Checkout';
 
   if (order.notes) {
     document.getElementById('confNotesRow').style.display = 'block';
@@ -84,7 +84,7 @@ function renderDeliveryInfo(order) {
 
 function renderContactLinks(order) {
   const items = order.cart.map(i => `  • ${i.name} ×${i.qty} — ₱${(i.price * i.qty).toLocaleString('en-PH')}`).join('\n');
-  const address = [order.street, order.city, order.province].filter(Boolean).join(', ');
+  const address = [order.street, order.city, order.province].filter(Boolean).join(', ') || 'N/A — Shopee Checkout';
 
   const lines = [
     `🧬 NEW ORDER — BIOPEP PH`,
@@ -126,7 +126,7 @@ function renderContactLinks(order) {
 }
 
 function sendToSheet(order) {
-  const address = [order.street, order.city, order.province].filter(Boolean).join(', ');
+  const address = [order.street, order.city, order.province].filter(Boolean).join(', ') || 'N/A — Shopee Checkout';
   const items = order.cart.map(i => `${i.name} ×${i.qty} — ₱${(i.price * i.qty).toLocaleString('en-PH')}`).join('\n');
   const date = new Date(order.placedAt).toLocaleString('en-PH', {
     month: 'short', day: 'numeric', year: 'numeric',
