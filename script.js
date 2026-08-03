@@ -202,6 +202,7 @@ const PRODUCTS = {
     variants: null,
   },
   'pink-syringe-preorder': {
+    hidden: true,
     name: 'Pink Insulin Syringe (10 pcs)', price: 50, origPrice: null, emoji: '💉', image: 'images/Pink Insulin Syringe (10pcs).jpg',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Other',
     desc: 'Pink insulin syringe pack of 10. Pre-order batch — secure yours before the cut-off.',
