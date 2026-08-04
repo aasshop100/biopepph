@@ -243,6 +243,12 @@ const PRODUCTS = {
       { label: 'Vial Only', desc: 'Glutathione vial only', priceAdd: -200 },
     ],
   },
+  'fuan-glutathione-1500mg-box': {
+    name: 'FUAN Reduced Glutathione 1500mg Box', price: 4100, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'FUAN Reduced Glutathione 1500mg\nPer Box: 10 vials\n❌ BAC Water is NOT included\n💰 ₱4,100 per box',
+    variants: null,
+  },
   'glutathione-1200mg-box': {
     name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
@@ -251,20 +257,20 @@ const PRODUCTS = {
   },
   'glutathione-1200mg-box-preorder': {
     name: 'Korean Glutathione 1200mg Box Pre-Order', price: 3200, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
-    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', hidden: true,
     desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials\n❌ BAC Water is NOT included\n💰 ₱3,200 per kit\n🚚 ETA to PH: 5 days\n📅 Order Deadline: August 2',
     variants: null,
   },
   'glutathione-1200mg-box-preorder-10x': {
     name: 'Korean Glutathione 1200mg Box Pre-Order 10x', price: 30000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
-    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', hidden: true,
     desc: 'KGTT Glutaone 1200mg — Bulk (10 kits)\nPer Kit: 10 vials\n❌ BAC Water is NOT included\n💰 ₱30,000 total (10 kits)\n🚚 ETA to PH: 5 days\n📅 Order Deadline: August 2',
     variants: null,
   },
   'fuan-glutathione-1500mg-box-preorder': {
-    name: 'FUAN Reduced Glutathione 1500mg Box Pre-Order', price: 3600, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
+    name: 'FUAN Reduced Glutathione 1500mg Box Pre-Order', price: 3500, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
-    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱3,600 per kit\n🚚 ETA to PH: 3 weeks\n📅 Order Deadline: August 7',
+    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱3,500 per kit\n🚚 ETA to PH: 3 weeks\n📅 Order Deadline: August 7',
     variants: null,
   },
 
