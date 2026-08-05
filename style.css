@@ -864,7 +864,15 @@ h2 span { color: var(--pink-dark); }
 .pcard-tag.sold-out { background: #6b7280; }
 .pcard-tag.preorder { background: #d97706; }
 .pcard-tag.sale { background: #e11d48; }
+.pcard-tag.closed { background: #6b7280; z-index: 3; } /* sits above .soldout-overlay */
 .pcard-cutoff { font-size: 0.7rem; color: #d97706; font-weight: 600; margin: 4px 0 0; }
+.pcard-cutoff.closed { color: #6b7280; }
+/* Closed pre-orders: shown for reference only, not orderable */
+.pcard.closed { cursor: default; }
+.pcard.closed .pcard-img,
+.pcard.closed .pcard-name { cursor: default; }
+.pcard.closed:hover .pcard-photo { transform: none; }
+.pcard.closed .pcard-price { color: #6b7280; }
 .btn-add.sold-out { background: #d1d5db; color: #9ca3af; cursor: not-allowed; pointer-events: none; }
 .soldout-overlay {
   position: absolute;
