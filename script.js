@@ -890,6 +890,65 @@ function refreshProductCardUI(id) {
   }
 }
 
+// ─── PRE-ORDER AUTO-CLOSE ──────────────────────
+// Any .pcard carrying data-deadline="YYYY-MM-DD" closes itself automatically once that
+// day has ended in PH time (UTC+8). No manual cleanup needed after a cut-off passes:
+// just set the attribute when you add the pre-order card.
+//
+// A closed card is greyed out, made unclickable, marked "Pre-Order Closed", and moved
+// to the bottom of the grid — and its PRODUCTS entry is flagged hidden so it drops out
+// of search, "You may also like", and the pricing-sheet sync.
+const PREORDER_MONTHS = ['January','February','March','April','May','June','July',
+                         'August','September','October','November','December'];
+
+function initPreOrderDeadlines() {
+  document.querySelectorAll('.pcard[data-deadline]').forEach(card => {
+    const deadline = card.dataset.deadline;
+    // Pre-orders stay open through the whole deadline day, PH time
+    const endOfDay = new Date(`${deadline}T23:59:59+08:00`).getTime();
+    if (Number.isNaN(endOfDay)) {
+      console.warn('Pre-order: unreadable data-deadline on', card.dataset.id, '—', deadline);
+      return;
+    }
+    if (Date.now() <= endOfDay) return;
+    closePreOrderCard(card, deadline);
+  });
+}
+
+function closePreOrderCard(card, deadline) {
+  const prod = PRODUCTS[card.dataset.id];
+  if (prod) prod.hidden = true;
+
+  card.classList.add('closed');
+  card.querySelectorAll('[onclick]').forEach(el => el.removeAttribute('onclick'));
+
+  const tag = card.querySelector('.pcard-tag');
+  if (tag) { tag.className = 'pcard-tag closed'; tag.textContent = 'Closed'; }
+
+  const imgWrap = card.querySelector('.pcard-img');
+  if (imgWrap && !imgWrap.querySelector('.soldout-overlay')) {
+    const overlay = document.createElement('div');
+    overlay.className = 'soldout-overlay';
+    overlay.innerHTML = '<span>Pre-Order Closed</span>';
+    imgWrap.appendChild(overlay);
+  }
+
+  const cutoff = card.querySelector('.pcard-cutoff');
+  if (cutoff) {
+    const [, month, day] = deadline.split('-').map(Number);
+    cutoff.className = 'pcard-cutoff closed';
+    cutoff.textContent = `🚫 Pre-order closed — deadline was ${PREORDER_MONTHS[month - 1]} ${day}`;
+  }
+
+  const btn = card.querySelector('.btn-add');
+  if (btn) { btn.className = 'btn-add sold-out'; btn.disabled = true; btn.textContent = 'Closed'; }
+
+  // Send it to the bottom of the grid, beside the other closed pre-orders
+  const item = card.closest('.pgrid-item');
+  const grid = document.getElementById('productGrid');
+  if (item && grid) grid.appendChild(item);
+}
+
 // ─── 7.7 SALE PROMO POPUP ──────────────────────
 // Time-limited — auto-hides itself and the promo card after this date/time (PH time).
 const PROMO_777_END = new Date('2026-07-07T23:59:59+08:00').getTime();
@@ -939,6 +998,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileNav();
   initSmoothScroll();
   initPromoPopup();
+  initPreOrderDeadlines(); // must run before the sync, so closed pre-orders are already hidden
   syncCatalogFromSheet();
 
   // Search
