@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git remote *)",
+      "Bash(git branch *)",
+      "Bash(git push *)",
+      "WebFetch(domain:take.app)",
+      "Bash(git add *)",
+      "Bash(pharma)",
+      "Bash(kgtt)",
+      "Bash(bac)",
+      "Bash(gluta\")",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\LESTER\\\\Desktop\\\\BIOPEP\\\\images\\\\\" | Where-Object { $_.Name -match \"tirz|pharma|kgtt|gluta|bac|Pharma\" } | Select-Object Name)",
+      "WebSearch"
+    ]
+  }
+}
