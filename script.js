@@ -949,6 +949,22 @@ function closePreOrderCard(card, deadline) {
   if (item && grid) grid.appendChild(item);
 }
 
+// ─── RESTOCK BADGE AUTO-REVERT ──────────────────────
+// Any .pcard-tag carrying data-restock-until="YYYY-MM-DDTHH:MM:SS+08:00" reverts to "New"
+// automatically once that time passes, PH time. No manual cleanup needed after restock day.
+function initRestockBadges() {
+  document.querySelectorAll('.pcard-tag[data-restock-until]').forEach(tag => {
+    const until = new Date(tag.dataset.restockUntil).getTime();
+    if (Number.isNaN(until)) {
+      console.warn('Restock badge: unreadable data-restock-until —', tag.dataset.restockUntil);
+      return;
+    }
+    if (Date.now() < until) return;
+    tag.textContent = 'New';
+    tag.removeAttribute('data-restock-until');
+  });
+}
+
 // ─── 7.7 SALE PROMO POPUP ──────────────────────
 // Time-limited — auto-hides itself and the promo card after this date/time (PH time).
 const PROMO_777_END = new Date('2026-07-07T23:59:59+08:00').getTime();
@@ -999,6 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initPromoPopup();
   initPreOrderDeadlines(); // must run before the sync, so closed pre-orders are already hidden
+  initRestockBadges();
   syncCatalogFromSheet();
 
   // Search
