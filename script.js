@@ -257,8 +257,8 @@ const PRODUCTS = {
   },
   'glutathione-1200mg-box-preorder': {
     name: 'Korean Glutathione 1200mg Box Pre-Order', price: 3200, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
-    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', hidden: true,
-    desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials\n❌ BAC Water is NOT included\n💰 ₱3,200 per kit\n🚚 ETA to PH: 5 days\n📅 Order Deadline: August 2',
+    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
+    desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials\n❌ BAC Water is NOT included\n💰 ₱3,200 per kit\n🚚 ETA to PH: 5 days',
     variants: null,
   },
   'glutathione-1200mg-box-preorder-10x': {
