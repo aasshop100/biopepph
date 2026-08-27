@@ -50,7 +50,7 @@ const PRODUCTS = {
     ],
   },
   'kpv-10mg': {
-    name: 'KPV 10mg', price: 1500, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
+    name: 'KPV 10mg', price: 1200, origPrice: null, emoji: '🧬', image: 'images/kpv10mg.jpg',
     tag: null, tagClass: '', cat: 'Healing', soldOut: true,
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
@@ -81,6 +81,16 @@ const PRODUCTS = {
   },
   'ghkcu-50mg': {
     name: 'GHK-Cu 50mg', price: 1000, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
+    tag: 'Top Pick', tagClass: '', cat: 'Anti-Aging',
+    desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+    ],
+  },
+  'ghkcu-100mg': {
+    name: 'GHK-Cu 100mg', price: 1100, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
     tag: 'Top Pick', tagClass: '', cat: 'Anti-Aging',
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
@@ -196,6 +206,7 @@ const PRODUCTS = {
     variants: null,
   },
   'normal-saline-20ml': {
+    hidden: true,
     name: 'Korean Pharma Normal Saline 0.9% 20mL', price: 150, origPrice: null, emoji: '💧', image: 'images/Korean Pharma - Normal Saline.jpg',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Korean Pharma pharmaceutical-grade normal saline solution. 0.9% NaCl, 20mL — suitable for peptide reconstitution and injection preparation.',
@@ -448,12 +459,8 @@ function openModal(id) {
   if (prod.image) {
     if (!photoEl) { photoEl = document.createElement('img'); photoEl.className = 'pmodal-photo'; imgWrap.prepend(photoEl); }
     photoEl.src = prod.image; photoEl.alt = prod.name;
-    photoEl.style.display = 'block'; emojiEl.style.display = 'none';
-    imgWrap.style.background = 'none';
   } else {
-    if (photoEl) photoEl.style.display = 'none';
-    emojiEl.textContent = prod.emoji; emojiEl.style.display = '';
-    imgWrap.style.background = '';
+    emojiEl.textContent = prod.emoji;
   }
   document.getElementById('pmodalCat').textContent   = prod.cat;
   document.getElementById('pmodalName').textContent  = prod.name;
@@ -466,17 +473,6 @@ function openModal(id) {
 
   updateModalPrice();
   renderVariants(prod);
-
-  const gradients = {
-    'Weight Loss': 'linear-gradient(135deg,#fce7f3,#fbcfe8)',
-    'Healing':     'linear-gradient(135deg,#fce7f3,#f9a8d4)',
-    'Anti-Aging':  'linear-gradient(135deg,#fdf2f8,#fce7f3)',
-    'Growth':      'linear-gradient(135deg,#fce7f3,#fbcfe8)',
-    'Stacks':      'linear-gradient(135deg,#fdf4ff,#fce7f3)',
-    'Other':       'linear-gradient(135deg,#fdf2f8,#fce7f3)',
-  };
-  document.getElementById('pmodalImgWrap').style.background =
-    gradients[prod.cat] || gradients['Other'];
 
   const addBtn = document.getElementById('pmodalAddBtn');
   if (prod.soldOut) {

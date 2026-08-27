@@ -802,11 +802,9 @@ h2 span { color: var(--pink-dark); }
 /* Product grid */
 .pgrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 8px;
 }
-@media (min-width: 600px)  { .pgrid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 900px)  { .pgrid { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
 
 .pgrid-item.hidden { display: none; }
 
@@ -819,38 +817,32 @@ h2 span { color: var(--pink-dark); }
   transition: var(--transition);
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 .pcard:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(244,114,182,0.15);
+  box-shadow: 0 6px 16px rgba(244,114,182,0.15);
   border-color: var(--pink);
 }
 
 .pcard-img {
   position: relative;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
 }
-.pcard-photo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.35s ease;
+.pcard-img:has(.pcard-tag),
+.pcard-img:has(.soldout-overlay) {
+  min-height: 34px;
 }
-.pcard:hover .pcard-photo { transform: scale(1.05); }
+.pcard-photo {
+  display: none;
+}
 .pcard-emoji {
   font-size: 3rem;
   transition: transform 0.35s ease;
 }
 .pcard:hover .pcard-emoji { transform: scale(1.15); }
 .pcard-tag {
-  position: absolute;
-  top: 10px; left: 10px;
+  position: static;
+  display: inline-block;
+  margin: 10px 0 0 12px;
   background: var(--pink-dark);
   color: var(--white);
   font-size: 0.65rem;
@@ -894,7 +886,7 @@ h2 span { color: var(--pink-dark); }
 }
 
 .pcard-body {
-  padding: 12px;
+  padding: 10px 12px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -962,8 +954,7 @@ h2 span { color: var(--pink-dark); }
 .btn-add.added { background: #16a34a; }
 
 @media (max-width: 480px) {
-  .pcard-foot { flex-direction: column; align-items: stretch; }
-  .btn-add { width: 100%; padding: 10px; }
+  .btn-add { padding: 7px 12px; flex-shrink: 0; }
 }
 
 /* ================================================
@@ -1378,16 +1369,13 @@ footer {
 
 .pmodal-img-wrap {
   position: relative;
-  aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #fce7f3, #f9a8d4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: 48px;
+  background: var(--white);
   border-radius: 24px 24px 0 0;
   flex-shrink: 0;
 }
-.pmodal-emoji { font-size: 4.5rem; pointer-events: none; }
-.pmodal-photo { width: 100%; height: 100%; object-fit: cover; border-radius: 24px 24px 0 0; display: block; }
+.pmodal-emoji { display: none; }
+.pmodal-photo { display: none; }
 
 .pmodal-badge {
   position: absolute;
@@ -1638,8 +1626,8 @@ footer {
   overflow: hidden;
 }
 .pmodal-also-card:hover  { border-color: var(--pink-dark); background: var(--pink-light); transform: translateY(-2px); }
-.pmodal-also-thumb       { font-size: 1.6rem; margin-bottom: 5px; line-height: 1; }
-.pmodal-also-img         { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 5px; }
+.pmodal-also-thumb       { display: none; }
+.pmodal-also-img         { display: none; }
 .pmodal-also-name {
   font-size: 0.65rem;
   font-weight: 600;
