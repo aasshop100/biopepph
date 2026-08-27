@@ -778,6 +778,7 @@ async function syncCatalogFromSheet() {
 
   const productList = Object.entries(PRODUCTS).filter(([, p]) => !p.hidden);
   const touchedIds = new Set();
+  const variantStock = new Map(); // product id -> stock values parsed from its "Name - Variant" sub-rows
 
   rows.slice(1).forEach(row => {
     const rawName = (row[0] || '').trim();
@@ -818,6 +819,10 @@ async function syncCatalogFromSheet() {
       const variant = prod.variants.find(v => v.label.toLowerCase() === suffix);
       if (variant) { variant.priceAdd = singlePrice - prod.price; touchedIds.add(id); }
       else console.warn('Sheet sync: no variant match for', rawName);
+      if (stock !== undefined) {
+        if (!variantStock.has(id)) variantStock.set(id, []);
+        variantStock.get(id).push(stock);
+      }
       return;
     }
 
@@ -830,6 +835,17 @@ async function syncCatalogFromSheet() {
     } else {
       console.warn('Sheet sync: no product match for', rawName);
     }
+  });
+
+  // Variant-style products (e.g. the glutathione lines) have no top-level sheet row —
+  // only "Name - Variant" sub-rows. Roll their stock cells up to the parent card:
+  // sold out only when every variant row is <= 0; back in stock if any row is positive.
+  variantStock.forEach((values, id) => {
+    const stringState = values.find(v => typeof v === 'string'); // "SOON" / "Closed"
+    if (stringState) PRODUCTS[id].soldOut = stringState;
+    else if (values.every(v => v === true)) PRODUCTS[id].soldOut = true;
+    else PRODUCTS[id].soldOut = false;
+    touchedIds.add(id);
   });
 
   touchedIds.forEach(refreshProductCardUI);
