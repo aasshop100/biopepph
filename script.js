@@ -849,6 +849,7 @@ async function syncCatalogFromSheet() {
   });
 
   touchedIds.forEach(refreshProductCardUI);
+  reorderUnavailableCards();
 }
 
 function refreshProductCardUI(id) {
@@ -900,6 +901,30 @@ function refreshProductCardUI(id) {
       if (nameEl)  nameEl.onclick  = () => openModal(id);
     }
   }
+}
+
+function reorderUnavailableCards() {
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+
+  const available = [];
+  const closed = [];
+  const unavailable = [];
+
+  Array.from(grid.children).forEach(item => {
+    if (!item.classList.contains('pgrid-item')) return;
+
+    const id = item.querySelector('.pcard')?.dataset.id;
+    const prod = id ? PRODUCTS[id] : null;
+    const isClosed = item.classList.contains('closed') || Boolean(prod?.hidden);
+    const isUnavailable = !isClosed && Boolean(prod?.soldOut);
+
+    if (isClosed) closed.push(item);
+    else if (isUnavailable) unavailable.push(item);
+    else available.push(item);
+  });
+
+  [...available, ...closed, ...unavailable].forEach(item => grid.appendChild(item));
 }
 
 // ─── PRE-ORDER AUTO-CLOSE ──────────────────────
@@ -1028,6 +1053,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPromoPopup();
   initPreOrderDeadlines(); // must run before the sync, so closed pre-orders are already hidden
   initRestockBadges();
+  reorderUnavailableCards();
   syncCatalogFromSheet();
 
   // Search
