@@ -94,6 +94,7 @@ Changes are appended here as they're made, most recent first.
 - **Glutathione consolidated:** Korean Glutathione 1200mg, KGTT w/ Vial Case, Korean Glutathione Box, Fuan Glutathione 1500mg and FUAN Box cards → **Korean Glutaone 1200mg** (Vial ₱450 / Box ₱4,000) and **FUAN GTT 1500mg** (Vial ₱550 / Box ₱5,000). Old entries kept as `hidden`.
 - **BAC water consolidated** into one **BAC Water** card (3mL ₱60 / 5mL ₱70 / 10mL ₱80); Pharma BAC renamed **Pharma Bac 10ml Amp** and repriced ₱60.
 - **Hidden:** Retatrutide 15mg, AOD-9604 5mg, 5-Amino-1MQ 5mg. Alcohol Swab card icon removed.
+- Category tabs centered on desktop (≥768px); phones keep them left-aligned for swiping.
 - **Sheet sync:** new per-option stock (`Name - Option` rows) and per-manufacturer rows (`Name - Manufacturer`); tiered rows no longer need the vial/bac column.
 
 ### 2026-07-04 — Searchable Province/City address fields + J&T auto fee + shipping breakdown
