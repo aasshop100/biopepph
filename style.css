@@ -770,6 +770,10 @@ h2 span { color: var(--pink-dark); }
   margin-bottom: 28px;
 }
 .cat-scroll::-webkit-scrollbar { display: none; }
+/* Center the tabs on wider screens; phones keep them left-aligned so the swipe row isn't clipped */
+@media (min-width: 768px) {
+  .cat-tabs { justify-content: center; }
+}
 .cat-tabs {
   display: inline-flex;
   gap: 6px;
