@@ -28,10 +28,27 @@ Deploying is just `git push origin master` — GitHub Pages rebuilds automatical
 ## How the order flow works
 
 ### 1. Product catalog & cart (`script.js`)
-- All products live in the `PRODUCTS` object (id → name, price, image, category, description, variants). Products with `hidden: true` exist in data but never render (kept around in case they come back in stock). Products with `soldOut: true` (or a custom string like `'Closed'`) render with a disabled "Sold Out" button.
-- Two-variant products (most peptides) offer **Complete Set** (full price) and **Vial Set** (`priceAdd: -200`, cheaper, fewer accessories) — selecting a variant in the product modal changes `modalVariantIdx` and recalculates price live.
-- Cart is an array of `{ id, baseId, name, price, qty }` persisted to `localStorage['biopep_cart']`. `id` includes the variant label (e.g. `tirze-10mg__Vial Set`) so each variant is a separate cart line; `baseId` points back to the `PRODUCTS` entry for image/emoji lookup.
+- All products live in the `PRODUCTS` object (id → name, price, image, category, description, variants). Products with `hidden: true` exist in data but never render (kept around in case they come back in stock). Products with `soldOut: true` (or a custom string like `'Closed'`) render with a disabled "Sold Out" button. **Each visible product also needs its card written by hand in `index.html`** (`.pcard[data-id]`); the card's price/sold-out state is refreshed from `PRODUCTS` after the sheet sync.
+- Product photos are hidden site-wide (compact list layout) — new products don't need an image.
+- Variants are per product. Peptides use **Vial Only** (`priceAdd: -200`) + **Complete Set** (full price), some also **Vial and Bac** (`-100`). The Complete Set `desc` lists the kit contents — two kits exist: the 6-syringe kit (Tirzepatide, Eloralintide, Semax+Selank, NAD+, Snap-8, Cagrilintide) and the 25-syringe kit (KPV, GHK-Cu, GHK-Cu+KPV blends), both with BAC water. Selecting a variant changes `modalVariantIdx` and recalculates price live.
+- **Manufacturer picker:** a product with `manufacturers: ['Jinbei', 'Avisala']` (the Tirzepatides) shows a required "Choose Manufacturer" row above the options — no default; Add to Cart is blocked until one is picked. Every manufacturer has the same options/prices; the choice only labels the cart line.
+- **Per-option / per-manufacturer stock:** `variant.soldOut` greys out one option; `mfrSoldOut: { Avisala: true }` greys out one manufacturer. Both are normally set by the sheet sync (below); the modal pre-selects the first in-stock option.
+- Cart is an array of `{ id, baseId, name, price, qty }` persisted to `localStorage['biopep_cart']`. `id` includes the label (e.g. `tirze-10mg__Jinbei · Complete Set`) so each manufacturer/variant is a separate cart line, and `name` carries it (`Tirzepatide 15mg (Jinbei · Complete Set)`) through checkout, payment, confirmation, the WhatsApp/Telegram message and the Orders sheet. `baseId` points back to the `PRODUCTS` entry.
 - Cart total, sticky bar, and drawer all re-render from `renderCart()` any time the cart array changes.
+
+### Live price & stock sheet (`syncCatalogFromSheet()` in `script.js`)
+Prices and stock are pulled on **every page load** from the [pricing/inventory Google Sheet](https://docs.google.com/spreadsheets/d/1uzA0Hyg0Y-c9irJKrL-IFZXjxrGjDM_2ozueOP6B3mo) (published CSV, `Sheet1`). Columns: `Name | SRP vial only | SRP vial/bac | SRP complete set | STOCKS LEFT`. Stock `<= 0` / `Sold out` → sold out; `Soon` / `Closed` → that label; blank → untouched.
+
+⚠️ **Editing the sheet changes the LIVE site immediately — no deploy.** And rows are matched to products **by name**, so renaming a product in code without renaming its sheet row silently stops it syncing (it falls back to the hardcoded price/stock). When renaming or replacing products, add the new rows first, push, and only then delete the old rows.
+
+| Row name pattern | Example | What it sets |
+|---|---|---|
+| `Product Name` + vial-only & complete prices (vial/bac optional) | `KPV 30mg · 1200 · · 1500 · 3` | product price, Vial Only/Vial and Bac offsets, card stock |
+| `Product Name` + one price | `Pink Insulin Syringe (10 pcs) · · · 50` | flat-price product |
+| `Product Name - Option` + one price | `FUAN GTT 1500mg - Box · · · 5000 · 0` | that option's price **and its own stock**; card is sold out only when every option row is |
+| `Product Name - Manufacturer`, no price | `Tirzepatide 30mg - Avisala · · · · 0` | that manufacturer's stock; card sold out only when all are 0 |
+
+Rows with no price that match nothing (e.g. inventory-only `Retatrutide 10mg`, `Semax 5mg`) are ignored silently; rows for hidden products log a harmless `Sheet sync: no product match` warning.
 
 ### 2. Checkout (`checkout.html` + `checkout.js`)
 - **Delivery method:** J&T Express (flat regional fee) or Lalamove (fee shouldered by buyer, confirmed at dispatch — not fixed, so it's excluded from all totals/breakdowns until then).
@@ -69,6 +86,15 @@ On load, this page:
 ## Changelog
 
 Changes are appended here as they're made, most recent first.
+
+### 2026-09-19 — Manufacturer picker, per-option stock, new products, glutathione/BAC consolidation
+- **Tirzepatide 15/30mg:** Jinbei/Avisala manufacturer picker with per-manufacturer stock; "Vial and Bac" option removed (Vial Only + Complete Set). **Tirzepatide 60mg** added (₱1,600 / ₱1,800, sold out).
+- **New products:** Eloralintide 10mg (₱1,200 / ₱1,400, sold out), Semax 5mg + Selank 5mg (₱1,200 / ₱1,400), KPV 30mg (₱1,200 / ₱1,500), China Lemon Bottle 10mL/50mL (₱800 / ₱1,500, sold out), Forges GTT 1500mg (₱550 / ₱1,500, sold out), Generic GTT 2500mg (₱600 / ₱5,500 kit).
+- **Complete Set contents** now itemized: 6-syringe kit (Tirzepatide, Eloralintide, Semax+Selank, NAD+, Snap-8, Cagrilintide) and 25-syringe kit (KPV 10/30mg, GHK-Cu 50/100mg, both GHK-Cu+KPV blends), both incl. BAC water.
+- **Glutathione consolidated:** Korean Glutathione 1200mg, KGTT w/ Vial Case, Korean Glutathione Box, Fuan Glutathione 1500mg and FUAN Box cards → **Korean Glutaone 1200mg** (Vial ₱450 / Box ₱4,000) and **FUAN GTT 1500mg** (Vial ₱550 / Box ₱5,000). Old entries kept as `hidden`.
+- **BAC water consolidated** into one **BAC Water** card (3mL ₱60 / 5mL ₱70 / 10mL ₱80); Pharma BAC renamed **Pharma Bac 10ml Amp** and repriced ₱60.
+- **Hidden:** Retatrutide 15mg, AOD-9604 5mg, 5-Amino-1MQ 5mg. Alcohol Swab card icon removed.
+- **Sheet sync:** new per-option stock (`Name - Option` rows) and per-manufacturer rows (`Name - Manufacturer`); tiered rows no longer need the vial/bac column.
 
 ### 2026-07-04 — Searchable Province/City address fields + J&T auto fee + shipping breakdown
 - Replaced free-text Province/City checkout fields with searchable comboboxes (`ph-address-data.js`, `checkout.js`) — typing filters live, selecting a province auto-detects its delivery region and sets the correct J&T Express fee (NCR ₱160 / Luzon ₱190 / Visayas ₱200 / Mindanao ₱220) instead of a flat ₱160 regardless of location.

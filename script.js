@@ -19,9 +19,9 @@ const PRODUCTS = {
       { label: 'Box (10 Vials)',   desc: '10 Vials box set',      priceAdd: 3100, origPrice: 4000 },
     ],
   },
-  'retro-10mg': {
+  'retro-10mg': { hidden: true, // hidden 2026-09-19 (sold out) — restore by removing this flag + re-adding its card
     name: 'Retatrutide 15mg', price: 1650, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
-    tag: 'New', tagClass: 'new', cat: 'Weight Loss',
+    tag: null, tagClass: '', cat: 'Weight Loss', soldOut: true,
     desc: 'Triple receptor agonist targeting GLP-1, GIP, and Glucagon pathways simultaneously. Clinical trials report up to 24% body weight reduction — the most advanced weight loss peptide currently available.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
@@ -33,20 +33,50 @@ const PRODUCTS = {
     name: 'Tirzepatide 15mg', price: 1200, origPrice: null, emoji: '💉', image: 'images/tirzepatide15mg.jpg',
     tag: null, tagClass: '', cat: 'Weight Loss',
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
+    manufacturers: ['Jinbei', 'Avisala'],
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'tirze-30mg': {
     name: 'Tirzepatide 30mg', price: 1400, origPrice: null, emoji: '💉', image: 'images/tirzepatide30mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
     desc: 'Higher-dose dual GLP-1/GIP agonist for patients who have completed the 15mg titration phase. Designed for accelerated and sustained weight loss at advanced protocol stages.',
+    manufacturers: ['Jinbei', 'Avisala'],
+    mfrSoldOut: { Avisala: true }, // fallback only — the sheet's "Tirzepatide 30mg - <Manufacturer>" rows overwrite this
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
+    ],
+  },
+  'tirze-60mg': {
+    name: 'Tirzepatide 60mg', price: 1800, origPrice: null, emoji: '💉',
+    tag: null, tagClass: '', cat: 'Weight Loss', soldOut: true,
+    desc: 'Maximum-strength dual GLP-1/GIP agonist vial for advanced protocol stages. More doses per vial for patients already established on higher Tirzepatide doses.',
+    manufacturers: ['Jinbei', 'Avisala'],
+    mfrSoldOut: { Jinbei: true, Avisala: true },
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
+    ],
+  },
+  'eloralintide-10mg': {
+    name: 'Eloralintide 10mg', price: 1400, origPrice: null, emoji: '💉',
+    tag: null, tagClass: '', cat: 'Weight Loss', soldOut: true,
+    desc: 'Next-generation selective amylin receptor agonist in clinical development for weight management. Works through the amylin pathway to increase fullness and reduce food intake.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0 },
+    ],
+  },
+  'china-lemon-bottle': {
+    name: 'China Lemon Bottle', price: 1500, origPrice: null, emoji: '🍋',
+    tag: null, tagClass: '', cat: 'Weight Loss', soldOut: true,
+    desc: 'Fat-dissolving solution for targeted contouring of stubborn fat areas such as the chin, arms, and belly. Formulated with riboflavin, bromelain, and lecithin.',
+    variants: [
+      { label: '10mL',          desc: 'Vial Only',                                                            priceAdd: -700 },
+      { label: '50mL',          desc: '',                                                                     priceAdd: 0    },
     ],
   },
   'kpv-10mg': {
@@ -56,7 +86,25 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
+    ],
+  },
+  'kpv-30mg': {
+    name: 'KPV 30mg', price: 1500, origPrice: null, emoji: '🧬',
+    tag: 'New', tagClass: 'new', cat: 'Healing',
+    desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair. Higher-strength 30mg vial.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -300 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
+    ],
+  },
+  'semax-selank-5mg': {
+    name: 'Semax 5mg + Selank 5mg', price: 1400, origPrice: null, emoji: '🧠',
+    tag: 'New', tagClass: 'new', cat: 'Healing',
+    desc: 'Blend of two nootropic peptides. Semax, an ACTH-derived peptide, is studied for focus, memory, and mental energy. Selank, a tuftsin analog, is studied for calm, stress relief, and mood balance.',
+    variants: [
+      { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0 },
     ],
   },
   'snap8-10mg': {
@@ -66,12 +114,12 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
-  'aod-9604-5mg': {
+  'aod-9604-5mg': { hidden: true, // hidden 2026-09-19 (sold out) — restore by removing this flag + re-adding its card
     name: 'AOD-9604 5mg', price: 1300, origPrice: null, emoji: '🔥', image: 'images/aod.jpg', cat: 'Weight Loss',
-    tag: 'New', tagClass: 'new',
+    tag: null, tagClass: '', soldOut: true,
     desc: 'Modified fragment of human growth hormone (HGH 176-191) studied for fat metabolism support without the growth-promoting effects of full HGH. Often paired with GLP-1/GIP therapies.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
@@ -86,7 +134,7 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'ghkcu-100mg': {
@@ -96,7 +144,7 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'nad-100mg': {
@@ -106,7 +154,7 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + insulin syringe',                  priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'nad-500mg': {
@@ -116,7 +164,7 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -300 },
       { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -200 },
-      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + insulin syringe',                  priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'cuv-110mg': {
@@ -126,7 +174,7 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'cuv-55mg': {
@@ -136,7 +184,7 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'nad-1000mg': {
@@ -146,7 +194,7 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -200 },
-      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + insulin syringe',                  priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'cagri-10mg-soon': {
@@ -156,12 +204,12 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
-  '5-amino-1mq-5mg': {
+  '5-amino-1mq-5mg': { hidden: true, // hidden 2026-09-19 (sold out) — restore by removing this flag + re-adding its card
     name: '5-Amino-1MQ 5mg', price: 1100, origPrice: null, emoji: '🔥', image: 'images/5amino.jpg', cat: 'Weight Loss',
-    tag: 'New', tagClass: 'new',
+    tag: null, tagClass: '', soldOut: true,
     desc: 'NNMT enzyme inhibitor that supports fat metabolism and lean muscle preservation. Popular pairing with GLP-1/GIP therapies for enhanced fat loss.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
@@ -170,19 +218,29 @@ const PRODUCTS = {
     ],
   },
   'pharma-bac-10ml': {
-    name: 'Pharma BAC Water 10mL', price: 150, origPrice: null, emoji: '💧', image: 'images/PharmaBac10ml.jpg',
+    name: 'Pharma Bac 10ml Amp', price: 60, origPrice: null, emoji: '💧', image: 'images/PharmaBac10ml.jpg',
     tag: 'New', tagClass: 'new', cat: 'Other',
     desc: 'Pharmaceutical-grade bacteriostatic water for injection. 10mL multi-use capacity — ideal for reconstituting larger peptide vials. Benzyl alcohol preservative maintains sterility for up to 4 weeks refrigerated.',
     variants: null,
   },
-  'bac-water-3ml': {
-    name: 'BAC Water 3mL', price: 100, origPrice: null, emoji: '💧', image: 'images/bacwater3ml.jpg',
+  'bac-water-options': {
+    name: 'BAC Water', price: 80, origPrice: null, emoji: '💧',
+    tag: null, tagClass: '', cat: 'Other',
+    desc: 'Pharmaceutical-grade bacteriostatic water for injection. Required for reconstituting lyophilized peptides. Preserves solution for up to 4 weeks refrigerated.',
+    variants: [
+      { label: '3mL',           desc: 'Small-volume reconstitution',                                          priceAdd: -20 },
+      { label: '5mL',           desc: 'Mid-size vial',                                                        priceAdd: -10 },
+      { label: '10mL',          desc: 'Multi-use, for larger peptide vials',                                  priceAdd: 0   },
+    ],
+  },
+  'bac-water-3ml': { hidden: true, // replaced 2026-09 by bac-water-options
+    name: 'BAC Water 3mL', price: 60, origPrice: null, emoji: '💧', image: 'images/bacwater3ml.jpg',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Pharmaceutical-grade bacteriostatic water for injection. Ideal for small-volume peptide reconstitution. Preserves solution for up to 4 weeks refrigerated.',
     variants: null,
   },
-  'bac-water': {
-    name: 'BAC Water 10mL', price: 200, origPrice: null, emoji: '💧', image: 'images/bacwater10ml.jpg',
+  'bac-water': { hidden: true, // replaced 2026-09 by bac-water-options
+    name: 'BAC Water 10mL', price: 80, origPrice: null, emoji: '💧', image: 'images/bacwater10ml.jpg',
     tag: null, tagClass: '', cat: 'Other',
     desc: 'Pharmaceutical-grade 0.9% benzyl alcohol water for injection. Required for reconstituting all lyophilized peptides. Preserves solution for up to 4 weeks refrigerated.',
     variants: null,
@@ -219,7 +277,7 @@ const PRODUCTS = {
     desc: 'Pink insulin syringe pack of 10. Pre-order batch — secure yours before the cut-off.',
     variants: null,
   },
-  'glutathione-1200mg': {
+  'glutathione-1200mg': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'Korean Glutathione 1200mg', price: 700, origPrice: null, emoji: '✨', image: 'images/kgtt1200mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose Korean glutathione for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade — one of the most potent whitening formulations available.',
@@ -231,7 +289,7 @@ const PRODUCTS = {
       { label: 'Vial Only',    desc: 'Glutathione vial only',                                                                              priceAdd: -150 },
     ],
   },
-  'glutathione-1200mg-vialcase': {
+  'glutathione-1200mg-vialcase': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'KGTT 1200mg w/ Vial Case', price: 900, origPrice: null, emoji: '✨', image: 'images/kgtt1200mg-vialcase.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose Korean glutathione for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade, now with a protective pink vial case for safer storage and travel.',
@@ -243,7 +301,7 @@ const PRODUCTS = {
       { label: 'Vial Only - w/ Vial Case', desc: 'Glutathione vial + case only',                                                            priceAdd: -150 },
     ],
   },
-  'fuan-glutathione-1500mg': {
+  'fuan-glutathione-1500mg': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'Fuan Glutathione 1500mg', price: 800, origPrice: null, emoji: '✨', image: 'images/fuan.jpg', cat: 'Anti-Aging',
     tag: 'New', tagClass: 'new',
     desc: 'High-dose Fuan glutathione for skin brightening, antioxidant protection, and cellular detox. 1500mg pharmaceutical-grade formulation.',
@@ -254,13 +312,49 @@ const PRODUCTS = {
       { label: 'Vial Only', desc: 'Glutathione vial only', priceAdd: -300 },
     ],
   },
-  'fuan-glutathione-1500mg-box': {
+  'fuan-glutathione-1500mg-box': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'FUAN Reduced Glutathione 1500mg Box', price: 4100, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'FUAN Reduced Glutathione 1500mg\nPer Box: 10 vials\n❌ BAC Water is NOT included\n💰 ₱4,100 per box',
     variants: null,
   },
-  'glutathione-1200mg-box': {
+  'korean-glutaone-1200mg': {
+    name: 'Korean Glutaone 1200mg', price: 4000, origPrice: null, emoji: '✨',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'High-dose Korean glutathione (Glutaone) for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade — one of the most potent whitening formulations available.',
+    variants: [
+      { label: 'Vial Only',     desc: 'Glutathione vial only',                                                priceAdd: -3550 },
+      { label: 'Box',           desc: '10 vials per box',                                                     priceAdd: 0, soldOut: true },
+    ],
+  },
+  'fuan-gtt-1500mg': {
+    name: 'FUAN GTT 1500mg', price: 5000, origPrice: null, emoji: '✨',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'High-dose FUAN reduced glutathione for skin brightening, antioxidant protection, and cellular detox. 1500mg pharmaceutical-grade formulation.',
+    variants: [
+      { label: 'Vial Only',     desc: 'Glutathione vial only',                                                priceAdd: -4450 },
+      { label: 'Box',           desc: '10 vials per box · BAC water NOT included',                            priceAdd: 0, soldOut: true },
+    ],
+  },
+  'generic-gtt-2500mg': {
+    name: 'Generic GTT 2500mg', price: 5500, origPrice: null, emoji: '✨',
+    tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
+    desc: 'High-dose 2500mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
+    variants: [
+      { label: 'Vial Only',     desc: 'Glutathione vial only',                                                priceAdd: -4900 },
+      { label: 'Kit',           desc: '',                                                                     priceAdd: 0    },
+    ],
+  },
+  'forges-gtt-1500mg': {
+    name: 'Forges GTT 1500mg', price: 1500, origPrice: null, emoji: '✨',
+    tag: null, tagClass: '', cat: 'Anti-Aging', soldOut: true,
+    desc: 'Forges 1500mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
+    variants: [
+      { label: 'Vial & Saline', desc: 'Glutathione vial + saline',                                            priceAdd: -950 },
+      { label: 'Kit w/ Saline', desc: '',                                                                     priceAdd: 0    },
+    ],
+  },
+  'glutathione-1200mg-box': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'Premium box set of Korean Glutathione 1200mg for extended whitening protocols. Pharmaceutical-grade, high-potency formulation for skin brightening and antioxidant support.',
@@ -444,6 +538,7 @@ function closeCart() {
 let modalCurrentId  = null;
 let modalQty        = 1;
 let modalVariantIdx = 0;
+let modalMfr        = null; // chosen manufacturer, for products with a `manufacturers` list
 
 function openModal(id) {
   const prod = PRODUCTS[id];
@@ -451,7 +546,8 @@ function openModal(id) {
 
   modalCurrentId  = id;
   modalQty        = 1;
-  modalVariantIdx = 0;
+  modalVariantIdx = Math.max(0, (prod.variants || []).findIndex(v => !v.soldOut)); // first in-stock option
+  modalMfr        = null;
 
   const emojiEl  = document.getElementById('pmodalEmoji');
   const imgWrap  = document.getElementById('pmodalImgWrap');
@@ -472,6 +568,7 @@ function openModal(id) {
   badge.className   = 'pmodal-badge' + (prod.tagClass ? ` ${prod.tagClass}` : '');
 
   updateModalPrice();
+  renderManufacturers(prod);
   renderVariants(prod);
 
   const addBtn = document.getElementById('pmodalAddBtn');
@@ -504,18 +601,59 @@ function renderVariants(prod) {
   opts.innerHTML = '';
   prod.variants.forEach((v, i) => {
     const price = prod.price + v.priceAdd;
+    const out = v.soldOut ? (typeof v.soldOut === 'string' ? v.soldOut : 'Sold Out') : '';
     const div = document.createElement('label');
-    div.className = 'pmodal-variant-opt' + (i === modalVariantIdx ? ' selected' : '');
+    div.className = 'pmodal-variant-opt' + (i === modalVariantIdx && !out ? ' selected' : '') + (out ? ' sold-out' : '');
     div.innerHTML = `
-      <input type="radio" name="pmodalVariant" value="${i}" ${i === modalVariantIdx ? 'checked' : ''}>
+      <input type="radio" name="pmodalVariant" value="${i}" ${i === modalVariantIdx && !out ? 'checked' : ''} ${out ? 'disabled' : ''}>
       <div class="pmodal-variant-info">
         <span class="pmodal-variant-name">${v.label}</span>
         <span class="pmodal-variant-desc">${v.desc}</span>
       </div>
-      <span class="pmodal-variant-price">₱${price.toLocaleString('en-PH')}</span>
+      <span class="pmodal-variant-price">₱${price.toLocaleString('en-PH')}${out ? `<small>${out}</small>` : ''}</span>
     `;
-    div.addEventListener('click', () => selectVariant(i));
+    if (!out) div.addEventListener('click', () => selectVariant(i));
     opts.appendChild(div);
+  });
+}
+
+// Manufacturer picker — every manufacturer has the same options and prices, so it only
+// labels the cart line. No default: the buyer must pick one before adding to cart.
+function renderManufacturers(prod) {
+  const wrap = document.getElementById('pmodalMfr');
+  const opts = document.getElementById('pmodalMfrOpts');
+  if (!wrap || !opts) return;
+  wrap.classList.remove('needs-choice');
+  if (!prod.manufacturers || prod.manufacturers.length === 0) {
+    wrap.style.display = 'none';
+    return;
+  }
+  wrap.style.display = 'block';
+  opts.innerHTML = '';
+  prod.manufacturers.forEach(m => {
+    const out = prod.mfrSoldOut?.[m];
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'pmodal-mfr-opt' + (out ? ' sold-out' : '');
+    btn.dataset.mfr = m;
+    btn.textContent = m;
+    if (out) {
+      btn.disabled = true;
+      btn.insertAdjacentHTML('beforeend',
+        `<small>${typeof out === 'string' ? out : 'Sold Out'}</small>`);
+    } else {
+      btn.addEventListener('click', () => selectManufacturer(m));
+    }
+    opts.appendChild(btn);
+  });
+}
+
+function selectManufacturer(name) {
+  if (PRODUCTS[modalCurrentId]?.mfrSoldOut?.[name]) return;
+  modalMfr = name;
+  document.getElementById('pmodalMfr')?.classList.remove('needs-choice');
+  document.querySelectorAll('.pmodal-mfr-opt').forEach(el => {
+    el.classList.toggle('selected', el.dataset.mfr === name);
   });
 }
 
@@ -556,6 +694,7 @@ function closeModal() {
   modalCurrentId = null;
   modalQty = 1;
   modalVariantIdx = 0;
+  modalMfr = null;
 }
 
 function updateModalQty(delta) {
@@ -606,7 +745,14 @@ function addFromModal() {
   if (!prod) return;
   const variant = prod.variants ? prod.variants[modalVariantIdx] : null;
   const price   = prod.price + (variant?.priceAdd || 0);
-  addItem(modalCurrentId, prod.name, price, variant?.label || null, modalQty);
+  if (variant?.soldOut) { showToast('⚠️ That option is sold out.'); return; }
+  if (prod.manufacturers?.length && !modalMfr) {
+    document.getElementById('pmodalMfr')?.classList.add('needs-choice');
+    showToast('⚠️ Please choose a manufacturer.');
+    return;
+  }
+  const label = [modalMfr, variant?.label].filter(Boolean).join(' · ') || null;
+  addItem(modalCurrentId, prod.name, price, label, modalQty);
   closeModal();
 }
 
@@ -790,15 +936,34 @@ async function syncCatalogFromSheet() {
     const stock    = parseStockCell(row[4]);
     const normSheetName = normalizeName(rawName);
 
-    // Case 1: full 3-tier row (all three price columns present) — matches a top-level product
-    if (vialOnly !== null && vialBac !== null && complete !== null) {
+    // Case 0: "Product Name - Manufacturer" stock row (e.g. "Tirzepatide 30mg - Avisala").
+    // Tracks stock per manufacturer; the card is sold out only when every manufacturer is.
+    const mfrMatch = productList.find(([, p]) =>
+      p.manufacturers && normSheetName.startsWith(normalizeName(p.name) + ' - ')
+    );
+    if (mfrMatch) {
+      const [id, prod] = mfrMatch;
+      const suffix = normSheetName.slice(normalizeName(prod.name).length + 3).trim();
+      const mfr = prod.manufacturers.find(m => m.toLowerCase() === suffix);
+      if (mfr) {
+        if (stock !== undefined) {
+          prod.mfrSoldOut = { ...(prod.mfrSoldOut || {}), [mfr]: stock };
+          if (!variantStock.has(id)) variantStock.set(id, []);
+          variantStock.get(id).push(stock);
+        }
+        return;
+      }
+    }
+
+    // Case 1: tiered row (Vial Only + Complete Set prices; Vial and Bac optional) — matches a top-level product
+    if (vialOnly !== null && complete !== null) {
       const match = productList.find(([, p]) => normalizeName(p.name) === normSheetName);
       if (!match) { console.warn('Sheet sync: no product match for', rawName); return; }
       const [id, prod] = match;
       prod.price = complete;
       (prod.variants || []).forEach(v => {
         if (v.label === 'Vial Only') v.priceAdd = vialOnly - complete;
-        else if (v.label === 'Vial and Bac') v.priceAdd = vialBac - complete;
+        else if (v.label === 'Vial and Bac' && vialBac !== null) v.priceAdd = vialBac - complete;
         else if (v.label === 'Complete Set') v.priceAdd = 0;
       });
       if (stock !== undefined) prod.soldOut = stock === false ? false : stock;
@@ -817,7 +982,12 @@ async function syncCatalogFromSheet() {
       const [id, prod] = subVariantMatch;
       const suffix = rawName.slice(prod.name.length + 3).trim().toLowerCase();
       const variant = prod.variants.find(v => v.label.toLowerCase() === suffix);
-      if (variant) { variant.priceAdd = singlePrice - prod.price; touchedIds.add(id); }
+      if (variant) {
+        variant.priceAdd = singlePrice - prod.price;
+        // Per-option stock: a 0 row greys out just that option in the modal
+        if (stock !== undefined) variant.soldOut = stock === false ? false : stock;
+        touchedIds.add(id);
+      }
       else console.warn('Sheet sync: no variant match for', rawName);
       if (stock !== undefined) {
         if (!variantStock.has(id)) variantStock.set(id, []);

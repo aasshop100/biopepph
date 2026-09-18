@@ -1594,6 +1594,63 @@ footer {
   white-space: nowrap;
 }
 
+/* Option sold out on its own (per-option stock from the sheet) */
+.pmodal-variant-opt.sold-out {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  cursor: not-allowed;
+}
+.pmodal-variant-opt.sold-out .pmodal-variant-name,
+.pmodal-variant-opt.sold-out .pmodal-variant-price { color: #9ca3af; }
+.pmodal-variant-price small {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  text-align: right;
+}
+
+/* Manufacturer picker (e.g. Tirzepatide: Jinbei / Avisala) */
+.pmodal-mfr { margin-bottom: 18px; }
+.pmodal-mfr-opts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 8px;
+}
+.pmodal-mfr-opt {
+  padding: 11px 14px;
+  border: 2px solid var(--pink-border);
+  border-radius: 12px;
+  background: var(--white);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--black);
+  cursor: pointer;
+  transition: var(--transition);
+}
+.pmodal-mfr-opt:hover { border-color: var(--pink); }
+.pmodal-mfr-opt.selected {
+  border-color: var(--pink-dark);
+  background: var(--pink-light);
+}
+.pmodal-mfr-opt.sold-out {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+.pmodal-mfr-opt small {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.pmodal-mfr.needs-choice .pmodal-mfr-opt:not(.sold-out) { border-color: #e5484d; }
+.pmodal-mfr.needs-choice .pmodal-variant-label { color: #e5484d; }
+
 /* ================================================
    PRODUCT MODAL — YOU MAY ALSO LIKE
    ================================================ */
