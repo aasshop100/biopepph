@@ -131,7 +131,6 @@ const PRODUCTS = {
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
