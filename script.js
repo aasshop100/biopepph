@@ -85,7 +85,6 @@ const PRODUCTS = {
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
