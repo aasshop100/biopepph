@@ -148,7 +148,6 @@ const PRODUCTS = {
     desc: 'Nicotinamide Adenine Dinucleotide — essential coenzyme for cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -100 },
       { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
