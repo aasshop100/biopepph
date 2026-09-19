@@ -88,6 +88,7 @@ On load, this page:
 Changes are appended here as they're made, most recent first.
 
 ### 2026-09-19 — Manufacturer picker, per-option stock, new products, glutathione/BAC consolidation
+- **Shopee checkout card:** added “Shopee link will be provided upon check-out” to the delivery option description.
 - **Follow-up catalog update:** GHK-Cu 50mg now offers Vial Only and Complete Set; the Vial and Bac option was removed. KPV 10mg now also offers only Vial Only and Complete Set; commit `2cdb529` contains the GHK-Cu change, and the KPV follow-up is in the current commit.
 - **Tirzepatide 15/30mg:** Jinbei/Avisala manufacturer picker with per-manufacturer stock; "Vial and Bac" option removed (Vial Only + Complete Set). **Tirzepatide 60mg** added (₱1,600 / ₱1,800, sold out).
 - **New products:** Eloralintide 10mg (₱1,200 / ₱1,400, sold out), Semax 5mg + Selank 5mg (₱1,200 / ₱1,400), KPV 30mg (₱1,200 / ₱1,500), China Lemon Bottle 10mL/50mL (₱800 / ₱1,500, sold out), Forges GTT 1500mg (₱550 / ₱1,500, sold out), Generic GTT 2500mg (₱600 / ₱5,500 kit).
