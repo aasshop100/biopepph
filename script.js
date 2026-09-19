@@ -113,8 +113,6 @@ const PRODUCTS = {
     desc: 'Octapeptide-2 — peptide alternative to Botox. Reduces the depth of expression lines by relaxing facial muscle contractions. Popular in advanced anti-aging skincare protocols.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'aod-9604-5mg': { hidden: true, // hidden 2026-09-19 (sold out) — restore by removing this flag + re-adding its card
@@ -143,7 +141,6 @@ const PRODUCTS = {
     desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
@@ -163,7 +160,6 @@ const PRODUCTS = {
     desc: 'Higher-dose Nicotinamide Adenine Dinucleotide for enhanced cellular energy production and DNA repair. Activates sirtuins for longevity benefits and supports mitochondrial function.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -300 },
-      { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -200 },
       { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
@@ -173,7 +169,6 @@ const PRODUCTS = {
     desc: 'Combination peptide blend — GHK-Cu 100mg for collagen synthesis and skin renewal, plus KPV 10mg for anti-inflammatory and antimicrobial support. Dual-action formula for skin and gut health.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
@@ -183,27 +178,24 @@ const PRODUCTS = {
     desc: 'Combination peptide blend — GHK-Cu 50mg for collagen synthesis and skin renewal, plus KPV 5mg for anti-inflammatory and antimicrobial support. Lower-dose dual-action formula for skin and gut health.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'nad-1000mg': {
     name: 'NAD+ 1000mg', price: 1700, origPrice: null, emoji: '⚡', image: 'images/nad+1000mg.jpg',
-    tag: 'Soon', tagClass: 'sold-out', cat: 'Anti-Aging', soldOut: 'SOON',
-    desc: 'Highest-dose Nicotinamide Adenine Dinucleotide for maximum cellular energy production and DNA repair support. Coming soon.',
+    tag: null, tagClass: '', cat: 'Anti-Aging',
+    desc: 'Highest-dose Nicotinamide Adenine Dinucleotide for maximum cellular energy production and DNA repair support.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'NAD+ Vial + Bac water Only',                                          priceAdd: -200 },
       { label: 'Complete Set',  desc: 'NAD+ vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'cagri-10mg-soon': {
     name: 'Cagrilintide 10mg', price: 1900, origPrice: null, emoji: '💉', image: 'images/cagrilintide10mg.jpg',
-    tag: 'Soon', tagClass: 'sold-out', cat: 'Weight Loss', soldOut: 'SOON',
-    desc: 'Amylin analog for appetite regulation and satiety enhancement. Often paired with GLP-1 therapy for synergistic weight loss. Coming soon.',
+    tag: null, tagClass: '', cat: 'Weight Loss',
+    desc: 'Amylin analog for appetite regulation and satiety enhancement. Often paired with GLP-1 therapy for synergistic weight loss.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
@@ -258,9 +250,9 @@ const PRODUCTS = {
     variants: null,
   },
   'alcohol-swab': {
-    name: 'Alcohol Swab (10 pcs)', price: 10, origPrice: null, emoji: '🧴',
+    name: 'Alcohol Pads (Box)', price: 90, origPrice: null, emoji: '🧴',
     tag: null, tagClass: '', cat: 'Other',
-    desc: 'Sterile 70% isopropyl alcohol swabs. Essential for sanitizing injection sites before peptide administration. Pack of 10.',
+    desc: '100 individually wrapped pads\n70% Isopropyl Alcohol\n2% Chlorhexidine Gluconate',
     variants: null,
   },
   'normal-saline-20ml': {
@@ -271,11 +263,13 @@ const PRODUCTS = {
     variants: null,
   },
   'pink-syringe-preorder': {
-    hidden: true,
-    name: 'Pink Insulin Syringe (10 pcs)', price: 50, origPrice: null, emoji: '💉', image: 'images/Pink Insulin Syringe (10pcs).jpg',
-    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Other',
-    desc: 'Pink insulin syringe pack of 10. Pre-order batch — secure yours before the cut-off.',
-    variants: null,
+    name: 'Pink Insulin Syringe', price: 6, origPrice: null, emoji: '💉', image: 'images/Pink Insulin Syringe (10pcs).jpg',
+    tag: null, tagClass: '', cat: 'Other',
+    desc: '31G 1mL 8mm',
+    variants: [
+      { label: 'Piece',          desc: '31G 1mL 8mm',               priceAdd: 0   },
+      { label: 'Box (100pcs)',  desc: '31G 1mL 8mm · 100 pieces',  priceAdd: 594 },
+    ],
   },
   'glutathione-1200mg': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'Korean Glutathione 1200mg', price: 700, origPrice: null, emoji: '✨', image: 'images/kgtt1200mg.jpg',
@@ -313,9 +307,9 @@ const PRODUCTS = {
     ],
   },
   'fuan-glutathione-1500mg-box': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
-    name: 'FUAN Reduced Glutathione 1500mg Box', price: 4100, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
+    name: 'FUAN Reduced Glutathione 1500mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
-    desc: 'FUAN Reduced Glutathione 1500mg\nPer Box: 10 vials\n❌ BAC Water is NOT included\n💰 ₱4,100 per box',
+    desc: 'FUAN Reduced Glutathione 1500mg\nPer Box: 10 vials\n❌ BAC Water is NOT included\n💰 ₱4,000 per box',
     variants: null,
   },
   'korean-glutaone-1200mg': {
@@ -373,9 +367,9 @@ const PRODUCTS = {
     variants: null,
   },
   'fuan-glutathione-1500mg-box-preorder': {
-    name: 'FUAN Reduced Glutathione 1500mg Box Pre-Order', price: 3500, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
+    name: 'FUAN Reduced Glutathione 1500mg Box Pre-Order', price: 4000, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
-    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱3,500 per kit\n🚚 ETA to PH: 3 weeks',
+    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱4,000 per kit\n🚚 ETA to PH: 3 weeks',
     variants: null,
   },
 
