@@ -366,7 +366,7 @@ const PRODUCTS = {
   'fuan-glutathione-1500mg-box-preorder': {
     name: 'FUAN Reduced Glutathione 1500mg Box Pre-Order', price: 4000, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
-    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱4,000 per kit\n🚚 ETA to PH: 3 weeks',
+    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱4,000 per kit\nAlways open, ETA: 7 days upon payment.',
     variants: null,
   },
 
