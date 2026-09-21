@@ -337,12 +337,12 @@ const PRODUCTS = {
     ],
   },
   'forges-gtt-1500mg': {
-    name: 'Forges GTT 1500mg', price: 1500, origPrice: null, emoji: '✨',
+    name: 'Forges GTT 1500mg', price: 6000, origPrice: null, emoji: '✨',
     tag: null, tagClass: '', cat: 'Anti-Aging', soldOut: true,
     desc: 'Forges 1500mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
     variants: [
-      { label: 'Vial & Saline', desc: 'Glutathione vial + saline',                                            priceAdd: -950 },
-      { label: 'Kit w/ Saline', desc: '',                                                                     priceAdd: 0    },
+      { label: 'Vial & Saline',                 desc: 'Glutathione vial + saline',                              priceAdd: -5350 },
+      { label: 'Box (10 vials & 10 saline)',    desc: '10 glutathione vials + 10 saline ampoules',             priceAdd: 0     },
     ],
   },
   'glutathione-1200mg-box': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg

@@ -88,6 +88,7 @@ On load, this page:
 Changes are appended here as they're made, most recent first.
 
 ### 2026-09-19 — Manufacturer picker, per-option stock, new products, glutathione/BAC consolidation
+- **Forges GTT 1500mg:** options are now Vial & Saline (₱650) and Box (10 vials & 10 saline) (₱6,000).
 - **Storefront cache bust:** versioned the `script.js` URL so browser caches pick up catalog/modal copy updates immediately.
 - **FUAN Reduced Glutathione pre-order card:** description now says “Always open, ETA: 7 days upon payment.”
 - **NAD+ 100mg:** removed the Vial and Bac option; only Vial Only and Complete Set remain.
