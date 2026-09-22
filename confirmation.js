@@ -127,18 +127,19 @@ function renderContactLinks(order) {
 // Here we only record the payment method the buyer chose; the sheet then emails the admin once.
 async function sendToSheet(order) {
   if (!order.orderKey) return true; // an order from before the sheet switch — nothing to confirm
-  try {
-    const r = await fetch(ORDER_API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ action: 'confirm', orderId: order.orderId, key: order.orderKey, payment: order.paymentMethod || '' }),
-    });
-    const res = await r.json();
-    return res.ok === true;
-  } catch (err) {
-    console.warn('Could not confirm the order with the store sheet:', err.message);
-    return false; // retried on the next visit to this page
+  const body = JSON.stringify({ action: 'confirm', orderId: order.orderId, key: order.orderKey, payment: order.paymentMethod || '' });
+  // Safe to repeat: the sheet emails the admin only once per order. Google's hand-off sometimes
+  // answers with a "page not found" page, so retry a few times before giving up.
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    if (attempt > 1) await new Promise(r => setTimeout(r, 3000));
+    try {
+      const r = await fetch(ORDER_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body });
+      const res = JSON.parse(await r.text());
+      if (res && typeof res.ok === 'boolean') return res.ok;
+    } catch (err) { /* retry */ }
   }
+  console.warn('Could not confirm the order with the store sheet — will retry on the next visit.');
+  return false;
 }
 
 function showConfToast(msg) {

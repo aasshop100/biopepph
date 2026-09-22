@@ -348,7 +348,7 @@ async function placeOrder() {
   const btnText = btn.textContent;
   placingOrder = true;
   btn.disabled = true;
-  btn.textContent = 'Placing order…';
+  btn.textContent = 'Placing order… (can take up to a minute)';
 
   const deliveryValue = document.querySelector('input[name="coDelivery"]:checked')?.value;
   const body = {
@@ -367,13 +367,19 @@ async function placeOrder() {
     items:    cart.map(i => ({ optionId: i.optionId, qty: i.qty })),
   };
 
-  let res;
-  try {
-    const r = await fetch(ORDER_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
-    res = await r.json();
-  } catch (err) {
-    res = { ok: false, error: 'network' };
+  // One reference per checkout attempt, reused on retries and on a second click with the same cart/phone:
+  // if Google loses the reply after the order was saved, the sheet returns that same order instead of a duplicate.
+  const sig = JSON.stringify([body.items, body.customer.phone]);
+  let refRec = null;
+  try { refRec = JSON.parse(sessionStorage.getItem('biopep_order_ref')); } catch (e) { /* ignore */ }
+  if (!refRec || refRec.sig !== sig) {
+    refRec = { sig, ref: (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2)) };
+    try { sessionStorage.setItem('biopep_order_ref', JSON.stringify(refRec)); } catch (e) { /* ignore */ }
   }
+  body.ref = refRec.ref;
+
+  const res = await postToStore(body, (n) => { btn.textContent = `Still placing order… (try ${n} of 4)`; });
+  if (res.ok) { try { sessionStorage.removeItem('biopep_order_ref'); } catch (e) { /* ignore */ } }
   placingOrder = false;
   btn.disabled = false;
   btn.textContent = btnText;
@@ -410,6 +416,25 @@ async function placeOrder() {
   localStorage.setItem('biopep_order', JSON.stringify(order));
   localStorage.removeItem('biopep_promo');
   window.location.href = 'payment.html';
+}
+
+/**
+ * POSTs to the store script, retrying when Google's web-app hand-off fails (404 page / network error /
+ * timeout) — the script can take 2–40 s. A real answer from the script (ok or an error code) is never retried.
+ */
+async function postToStore(body, onRetry) {
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    if (attempt > 1) { onRetry?.(attempt); await new Promise(r => setTimeout(r, 2000)); }
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 60000);
+      const r = await fetch(ORDER_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body), signal: ctrl.signal });
+      clearTimeout(timer);
+      const res = JSON.parse(await r.text()); // a Google "page not found" is HTML → throws → retry
+      if (res && typeof res.ok === 'boolean') return res;
+    } catch (err) { /* retry */ }
+  }
+  return { ok: false, error: 'network' };
 }
 
 /** After a "not enough stock" answer: lower or remove the lines that can't be filled. */

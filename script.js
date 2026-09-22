@@ -903,7 +903,7 @@ const CATEGORY_KEYS = { 'Weight Loss': 'WeightLoss', 'Healing': 'Healing', 'Anti
 // Label printed on the card when it differs from the sheet's category name.
 const CATEGORY_LABELS = { 'Other': 'Add-ons' };
 const CATALOG_CACHE_KEY = 'biopep_catalog_v1';
-const CATALOG_TIMEOUT_MS = 15000;
+const CATALOG_TIMEOUT_MS = 45000; // web-app fallback only — Apps Script can take 2–40 s
 
 let sheetProducts = null; // Product ID → sheet product, once the catalog has loaded
 
@@ -1020,20 +1020,96 @@ function refreshCartFromCatalog() {
   if (dropped.length) showToast(`⚠️ Removed from cart (no longer available): ${dropped.join(', ')}`);
 }
 
+/** Minimal CSV parser (quoted fields, "" escapes, CRLF). */
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"') {
+        if (text[i + 1] === '"') { field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else if (c === '"') inQuotes = true;
+    else if (c === ',') { row.push(field); field = ''; }
+    else if (c === '\r') { /* skip */ }
+    else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+    else field += c;
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+/**
+ * Builds the same catalog shape the web app returns, from the published Catalog tab CSV.
+ * Mirrors buildCatalog_() in the Apps Script: hidden products, unticked/unpriced options dropped,
+ * blank Stock = not counted (null).
+ */
+function catalogFromCSV(text) {
+  const rows = parseCSV(text);
+  const head = (rows[0] || []).map(h => h.trim());
+  const col = (name) => head.indexOf(name);
+  const need = ['Product ID', 'Option ID', 'Product Name', 'Category', 'Stock', 'Show on Site', 'Sort Order', 'Option Name', 'Price (₱)', 'Show Option'];
+  if (need.some(h => col(h) < 0)) throw new Error('Catalog CSV is missing columns');
+  const num = (v) => { const n = parseFloat(String(v || '').replace(/[₱,\s]/g, '')); return isNaN(n) ? null : n; };
+  const yes = (v) => String(v || '').trim().toUpperCase() === 'TRUE';
+  const products = [];
+  let cur = null;
+  rows.slice(1).forEach(r => {
+    const get = (h) => (r[col(h)] || '').trim();
+    if (get('Product Name')) {
+      const stock = num(get('Stock'));
+      cur = { id: get('Product ID'), name: get('Product Name'), category: get('Category'), sort: num(get('Sort Order')) ?? 9999,
+        show: yes(get('Show on Site')), stock: stock === null ? null : Math.floor(stock), options: [] };
+      products.push(cur);
+    }
+    if (cur && get('Option Name') && get('Option ID') && yes(get('Show Option')) && num(get('Price (₱)')) !== null) {
+      cur.options.push({ id: get('Option ID'), name: get('Option Name'), price: num(get('Price (₱)')) });
+    }
+  });
+  return {
+    source: 'csv',
+    products: products
+      .filter(p => p.id && p.show && p.options.length)
+      .map(({ show, ...p }) => ({ ...p, stock: p.stock === null ? null : Math.max(0, p.stock), soldOut: p.stock !== null && p.stock <= 0 }))
+      .sort((a, b) => a.sort - b.sort),
+  };
+}
+
+async function fetchWithTimeout(url, ms, opts = {}) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), ms);
+  try { return await fetch(url, { ...opts, signal: ctrl.signal }); }
+  finally { clearTimeout(timer); }
+}
+
 async function syncCatalogFromSheet() {
   let cached = null;
   try { cached = JSON.parse(localStorage.getItem(CATALOG_CACHE_KEY)); } catch (e) { /* ignore */ }
   if (cached?.products) applyCatalog(cached); // show the last good copy immediately
 
+  const save = (catalog) => { try { localStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify(catalog)); } catch (e) { /* storage full / blocked */ } };
+  // 1) Fast path: the published Catalog tab (Google's CDN, ~1 s; can lag sheet edits by a few minutes —
+  //    stock is re-checked live when the order is placed, so that is safe).
   try {
-    const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), CATALOG_TIMEOUT_MS);
-    const res = await fetch(ORDER_API_URL, { cache: 'no-store', signal: ctrl.signal });
-    clearTimeout(timer);
+    const res = await fetchWithTimeout(CATALOG_CSV_URL + '&t=' + Date.now(), 10000, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const catalog = catalogFromCSV(await res.text());
+    if (!catalog.products.length) throw new Error('empty catalog');
+    save(catalog);
+    applyCatalog(catalog);
+    return;
+  } catch (err) {
+    console.warn('Published catalog unavailable, asking the store script instead:', err.message);
+  }
+  // 2) Fallback: the Apps Script web app (always current, but can take 2–40 s).
+  try {
+    const res = await fetchWithTimeout(ORDER_API_URL, CATALOG_TIMEOUT_MS, { cache: 'no-store' });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const catalog = await res.json();
     if (!Array.isArray(catalog.products)) throw new Error('bad catalog');
-    try { localStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify(catalog)); } catch (e) { /* storage full / blocked */ }
+    save(catalog);
     applyCatalog(catalog);
   } catch (err) {
     console.warn('Catalog sync failed' + (cached ? ' — showing the saved copy:' : ':'), err.message);
