@@ -43,7 +43,9 @@ Prices, stock, show/hide, category and card order come from the **Catalog** tab 
 - **Stock is per sheet product**, shared by its options (Vial Only + Complete Set). Blank stock = not counted, always orderable (pre-orders).
 - **Cards are wired to sheet products by id, never by name** — `SHEET_MAP` in `script.js`: `'P-0011'` (options match the card's variant labels), `{ mfr: { Jinbei: 'P-0001', Avisala: 'P-0002' } }` (one sheet product per manufacturer, own stock + price), or `{ variants: { 'Vial Only': 'P-0024', 'Box': 'P-0025' } }` (one sheet product per card option). Renaming in the sheet can't break the site.
 - Sheet **Category** sets the card's filter tab (`CATEGORY_KEYS`; `Other` is labelled "Add-ons"). **Sort Order** sets card order (sold-out cards still sink to the bottom). A card whose sheet products are all unticked disappears.
-- The last good catalog is kept in `localStorage['biopep_catalog_v1']` and shown instantly while the fresh one loads (web app caches 60 s).
+- **Where the shop page reads it from:** first the **published Catalog tab** (`CATALOG_CSV_URL` in `api-config.js` — File → Share → Publish to web, Catalog tab only, CSV; ~1 s, may lag edits by a few minutes); if that fails, the web app (`ORDER_API_URL`, always current but 2–40 s). Stock is re-checked live when an order is placed, so the lag is safe. The last good catalog is kept in `localStorage['biopep_catalog_v1']` and shown instantly while the fresh one loads.
+- 🔒 **The sheet must stay "Restricted" and only the Catalog tab may be published** — Orders holds customer names, phones and addresses.
+- Checkout retries lost web-app replies with the same `ref`; the script returns the already-saved order instead of a duplicate.
 - **Adding a product** = sheet rows (ids fill in automatically) + a card in `index.html` + a `PRODUCTS` entry + a `SHEET_MAP` line.
 
 ⚠️ **Editing the sheet changes the LIVE site within about a minute — no deploy.**
