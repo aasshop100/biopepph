@@ -63,8 +63,9 @@
         <h2>Delivery Option</h2>
         <div class="co-delivery-opts">
 
-          <label class="co-delivery-opt">
-            <input type="radio" name="coDelivery" value="jnt" data-fee="160" data-label="Via J&T Express">
+          <!-- J&T hidden 2026-09-22 — to restore, remove style="display:none;" here and `disabled` on the input -->
+          <label class="co-delivery-opt" style="display:none;">
+            <input type="radio" name="coDelivery" value="jnt" data-fee="160" data-label="Via J&T Express" disabled>
             <div class="co-delivery-card">
               <span class="co-del-icon">📦</span>
               <div class="co-del-info">

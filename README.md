@@ -87,6 +87,9 @@ On load, this page:
 
 Changes are appended here as they're made, most recent first.
 
+### 2026-09-22 — J&T Express delivery option hidden
+- Checkout now offers only **Lalamove** (default) and **Shopee Checkout**. The J&T block is still in `checkout.html`, hidden (`style="display:none"`) with its radio `disabled`; the regional fee logic in `checkout.js` is untouched, so restoring J&T is just removing those two attributes.
+
 ### 2026-09-19 — Manufacturer picker, per-option stock, new products, glutathione/BAC consolidation
 - **Forges GTT 1500mg:** options are now Vial & Saline (₱650) and Box (10 vials & 10 saline) (₱6,000).
 - **Storefront cache bust:** versioned the `script.js` URL so browser caches pick up catalog/modal copy updates immediately.
