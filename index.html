@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260922">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-99KWCP7494"></script>
   <script>
@@ -69,6 +69,7 @@
     <button class="mnav-cat" data-cat="WeightLoss">Weight Loss</button>
     <button class="mnav-cat" data-cat="Healing">Healing &amp; Recovery</button>
     <button class="mnav-cat" data-cat="AntiAging">Anti-Aging &amp; Skin</button>
+    <button class="mnav-cat" data-cat="AntiOxidant">Anti-oxidant (Glutathione)</button>
     <button class="mnav-cat" data-cat="Growth" style="display:none;">Growth &amp; Performance</button>
     <button class="mnav-cat" data-cat="Stacks" style="display:none;">Stack Bundles</button>
     <button class="mnav-cat" data-cat="Other">Add-ons</button>
@@ -200,6 +201,7 @@
       <button class="cat-tab" data-cat="WeightLoss">Weight Loss</button>
       <button class="cat-tab" data-cat="Healing">Healing</button>
       <button class="cat-tab" data-cat="AntiAging">Anti-Aging</button>
+      <button class="cat-tab" data-cat="AntiOxidant">Anti-oxidant</button>
       <button class="cat-tab" data-cat="Growth" style="display:none;">Growth</button>
       <button class="cat-tab" data-cat="Stacks" style="display:none;">Stacks</button>
       <button class="cat-tab" data-cat="Other">Other</button>
@@ -214,14 +216,14 @@
   <div class="pgrid" id="productGrid">
 
     <!-- PRE-ORDERS — data-deadline="YYYY-MM-DD" auto-closes the card after that day (PH time) -->
-    <div class="pgrid-item" data-cat="AntiAging">
+    <div class="pgrid-item" data-cat="AntiOxidant">
       <div class="pcard" data-id="fuan-glutathione-1500mg-box-preorder">
         <div class="pcard-img" onclick="openModal('fuan-glutathione-1500mg-box-preorder')">
-          <img src="images/fuan1.png" alt="FUAN Reduced Glutathione 1500mg Box Pre-Order" class="pcard-photo">
           <span class="pcard-tag preorder">Pre-Order</span>
+          <img src="images/fuan1.png" alt="FUAN Reduced Glutathione 1500mg Box Pre-Order" class="pcard-photo">
         </div>
         <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
+          <p class="pcard-cat">Anti-oxidant</p>
           <h6 class="pcard-name" onclick="openModal('fuan-glutathione-1500mg-box-preorder')">FUAN Reduced Glutathione 1500mg Box</h6>
           <p class="pcard-desc">Always open, ETA: 7 days upon payment.</p>
           <div class="pcard-foot">
@@ -232,13 +234,12 @@
       </div>
     </div>
 
-    <div class="pgrid-item" data-cat="AntiAging">
+    <div class="pgrid-item" data-cat="AntiOxidant">
       <div class="pcard" data-id="korean-glutaone-1200mg">
         <div class="pcard-img" onclick="openModal('korean-glutaone-1200mg')">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
+          <p class="pcard-cat">Anti-oxidant</p>
           <h6 class="pcard-name" onclick="openModal('korean-glutaone-1200mg')">Korean Glutaone 1200mg</h6>
           <p class="pcard-desc">Korean glutathione · Skin brightening · Antioxidant</p>
           <p class="pcard-variants">Vial Only · Box</p>
@@ -250,13 +251,12 @@
       </div>
     </div>
 
-    <div class="pgrid-item" data-cat="AntiAging">
+    <div class="pgrid-item" data-cat="AntiOxidant">
       <div class="pcard" data-id="fuan-gtt-1500mg">
         <div class="pcard-img" onclick="openModal('fuan-gtt-1500mg')">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
+          <p class="pcard-cat">Anti-oxidant</p>
           <h6 class="pcard-name" onclick="openModal('fuan-gtt-1500mg')">FUAN GTT 1500mg</h6>
           <p class="pcard-desc">Reduced glutathione · Skin brightening · Antioxidant</p>
           <p class="pcard-variants">Vial Only · Box</p>
@@ -268,13 +268,12 @@
       </div>
     </div>
 
-    <div class="pgrid-item" data-cat="AntiAging">
+    <div class="pgrid-item" data-cat="AntiOxidant">
       <div class="pcard" data-id="generic-gtt-2500mg">
         <div class="pcard-img" onclick="openModal('generic-gtt-2500mg')">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
+          <p class="pcard-cat">Anti-oxidant</p>
           <h6 class="pcard-name" onclick="openModal('generic-gtt-2500mg')">Generic GTT 2500mg</h6>
           <p class="pcard-desc">High-dose glutathione · Skin brightening · Antioxidant</p>
           <p class="pcard-variants">Vial Only · Kit</p>
@@ -286,13 +285,13 @@
       </div>
     </div>
 
-    <div class="pgrid-item" data-cat="AntiAging">
+    <div class="pgrid-item" data-cat="AntiOxidant">
       <div class="pcard" data-id="forges-gtt-1500mg">
         <div class="pcard-img" onclick="openModal('forges-gtt-1500mg')">
           <div class="soldout-overlay"><span>Sold Out</span></div>
         </div>
         <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
+          <p class="pcard-cat">Anti-oxidant</p>
           <h6 class="pcard-name" onclick="openModal('forges-gtt-1500mg')">Forges GTT 1500mg</h6>
           <p class="pcard-desc">Glutathione · Skin brightening · Antioxidant</p>
           <p class="pcard-variants">Vial &amp; Saline · Box (10 vials &amp; 10 saline)</p>
@@ -304,18 +303,18 @@
       </div>
     </div>
 
-    <div class="pgrid-item" data-cat="AntiAging">
+    <div class="pgrid-item" data-cat="AntiOxidant">
       <div class="pcard" data-id="glutathione-1200mg-box-preorder">
         <div class="pcard-img" onclick="openModal('glutathione-1200mg-box-preorder')">
-          <img src="images/kgttbox.jpg" alt="Korean Glutathione 1200mg Box Pre-Order" class="pcard-photo">
           <span class="pcard-tag preorder">Pre-Order</span>
+          <img src="images/kgttbox.jpg" alt="Korean Glutathione 1200mg Box Pre-Order" class="pcard-photo">
         </div>
         <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
+          <p class="pcard-cat">Anti-oxidant</p>
           <h6 class="pcard-name" onclick="openModal('glutathione-1200mg-box-preorder')">Korean Glutathione 1200mg Box</h6>
-          <p class="pcard-desc">10 vials per kit · ETA to PH: 5 days</p>
+          <p class="pcard-desc">Always open, ETA: 7 days upon payment.</p>
           <div class="pcard-foot">
-            <span class="pcard-price">₱3,200</span>
+            <span class="pcard-price">₱3,500</span>
             <button class="btn-add" onclick="openModal('glutathione-1200mg-box-preorder')">Pre-Order</button>
           </div>
         </div>
@@ -323,14 +322,13 @@
     </div>
 
     <!-- 7.7 SALE (time-limited — ends July 7 2026 midnight PH time) -->
-    <div class="pgrid-item" data-cat="AntiAging" id="promoCardWrap">
+    <div class="pgrid-item" data-cat="AntiOxidant" id="promoCardWrap">
       <div class="pcard" data-id="promo-77-glutathione">
         <div class="pcard-img" onclick="openModal('promo-77-glutathione')">
           <img src="images/77sale.jpg" alt="7.7 Sale — Korean Glutathione 1200mg" class="pcard-photo">
-          <span class="pcard-tag sale">Sale</span>
         </div>
         <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
+          <p class="pcard-cat">Anti-oxidant</p>
           <h6 class="pcard-name" onclick="openModal('promo-77-glutathione')">KGTT 1200 Glutaone — 7.7 Sale</h6>
           <p class="pcard-desc">Ends tonight at midnight · Vial Only ₱400 · Box ₱3,500</p>
           <p class="pcard-variants">Vial Only · Box (10 Vials)</p>
@@ -366,7 +364,6 @@
       <div class="pcard" data-id="tirze-30mg">
         <div class="pcard-img" onclick="openModal('tirze-30mg')">
           <img src="images/tirzepatide30mg.jpg" alt="Tirzepatide 30mg" class="pcard-photo">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Weight Loss</p>
@@ -439,7 +436,6 @@
       <div class="pcard" data-id="ghkcu-50mg">
         <div class="pcard-img" onclick="openModal('ghkcu-50mg')">
           <img src="images/ghkcu50mg.jpg" alt="GHK-Cu 50mg" class="pcard-photo">
-          <span class="pcard-tag">Top Pick</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
@@ -458,7 +454,6 @@
       <div class="pcard" data-id="ghkcu-100mg">
         <div class="pcard-img" onclick="openModal('ghkcu-100mg')">
           <img src="images/ghkcu50mg.jpg" alt="GHK-Cu 100mg" class="pcard-photo">
-          <span class="pcard-tag">Top Pick</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
@@ -496,7 +491,6 @@
       <div class="pcard" data-id="nad-500mg">
         <div class="pcard-img" onclick="openModal('nad-500mg')">
           <img src="images/nad+500mg.jpg" alt="NAD+ 500mg" class="pcard-photo">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
@@ -515,7 +509,6 @@
       <div class="pcard" data-id="cuv-110mg">
         <div class="pcard-img" onclick="openModal('cuv-110mg')">
           <img src="images/cuv110mg.jpg" alt="GHK-CU 100mg + KPV 10mg" class="pcard-photo">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
@@ -534,7 +527,6 @@
       <div class="pcard" data-id="cuv-55mg">
         <div class="pcard-img" onclick="openModal('cuv-55mg')">
           <img src="images/cuv55mg.jpg" alt="GHK-CU 50mg + KPV 5mg" class="pcard-photo">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Anti-Aging</p>
@@ -571,7 +563,6 @@
     <div class="pgrid-item" data-cat="Healing">
       <div class="pcard" data-id="kpv-30mg">
         <div class="pcard-img" onclick="openModal('kpv-30mg')">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Healing</p>
@@ -589,7 +580,6 @@
     <div class="pgrid-item" data-cat="Healing">
       <div class="pcard" data-id="semax-selank-5mg">
         <div class="pcard-img" onclick="openModal('semax-selank-5mg')">
-          <span class="pcard-tag new">New</span>
         </div>
         <div class="pcard-body">
           <p class="pcard-cat">Healing</p>
@@ -660,6 +650,24 @@
     </div>
 
     <!-- OTHER / ADD-ONS -->
+    <div class="pgrid-item" data-cat="WeightLoss">
+      <div class="pcard" data-id="retro-10mg">
+        <div class="pcard-img" onclick="openModal('retro-10mg')">
+          <img src="images/retrutide15mg.jpg" alt="Retatrutide 15mg" class="pcard-photo">
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Weight Loss</p>
+          <h6 class="pcard-name" onclick="openModal('retro-10mg')">Retatrutide 15mg</h6>
+          <p class="pcard-desc">GLP-1/GIP/Glucagon Triple Agonist · Advanced weight management</p>
+          <p class="pcard-variants">Vial Only · Complete Set</p>
+          <div class="pcard-foot">
+            <span class="pcard-price"><small style="font-size:.65em;font-weight:500;opacity:.7">from </small>₱1,450</span>
+            <button class="btn-add" onclick="openModal('retro-10mg')">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="pgrid-item" data-cat="Other" style="display:none">
       <div class="pcard" data-id="normal-saline-20ml">
         <div class="pcard-img" onclick="openModal('normal-saline-20ml')">
@@ -756,27 +764,6 @@
           <div class="pcard-foot">
             <span class="pcard-price">₱90</span>
             <button class="btn-add" onclick="openModal('alcohol-swab')">Add</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CLOSED PRE-ORDERS (kept visible for reference — no longer orderable) -->
-    <div class="pgrid-item" data-cat="AntiAging">
-      <div class="pcard closed" data-id="glutathione-1200mg-box-preorder-10x" data-deadline="2026-08-02">
-        <div class="pcard-img">
-          <img src="images/kgttbox.jpg" alt="Korean Glutathione 1200mg Box 10x Pre-Order (closed)" class="pcard-photo">
-          <span class="pcard-tag closed">Closed</span>
-          <div class="soldout-overlay"><span>Pre-Order Closed</span></div>
-        </div>
-        <div class="pcard-body">
-          <p class="pcard-cat">Anti-Aging</p>
-          <h6 class="pcard-name">Korean Glutathione 1200mg Box (10x)</h6>
-          <p class="pcard-desc">10 kits (10 vials each) · BAC Water NOT included</p>
-          <p class="pcard-cutoff closed">🚫 Pre-order closed — deadline was August 2</p>
-          <div class="pcard-foot">
-            <span class="pcard-price">₱30,000</span>
-            <button class="btn-add sold-out" disabled>Closed</button>
           </div>
         </div>
       </div>
@@ -912,7 +899,6 @@
 <div class="pmodal" id="pmodal" role="dialog" aria-modal="true">
   <div class="pmodal-img-wrap" id="pmodalImgWrap">
     <span class="pmodal-emoji" id="pmodalEmoji">💉</span>
-    <span class="pmodal-badge" id="pmodalBadge"></span>
     <button class="pmodal-close" id="pmodalClose" aria-label="Close">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
@@ -954,7 +940,8 @@
   </div>
 </div>
 
-<script src="script.js?v=20260920"></script>
+<script src="api-config.js?v=20260922"></script>
+<script src="script.js?v=20260922"></script>
 <script>
 (function () {
   const canvas = document.createElement('canvas');

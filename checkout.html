@@ -154,6 +154,11 @@
             <label for="coNotes">Landmarks / Notes <span class="co-opt">(optional)</span></label>
             <textarea id="coNotes" rows="2" placeholder="e.g. Blue gate, near 7-Eleven, preferred delivery time..."></textarea>
           </div>
+          <!-- Trap field for bots: hidden from people, so a real buyer always leaves it empty -->
+          <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+            <label for="coWebsite">Website</label>
+            <input type="text" id="coWebsite" name="website" tabindex="-1" autocomplete="off">
+          </div>
         </div>
       </section>
 
@@ -187,6 +192,7 @@
   </main>
 
   <script src="ph-address-data.js"></script>
-  <script src="checkout.js"></script>
+  <script src="api-config.js?v=20260922"></script>
+  <script src="checkout.js?v=20260922"></script>
 </body>
 </html>

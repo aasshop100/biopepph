@@ -36,26 +36,24 @@ Deploying is just `git push origin master` — GitHub Pages rebuilds automatical
 - Cart is an array of `{ id, baseId, name, price, qty }` persisted to `localStorage['biopep_cart']`. `id` includes the label (e.g. `tirze-10mg__Jinbei · Complete Set`) so each manufacturer/variant is a separate cart line, and `name` carries it (`Tirzepatide 15mg (Jinbei · Complete Set)`) through checkout, payment, confirmation, the WhatsApp/Telegram message and the Orders sheet. `baseId` points back to the `PRODUCTS` entry.
 - Cart total, sticky bar, and drawer all re-render from `renderCart()` any time the cart array changes.
 
-### Live price & stock sheet (`syncCatalogFromSheet()` in `script.js`)
-Prices and stock are pulled on **every page load** from the [pricing/inventory Google Sheet](https://docs.google.com/spreadsheets/d/1uzA0Hyg0Y-c9irJKrL-IFZXjxrGjDM_2ozueOP6B3mo) (published CSV, `Sheet1`). Columns: `Name | SRP vial only | SRP vial/bac | SRP complete set | STOCKS LEFT`. Stock `<= 0` / `Sold out` → sold out; `Soon` / `Closed` → that label; blank → untouched.
+### Store back office — the BIOPEP INVENTORY sheet (`syncCatalogFromSheet()` in `script.js`)
+Prices, stock, show/hide, category and card order come from the **Catalog** tab of the [BIOPEP INVENTORY sheet](https://docs.google.com/spreadsheets/d/1uzA0Hyg0Y-c9irJKrL-IFZXjxrGjDM_2ozueOP6B3mo), served as JSON by the sheet's own Apps Script web app (`ORDER_API_URL` in `api-config.js`). The script source, its flow tests and the sheet tools live **outside this repo** in `Desktop\BIOPEP-backoffice\`.
 
-⚠️ **Editing the sheet changes the LIVE site immediately — no deploy.** And rows are matched to products **by name**, so renaming a product in code without renaming its sheet row silently stops it syncing (it falls back to the hardcoded price/stock). When renaming or replacing products, add the new rows first, push, and only then delete the old rows.
+- **Catalog tab:** one row per option. A product's own fields (Product Name, Category, Stock, Show on Site, Sort Order) are only on its first row; rows under it with a blank name are its other options. Hidden columns A/B hold `P-0001` / `O-0001` ids.
+- **Stock is per sheet product**, shared by its options (Vial Only + Complete Set). Blank stock = not counted, always orderable (pre-orders).
+- **Cards are wired to sheet products by id, never by name** — `SHEET_MAP` in `script.js`: `'P-0011'` (options match the card's variant labels), `{ mfr: { Jinbei: 'P-0001', Avisala: 'P-0002' } }` (one sheet product per manufacturer, own stock + price), or `{ variants: { 'Vial Only': 'P-0024', 'Box': 'P-0025' } }` (one sheet product per card option). Renaming in the sheet can't break the site.
+- Sheet **Category** sets the card's filter tab (`CATEGORY_KEYS`; `Other` is labelled "Add-ons"). **Sort Order** sets card order (sold-out cards still sink to the bottom). A card whose sheet products are all unticked disappears.
+- The last good catalog is kept in `localStorage['biopep_catalog_v1']` and shown instantly while the fresh one loads (web app caches 60 s).
+- **Adding a product** = sheet rows (ids fill in automatically) + a card in `index.html` + a `PRODUCTS` entry + a `SHEET_MAP` line.
 
-| Row name pattern | Example | What it sets |
-|---|---|---|
-| `Product Name` + vial-only & complete prices (vial/bac optional) | `KPV 30mg · 1200 · · 1500 · 3` | product price, Vial Only/Vial and Bac offsets, card stock |
-| `Product Name` + one price | `Pink Insulin Syringe (10 pcs) · · · 50` | flat-price product |
-| `Product Name - Option` + one price | `FUAN GTT 1500mg - Box · · · 5000 · 0` | that option's price **and its own stock**; card is sold out only when every option row is |
-| `Product Name - Manufacturer`, no price | `Tirzepatide 30mg - Avisala · · · · 0` | that manufacturer's stock; card sold out only when all are 0 |
-
-Rows with no price that match nothing (e.g. inventory-only `Retatrutide 10mg`, `Semax 5mg`) are ignored silently; rows for hidden products log a harmless `Sheet sync: no product match` warning.
+⚠️ **Editing the sheet changes the LIVE site within about a minute — no deploy.**
 
 ### 2. Checkout (`checkout.html` + `checkout.js`)
 - **Delivery method:** J&T Express (flat regional fee) or Lalamove (fee shouldered by buyer, confirmed at dispatch — not fixed, so it's excluded from all totals/breakdowns until then).
 - **Province/City fields are searchable comboboxes**, not native `<select>` — typing filters the option list live (`setupCombo()` in checkout.js). Selecting a province populates the City combobox from `PH_CITIES_BY_PROVINCE[provinceCode]` and unlocks it. A field must be **selected from the list**, not just typed — if the hidden value never gets set, required-field validation blocks checkout. This guarantees the exact province name reaches WhatsApp/email/sheet (not a typo or free-text variant).
 - **J&T fee auto-detection:** each province in `ph-address-data.js` is tagged with a region (`ncr: ₱160`, `luzon: ₱190`, `visayas: ₱200`, `mindanao: ₱220`). Selecting a province sets `selectedProvinceObj`, and `updateJntFee()` reads its `.region` to set the J&T radio's `data-fee` and update the visible fee text — no fuzzy text matching involved.
 - Promo codes (`PROMO_CODES` object — percent or fixed discount) persist in `localStorage['biopep_promo']` across back-navigation, cleared on order placement or cart clear.
-- `placeOrder()` builds the full order object (name, phone, address, delivery method + fee, promo, cart, totals) and stores it in `localStorage['biopep_order']`, then redirects to `payment.html`.
+- `placeOrder()` **POSTs the order to the sheet** (`{ customer, delivery, region, promo, notes, website (bot trap), items: [{ optionId, qty }] }`). The sheet checks and **reserves stock**, computes prices / delivery fee / discount itself (`DELIVERY` and `PROMO_CODES` are mirrored in the Apps Script — change both), writes the Orders row and returns `BP-0001`-style order id + a secret `key`. The sheet's totals are stored in `localStorage['biopep_order']` and shown on the payment page. On `not_enough_stock` the cart is trimmed and the buyer sees a message.
 
 ### 3. Payment (`payment.html` + `payment.js`)
 - Reads `biopep_order` from localStorage, renders cart + totals, shows QR code + account number for the selected method.
@@ -66,17 +64,17 @@ On load, this page:
 1. Clears the cart (order is considered placed).
 2. Renders the order summary + delivery/payment info on-page.
 3. Builds a pre-filled order summary message and wires it into WhatsApp (`wa.me` link), Viber (copy-to-clipboard, since `viber://` can't pre-fill text reliably), and Telegram (`t.me` link) buttons — the buyer taps one and manually attaches their payment screenshot.
-4. Fires `sendToSheet(order)` — a `fetch(..., {mode:'no-cors'})` POST to a Google Apps Script Web App webhook. This **only fires once per order** — a `localStorage['biopep_sent_' + orderId]` flag guards against duplicate sends on page refresh.
+4. Calls `sendToSheet(order)` — POSTs `{ action: 'confirm', orderId, key, payment }`. The sheet writes the Payment column and **emails the admin once** (Settings → Admin email). A `localStorage['biopep_sent_' + orderId]` flag is set only after success, so a failed call retries on the next visit.
 
-**What the webhook does (lives on script.google.com, not in this repo):** appends a row to the "Orders" tab of the [Orders Google Sheet](https://docs.google.com/spreadsheets/d/1jGcwayWGuoa-Pj8Fv8eMAsma4gD6K2jaSrfoE2m4qvQ), and emails a formatted HTML summary to the admin inbox. Sheet columns: `Order ID | Date | Name | Phone | Address | Items | Total | Payment | Shipping | Status | Notes | Subtotal | Shipping Fee`.
+**In the sheet:** Orders tab `Status` Pending → Paid → Shipped; **Cancelled puts the stock back once**; Pending orders older than Settings "Unpaid order hold (hours)" (12) are auto-cancelled hourly. Every stock change is in the Stock Log tab. (The old separate Orders spreadsheet `1jGcway…` is history only.)
 
-⚠️ **Editing that Apps Script requires two extra steps beyond saving:** (1) if the sheet gains new columns, add matching headers in the sheet manually — the script writes by position, not by header name; (2) **Deploy → Manage deployments → edit → New version → Deploy** — saving in the editor alone does *not* update the live webhook URL.
+⚠️ **Updating the Apps Script:** paste the new code (use `Code-paste.gs` over Remote Desktop), save, then **Deploy → Manage deployments → ✏️ → New version** — never "New deployment" (new URL = site breaks).
 
 ---
 
 ## Known constraints / gotchas
 
-- **No backend, no database** — every "server-side" behavior (order storage, admin email) is done via a Google Apps Script Web App triggered by a `fetch()` call from the confirmation page. If that webhook fails silently (the `fetch` call swallows errors with `.catch(() => {})`), the order is still placed from the buyer's perspective but never reaches the sheet/email — there's no retry.
+- **No backend server** — the sheet's Apps Script web app is the backend (catalog, orders, stock, admin email). If it's unreachable, checkout shows an error and no order is placed (nothing is lost silently); the shop keeps showing the last saved catalog.
 - **Cart/order data lives entirely in `localStorage`** — clearing browser data mid-checkout loses the cart; there's no server-side cart recovery.
 - **Lalamove's fee is never itemized** — it's confirmed manually at dispatch, so it's intentionally left out of the subtotal/shipping breakdown everywhere (checkout totals, WhatsApp message, admin email). Only J&T's fee (auto-detected by province region) shows as a line item.
 - **GitHub Pages deploy has no staging environment** — pushing to `master` goes straight to the live domain. Test locally (or push and verify quickly) before pushing changes that touch checkout/payment/confirmation logic.
@@ -86,6 +84,13 @@ On load, this page:
 ## Changelog
 
 Changes are appended here as they're made, most recent first.
+
+### 2026-09-22 — Store back office in the BIOPEP INVENTORY sheet (stock deducted per order)
+- Catalog now comes from the sheet's **Catalog** tab via its Apps Script web app (`api-config.js`), wired by Product ID (`SHEET_MAP`) instead of matching `Sheet1` rows by name.
+- **Orders go into the sheet at checkout and reserve stock**; prices/fees/discounts are decided by the sheet; the confirmation page records the payment method and triggers one admin email. Cancelled → stock back; unpaid 12 h → auto-cancelled.
+- All card badges removed except **Pre-Order**; glutathione cards moved to a new **Anti-oxidant** tab; card order follows the sheet's Sort Order (both pre-orders first).
+- Retatrutide 15mg (Avisala) card restored; closed "Korean Glutathione 1200mg Box (10x)" card removed; Korean Glutathione Box pre-order now ₱3,500 with FUAN's "Always open, ETA: 7 days upon payment." text.
+- Hidden bot-trap field on checkout; cart lines carry the sheet option id (old carts are upgraded on the shop page).
 
 ### 2026-09-22 — J&T Express delivery option hidden
 - Checkout now offers only **Lalamove** (default) and **Shopee Checkout**. The J&T block is still in `checkout.html`, hidden (`style="display:none"`) with its radio `disabled`; the regional fee logic in `checkout.js` is untouched, so restoring J&T is just removing those two attributes.

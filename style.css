@@ -2882,3 +2882,6 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
 @media (max-width: 480px) {
   .promo-popup { max-width: 92vw; }
 }
+
+/* Card whose products are all hidden in the sheet (Show on Site unticked) */
+.pgrid-item.sheet-hidden { display: none !important; }

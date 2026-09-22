@@ -19,14 +19,14 @@ const PRODUCTS = {
       { label: 'Box (10 Vials)',   desc: '10 Vials box set',      priceAdd: 3100, origPrice: 4000 },
     ],
   },
-  'retro-10mg': { hidden: true, // hidden 2026-09-19 (sold out) — restore by removing this flag + re-adding its card
+  'retro-10mg': { // card restored 2026-09-22 (sheet: Retatrutide 15mg (Avisala), P-0041)
     name: 'Retatrutide 15mg', price: 1650, origPrice: null, emoji: '💉', image: 'images/retrutide15mg.jpg',
-    tag: null, tagClass: '', cat: 'Weight Loss', soldOut: true,
+    tag: null, tagClass: '', cat: 'Weight Loss',
+    manufacturers: ['Avisala'],
     desc: 'Triple receptor agonist targeting GLP-1, GIP, and Glucagon pathways simultaneously. Clinical trials report up to 24% body weight reduction — the most advanced weight loss peptide currently available.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0 },
     ],
   },
   'tirze-10mg': {
@@ -352,15 +352,9 @@ const PRODUCTS = {
     variants: null,
   },
   'glutathione-1200mg-box-preorder': {
-    name: 'Korean Glutathione 1200mg Box Pre-Order', price: 3200, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
+    name: 'Korean Glutathione 1200mg Box Pre-Order', price: 3500, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
-    desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials\n❌ BAC Water is NOT included\n💰 ₱3,200 per kit\n🚚 ETA to PH: 5 days',
-    variants: null,
-  },
-  'glutathione-1200mg-box-preorder-10x': {
-    name: 'Korean Glutathione 1200mg Box Pre-Order 10x', price: 30000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
-    tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging', hidden: true,
-    desc: 'KGTT Glutaone 1200mg — Bulk (10 kits)\nPer Kit: 10 vials\n❌ BAC Water is NOT included\n💰 ₱30,000 total (10 kits)\n🚚 ETA to PH: 5 days\n📅 Order Deadline: August 2',
+    desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials\n💰 ₱3,500 per kit\nAlways open, ETA: 7 days upon payment.',
     variants: null,
   },
   'fuan-glutathione-1500mg-box-preorder': {
@@ -399,15 +393,17 @@ function saveCart() {
 
 // ─── ADD ITEM ─────────────────────────────────
 // variantLabel is optional (e.g. "Complete Kit")
-function addItem(id, name, price, variantLabel, qty = 1) {
+function addItem(id, name, price, variantLabel, qty = 1, optionId = null) {
   const cartId = variantLabel ? `${id}__${variantLabel}` : id;
   const displayName = variantLabel ? `${name} (${variantLabel})` : name;
   const existing = cart.find(i => i.id === cartId);
   if (existing) {
     if (existing.qty >= 20) { showToast('⚠️ Maximum 20 per item.'); return; }
     existing.qty = Math.min(20, existing.qty + qty);
+    existing.price = price;
+    existing.optionId = optionId;
   } else {
-    cart.push({ id: cartId, baseId: id, name: displayName, price, qty: Math.min(20, qty) });
+    cart.push({ id: cartId, baseId: id, name: displayName, price, qty: Math.min(20, qty), optionId });
   }
   saveCart();
   renderCart();
@@ -554,9 +550,6 @@ function openModal(id) {
   document.getElementById('pmodalDesc').textContent  = prod.desc;
   document.getElementById('pmodalQtyNum').textContent = 1;
 
-  const badge = document.getElementById('pmodalBadge');
-  badge.textContent = prod.tag || '';
-  badge.className   = 'pmodal-badge' + (prod.tagClass ? ` ${prod.tagClass}` : '');
 
   updateModalPrice();
   renderManufacturers(prod);
@@ -591,7 +584,7 @@ function renderVariants(prod) {
   wrap.style.display = 'block';
   opts.innerHTML = '';
   prod.variants.forEach((v, i) => {
-    const price = prod.price + v.priceAdd;
+    const price = variantPrice(prod, v);
     const out = v.soldOut ? (typeof v.soldOut === 'string' ? v.soldOut : 'Sold Out') : '';
     const div = document.createElement('label');
     div.className = 'pmodal-variant-opt' + (i === modalVariantIdx && !out ? ' selected' : '') + (out ? ' sold-out' : '');
@@ -608,8 +601,14 @@ function renderVariants(prod) {
   });
 }
 
-// Manufacturer picker — every manufacturer has the same options and prices, so it only
-// labels the cart line. No default: the buyer must pick one before adding to cart.
+// Price of an option — once a manufacturer is picked, that manufacturer's sheet price.
+function variantPrice(prod, variant) {
+  const byMfr = modalMfr && prod.mfrPrices?.[modalMfr]?.[variant ? variant.label : null];
+  return byMfr ?? prod.price + (variant?.priceAdd || 0);
+}
+
+// Manufacturer picker — each manufacturer is its own sheet product (own stock, own prices).
+// No default: the buyer must pick one before adding to cart.
 function renderManufacturers(prod) {
   const wrap = document.getElementById('pmodalMfr');
   const opts = document.getElementById('pmodalMfrOpts');
@@ -646,6 +645,8 @@ function selectManufacturer(name) {
   document.querySelectorAll('.pmodal-mfr-opt').forEach(el => {
     el.classList.toggle('selected', el.dataset.mfr === name);
   });
+  renderVariants(PRODUCTS[modalCurrentId]);
+  updateModalPrice();
 }
 
 function selectVariant(idx) {
@@ -660,7 +661,7 @@ function updateModalPrice() {
   const prod = PRODUCTS[modalCurrentId];
   if (!prod) return;
   const variant = prod.variants ? prod.variants[modalVariantIdx] : null;
-  const price = prod.price + (variant?.priceAdd || 0);
+  const price = variantPrice(prod, variant);
   document.getElementById('pmodalPrice').textContent = `₱${price.toLocaleString('en-PH')}`;
 
   const origEl = document.getElementById('pmodalOrigPrice');
@@ -735,15 +736,17 @@ function addFromModal() {
   const prod = PRODUCTS[modalCurrentId];
   if (!prod) return;
   const variant = prod.variants ? prod.variants[modalVariantIdx] : null;
-  const price   = prod.price + (variant?.priceAdd || 0);
   if (variant?.soldOut) { showToast('⚠️ That option is sold out.'); return; }
   if (prod.manufacturers?.length && !modalMfr) {
     document.getElementById('pmodalMfr')?.classList.add('needs-choice');
     showToast('⚠️ Please choose a manufacturer.');
     return;
   }
+  const hit = sheetChoice(modalCurrentId, variant ? variant.label : null, modalMfr);
+  if (!hit) { showToast(sheetProducts ? '⚠️ That option is not available right now.' : '⏳ Still loading prices — please try again in a moment.'); return; }
+  if (hit.product.soldOut) { showToast('⚠️ That option is sold out.'); return; }
   const label = [modalMfr, variant?.label].filter(Boolean).join(' · ') || null;
-  addItem(modalCurrentId, prod.name, price, label, modalQty);
+  addItem(modalCurrentId, prod.name, hit.option.price, label, modalQty, hit.option.id);
   closeModal();
 }
 
@@ -854,163 +857,187 @@ function initSmoothScroll() {
   });
 }
 
-// ─── LIVE PRICE/STOCK SYNC (Google Sheet) ─────
-// Sheet must be published/shared as "Anyone with the link — Viewer".
-// Columns: Name | SRP vial only | SRP vial/bac | SRP complete set | STOCKS LEFT | (tag, unused)
-const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1uzA0Hyg0Y-c9irJKrL-IFZXjxrGjDM_2ozueOP6B3mo/export?format=csv&gid=0';
+// ─── LIVE PRICE/STOCK SYNC (Google Sheet → Apps Script web app) ─────
+// The BIOPEP INVENTORY sheet's "Catalog" tab is served as JSON by ORDER_API_URL (api-config.js).
+// Each website card below is wired to one or more sheet products by their hidden Product ID
+// (never by name — renaming a product in the sheet can't break the site):
+//   'P-0011'                                → one sheet product; its options match the card's variant labels
+//   { mfr: { Jinbei: 'P-0001', … } }        → one sheet product per manufacturer (each with its own stock)
+//   { variants: { 'Vial Only': 'P-0024', … } } → one sheet product per card option (e.g. vial vs box)
+// A card whose sheet products are all hidden (Show on Site unticked) disappears from the site.
+const SHEET_MAP = {
+  'tirze-10mg':          { mfr: { Jinbei: 'P-0001', Avisala: 'P-0002' } },
+  'tirze-30mg':          { mfr: { Jinbei: 'P-0003', Avisala: 'P-0004' } },
+  'tirze-60mg':          { mfr: { Jinbei: 'P-0005', Avisala: 'P-0006' } },
+  'eloralintide-10mg':   'P-0007',
+  'cagri-10mg-soon':     'P-0008',
+  'retro-10mg':          { mfr: { Avisala: 'P-0041' } },
+  'china-lemon-bottle':  { variants: { '10mL': 'P-0009', '50mL': 'P-0010' } },
+  'kpv-10mg':            'P-0011',
+  'kpv-30mg':            'P-0012',
+  'semax-selank-5mg':    'P-0013',
+  'ghkcu-50mg':          'P-0014',
+  'ghkcu-100mg':         'P-0015',
+  'cuv-110mg':           'P-0016',
+  'cuv-55mg':            'P-0017',
+  'nad-100mg':           'P-0018',
+  'nad-500mg':           'P-0019',
+  'nad-1000mg':          'P-0020',
+  'snap8-10mg':          'P-0021',
+  'korean-glutaone-1200mg': { variants: { 'Vial Only': 'P-0022', 'Box': 'P-0023' } },
+  'fuan-gtt-1500mg':        { variants: { 'Vial Only': 'P-0024', 'Box': 'P-0025' } },
+  'generic-gtt-2500mg':     { variants: { 'Vial Only': 'P-0026', 'Kit': 'P-0027' } },
+  'forges-gtt-1500mg':      { variants: { 'Vial & Saline': 'P-0028', 'Box (10 vials & 10 saline)': 'P-0029' } },
+  'glutathione-1200mg-box-preorder':      'P-0030',
+  'fuan-glutathione-1500mg-box-preorder': 'P-0031',
+  'pharma-bac-10ml':     'P-0032',
+  'bac-water-options':   { variants: { '3mL': 'P-0033', '5mL': 'P-0034', '10mL': 'P-0035' } },
+  'syringe-05ml':        'P-0036',
+  'syringe-1ml':         'P-0037',
+  'pink-syringe-preorder': { variants: { 'Piece': 'P-0038', 'Box (100pcs)': 'P-0039' } },
+  'alcohol-swab':        'P-0040',
+};
 
-function parseCSV(text) {
-  const rows = [];
-  let row = [], field = '', inQuotes = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (inQuotes) {
-      if (c === '"') {
-        if (text[i + 1] === '"') { field += '"'; i++; }
-        else inQuotes = false;
-      } else field += c;
-    } else {
-      if (c === '"') inQuotes = true;
-      else if (c === ',') { row.push(field); field = ''; }
-      else if (c === '\r') { /* skip */ }
-      else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
-      else field += c;
+// Sheet Category → the card's data-cat filter key.
+const CATEGORY_KEYS = { 'Weight Loss': 'WeightLoss', 'Healing': 'Healing', 'Anti-Aging': 'AntiAging', 'Anti-oxidant': 'AntiOxidant', 'Other': 'Other' };
+// Label printed on the card when it differs from the sheet's category name.
+const CATEGORY_LABELS = { 'Other': 'Add-ons' };
+const CATALOG_CACHE_KEY = 'biopep_catalog_v1';
+const CATALOG_TIMEOUT_MS = 15000;
+
+let sheetProducts = null; // Product ID → sheet product, once the catalog has loaded
+
+/**
+ * Which sheet product + option a card choice is, or null if the sheet doesn't offer it.
+ * label = the card's variant label (null for single-option cards), mfr = manufacturer (or null).
+ */
+function sheetChoice(siteId, label, mfr) {
+  const entry = SHEET_MAP[siteId];
+  if (!entry || !sheetProducts) return null;
+  let pid, optName = label;
+  if (typeof entry === 'string') pid = entry;
+  else if (entry.mfr) pid = entry.mfr[mfr];
+  else if (entry.variants) { pid = entry.variants[label]; optName = null; } // one option per sheet product
+  const sp = pid && sheetProducts[pid];
+  if (!sp) return null;
+  const opt = optName ? sp.options.find(o => o.name.toLowerCase() === optName.toLowerCase()) : sp.options[0];
+  return opt ? { product: sp, option: opt } : null;
+}
+
+/** Applies the sheet catalog to PRODUCTS (prices, sold-out states, manufacturers, category) and the cards. */
+function applyCatalog(catalog) {
+  sheetProducts = Object.fromEntries(catalog.products.map(p => [p.id, p]));
+
+  Object.entries(SHEET_MAP).forEach(([id, entry]) => {
+    const prod = PRODUCTS[id];
+    if (!prod) return;
+    // Start from the card's original data every time (the catalog is applied twice: saved copy, then fresh).
+    if (!prod._orig) prod._orig = { hidden: !!prod.hidden, variants: prod.variants ? prod.variants.map(v => ({ ...v })) : null };
+    if (prod._orig.hidden) return;
+    prod.hidden = false;
+    if (prod._orig.variants) prod.variants = prod._orig.variants.map(v => ({ ...v }));
+    const mfrs = entry.mfr ? Object.keys(entry.mfr).filter(m => sheetProducts[entry.mfr[m]]) : [null];
+    const labels = prod.variants ? prod.variants.map(v => v.label) : [null];
+
+    // Every choice the sheet still offers, with its price and availability.
+    const offered = {}; // label -> [{ mfr, price, soldOut }]
+    labels.forEach(label => mfrs.forEach(m => {
+      const hit = sheetChoice(id, label, m);
+      if (hit) (offered[label] = offered[label] || []).push({ mfr: m, price: hit.option.price, soldOut: hit.product.soldOut });
+    }));
+
+    const shown = labels.filter(l => offered[l]);
+    const card = document.querySelector(`.pcard[data-id="${id}"]`);
+    if (!shown.length) { // nothing of it is on the sheet any more → hide the card
+      prod.hidden = true;
+      card?.closest('.pgrid-item')?.classList.add('sheet-hidden');
+      return;
     }
-  }
-  if (field.length || row.length) { row.push(field); rows.push(row); }
-  return rows;
+    card?.closest('.pgrid-item')?.classList.remove('sheet-hidden');
+
+    // Price shown before a manufacturer is chosen = the lowest across manufacturers.
+    const priceOf = (label) => Math.min(...offered[label].map(o => o.price));
+    if (prod.variants) {
+      prod.variants = prod.variants.filter(v => offered[v.label]);
+      prod.price = priceOf(prod.variants[prod.variants.length - 1].label);
+      prod.variants.forEach(v => {
+        v.priceAdd = priceOf(v.label) - prod.price;
+        v.soldOut = offered[v.label].every(o => o.soldOut);
+      });
+    } else {
+      prod.price = priceOf(null);
+    }
+    prod.soldOut = shown.every(l => offered[l].every(o => o.soldOut));
+
+    if (entry.mfr) {
+      prod.manufacturers = mfrs;
+      prod.mfrSoldOut = Object.fromEntries(mfrs.map(m => [m, sheetProducts[entry.mfr[m]].soldOut]));
+      // per-manufacturer prices, used once a manufacturer is picked
+      prod.mfrPrices = Object.fromEntries(mfrs.map(m => [m, Object.fromEntries(labels.map(l => {
+        const hit = sheetChoice(id, l, m); return [l, hit ? hit.option.price : null];
+      }))]));
+    }
+
+    // Category comes from the sheet (first mapped product).
+    const firstPid = typeof entry === 'string' ? entry : Object.values(entry.mfr || entry.variants).find(pid => sheetProducts[pid]);
+    const cat = sheetProducts[firstPid]?.category;
+    if (cat) {
+      prod.cat = cat;
+      const item = card?.closest('.pgrid-item');
+      if (item && CATEGORY_KEYS[cat]) item.dataset.cat = CATEGORY_KEYS[cat];
+      const catEl = card?.querySelector('.pcard-cat');
+      if (catEl) catEl.textContent = CATEGORY_LABELS[cat] || cat;
+    }
+    prod.sheetSort = Math.min(...Object.values(typeof entry === 'string' ? { a: entry } : (entry.mfr || entry.variants))
+      .map(pid => sheetProducts[pid]?.sort ?? 9999));
+
+    refreshProductCardUI(id);
+  });
+
+  refreshCartFromCatalog();
+  reorderUnavailableCards();
+  const activeTab = document.querySelector('.cat-tab.active');
+  filterCat(activeTab?.dataset.cat || 'all');
 }
 
-function parsePriceCell(str) {
-  if (!str) return null;
-  const n = parseFloat(str.replace(/[₱,]/g, '').trim());
-  return isNaN(n) ? null : n;
-}
-
-function parseStockCell(str) {
-  const s = (str || '').trim();
-  if (!s) return undefined; // no stock info given — leave product's soldOut untouched
-  if (/^sold\s*out$/i.test(s)) return true;
-  if (/^soon$/i.test(s)) return 'SOON';
-  if (/^closed$/i.test(s)) return 'Closed';
-  const n = parseFloat(s.replace(/,/g, ''));
-  if (!isNaN(n)) return n <= 0 ? true : false;
-  return undefined; // unrecognized text — don't touch
-}
-
-function normalizeName(name) {
-  return (name || '').replace(/^\([^)]*\)\s*/, '').trim().toLowerCase();
+/** Cart lines get their sheet option id + current sheet price; lines the sheet no longer offers are removed. */
+function refreshCartFromCatalog() {
+  if (!sheetProducts || !cart.length) return;
+  const dropped = [];
+  cart = cart.filter(item => {
+    const parts = item.id.includes('__') ? item.id.split('__')[1].split(' · ') : [];
+    const prod = PRODUCTS[item.baseId || item.id];
+    const mfr = prod?.manufacturers ? parts[0] : null;
+    const label = prod?.manufacturers ? parts[1] || null : parts[0] || null;
+    const hit = prod && !prod.hidden && sheetChoice(item.baseId || item.id, label, mfr);
+    if (!hit) { dropped.push(item.name); return false; }
+    item.optionId = hit.option.id;
+    item.price = hit.option.price;
+    return true;
+  });
+  saveCart();
+  renderCart();
+  if (dropped.length) showToast(`⚠️ Removed from cart (no longer available): ${dropped.join(', ')}`);
 }
 
 async function syncCatalogFromSheet() {
-  let rows;
+  let cached = null;
+  try { cached = JSON.parse(localStorage.getItem(CATALOG_CACHE_KEY)); } catch (e) { /* ignore */ }
+  if (cached?.products) applyCatalog(cached); // show the last good copy immediately
+
   try {
-    const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), CATALOG_TIMEOUT_MS);
+    const res = await fetch(ORDER_API_URL, { cache: 'no-store', signal: ctrl.signal });
+    clearTimeout(timer);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    rows = parseCSV(await res.text());
+    const catalog = await res.json();
+    if (!Array.isArray(catalog.products)) throw new Error('bad catalog');
+    try { localStorage.setItem(CATALOG_CACHE_KEY, JSON.stringify(catalog)); } catch (e) { /* storage full / blocked */ }
+    applyCatalog(catalog);
   } catch (err) {
-    console.warn('Sheet sync skipped — could not fetch pricing sheet:', err.message);
-    return;
+    console.warn('Catalog sync failed' + (cached ? ' — showing the saved copy:' : ':'), err.message);
   }
-
-  const productList = Object.entries(PRODUCTS).filter(([, p]) => !p.hidden);
-  const touchedIds = new Set();
-  const variantStock = new Map(); // product id -> stock values parsed from its "Name - Variant" sub-rows
-
-  rows.slice(1).forEach(row => {
-    const rawName = (row[0] || '').trim();
-    if (!rawName) return; // spacer row
-
-    const vialOnly = parsePriceCell(row[1]);
-    const vialBac  = parsePriceCell(row[2]);
-    const complete = parsePriceCell(row[3]);
-    const stock    = parseStockCell(row[4]);
-    const normSheetName = normalizeName(rawName);
-
-    // Case 0: "Product Name - Manufacturer" stock row (e.g. "Tirzepatide 30mg - Avisala").
-    // Tracks stock per manufacturer; the card is sold out only when every manufacturer is.
-    const mfrMatch = productList.find(([, p]) =>
-      p.manufacturers && normSheetName.startsWith(normalizeName(p.name) + ' - ')
-    );
-    if (mfrMatch) {
-      const [id, prod] = mfrMatch;
-      const suffix = normSheetName.slice(normalizeName(prod.name).length + 3).trim();
-      const mfr = prod.manufacturers.find(m => m.toLowerCase() === suffix);
-      if (mfr) {
-        if (stock !== undefined) {
-          prod.mfrSoldOut = { ...(prod.mfrSoldOut || {}), [mfr]: stock };
-          if (!variantStock.has(id)) variantStock.set(id, []);
-          variantStock.get(id).push(stock);
-        }
-        return;
-      }
-    }
-
-    // Case 1: tiered row (Vial Only + Complete Set prices; Vial and Bac optional) — matches a top-level product
-    if (vialOnly !== null && complete !== null) {
-      const match = productList.find(([, p]) => normalizeName(p.name) === normSheetName);
-      if (!match) { console.warn('Sheet sync: no product match for', rawName); return; }
-      const [id, prod] = match;
-      prod.price = complete;
-      (prod.variants || []).forEach(v => {
-        if (v.label === 'Vial Only') v.priceAdd = vialOnly - complete;
-        else if (v.label === 'Vial and Bac' && vialBac !== null) v.priceAdd = vialBac - complete;
-        else if (v.label === 'Complete Set') v.priceAdd = 0;
-      });
-      if (stock !== undefined) prod.soldOut = stock === false ? false : stock;
-      touchedIds.add(id);
-      return;
-    }
-
-    // Case 2: single price present — either a flat-price product, or "Product Name - Variant Label" row
-    const singlePrice = [vialOnly, vialBac, complete].find(v => v !== null);
-    if (singlePrice === undefined) return;
-
-    const subVariantMatch = productList.find(([, p]) =>
-      p.variants && normSheetName.startsWith(normalizeName(p.name) + ' - ')
-    );
-    if (subVariantMatch) {
-      const [id, prod] = subVariantMatch;
-      const suffix = rawName.slice(prod.name.length + 3).trim().toLowerCase();
-      const variant = prod.variants.find(v => v.label.toLowerCase() === suffix);
-      if (variant) {
-        variant.priceAdd = singlePrice - prod.price;
-        // Per-option stock: a 0 row greys out just that option in the modal
-        if (stock !== undefined) variant.soldOut = stock === false ? false : stock;
-        touchedIds.add(id);
-      }
-      else console.warn('Sheet sync: no variant match for', rawName);
-      if (stock !== undefined) {
-        if (!variantStock.has(id)) variantStock.set(id, []);
-        variantStock.get(id).push(stock);
-      }
-      return;
-    }
-
-    const flatMatch = productList.find(([, p]) => !p.variants && normalizeName(p.name) === normSheetName);
-    if (flatMatch) {
-      const [id, prod] = flatMatch;
-      prod.price = singlePrice;
-      if (stock !== undefined) prod.soldOut = stock === false ? false : stock;
-      touchedIds.add(id);
-    } else {
-      console.warn('Sheet sync: no product match for', rawName);
-    }
-  });
-
-  // Variant-style products (e.g. the glutathione lines) have no top-level sheet row —
-  // only "Name - Variant" sub-rows. Roll their stock cells up to the parent card:
-  // sold out only when every variant row is <= 0; back in stock if any row is positive.
-  variantStock.forEach((values, id) => {
-    const stringState = values.find(v => typeof v === 'string'); // "SOON" / "Closed"
-    if (stringState) PRODUCTS[id].soldOut = stringState;
-    else if (values.every(v => v === true)) PRODUCTS[id].soldOut = true;
-    else PRODUCTS[id].soldOut = false;
-    touchedIds.add(id);
-  });
-
-  touchedIds.forEach(refreshProductCardUI);
-  reorderUnavailableCards();
 }
 
 function refreshProductCardUI(id) {
@@ -1085,6 +1112,8 @@ function reorderUnavailableCards() {
     else available.push(item);
   });
 
+  const sortKey = (item) => PRODUCTS[item.querySelector('.pcard')?.dataset.id]?.sheetSort ?? 9999;
+  if (sheetProducts) { available.sort((a, b) => sortKey(a) - sortKey(b)); unavailable.sort((a, b) => sortKey(a) - sortKey(b)); }
   [...available, ...closed, ...unavailable].forEach(item => grid.appendChild(item));
 }
 

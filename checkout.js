@@ -318,40 +318,118 @@ function validateForm() {
 }
 
 // ─── PLACE ORDER ──────────────────────────────
-function placeOrder() {
-  if (cart.length === 0) return;
+// The order is sent to the store sheet HERE: the sheet checks stock, reserves it, and decides the
+// prices, delivery fee and discount. The amounts shown on the payment page are the sheet's.
+const ORDER_ERRORS = {
+  not_enough_stock: 'Some items just sold out — your cart has been updated. Please review it.',
+  too_many_pending: 'You already have unpaid orders with this number. Please pay or contact us first.',
+  missing_customer: 'Please check your name, phone number and address.',
+  bad_items:        'Your cart has an item that can\'t be ordered. Please remove it and add it again.',
+  bad_delivery:     'Please choose a delivery option.',
+  busy:             'The store is busy — please try again in a few seconds.',
+};
+let placingOrder = false;
+
+async function placeOrder() {
+  if (cart.length === 0 || placingOrder) return;
   if (!validateForm()) return;
 
-  const subtotal     = getSubtotal();
-  const deliveryFee  = getDeliveryFee();
-  const deliveryLabel = getDeliveryLabel();
-  const discount     = getDiscount(subtotal);
-  const total        = Math.max(0, subtotal + deliveryFee - discount);
+  // Every cart line needs its store id (set when the shop page loads the catalog).
+  const stale = cart.filter(i => !i.optionId);
+  if (stale.length) {
+    cart = cart.filter(i => i.optionId);
+    localStorage.setItem('biopep_cart', JSON.stringify(cart));
+    showToast('⚠️ Please add these again from the shop: ' + stale.map(i => i.name).join(', '));
+    setTimeout(() => { window.location.href = 'index.html#products'; }, 2500);
+    return;
+  }
 
-  const orderId = 'BP-' + Date.now().toString(36).toUpperCase().slice(-6);
+  const btn = document.getElementById('btnPlaceOrder');
+  const btnText = btn.textContent;
+  placingOrder = true;
+  btn.disabled = true;
+  btn.textContent = 'Placing order…';
 
+  const deliveryValue = document.querySelector('input[name="coDelivery"]:checked')?.value;
+  const body = {
+    customer: {
+      name:     document.getElementById('coName').value.trim(),
+      phone:    document.getElementById('coPhone').value.trim(),
+      street:   document.getElementById('coStreet').value.trim(),
+      city:     document.getElementById('coCity').value.trim(),
+      province: document.getElementById('coProvince').value.trim(),
+    },
+    delivery: deliveryValue,
+    region:   selectedProvinceObj?.region || '',
+    promo:    appliedPromo || '',
+    notes:    document.getElementById('coNotes').value.trim(),
+    website:  document.getElementById('coWebsite')?.value || '',
+    items:    cart.map(i => ({ optionId: i.optionId, qty: i.qty })),
+  };
+
+  let res;
+  try {
+    const r = await fetch(ORDER_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
+    res = await r.json();
+  } catch (err) {
+    res = { ok: false, error: 'network' };
+  }
+  placingOrder = false;
+  btn.disabled = false;
+  btn.textContent = btnText;
+
+  if (!res.ok) {
+    if (res.error === 'not_enough_stock') trimCartToStock(res.items || []);
+    showToast('⚠️ ' + (ORDER_ERRORS[res.error] || 'Could not place the order. Please check your connection and try again.'));
+    return;
+  }
+
+  // Keep the buyer's cart names (they show the manufacturer/option) with the sheet's prices.
+  const priceById = Object.fromEntries(res.lines.map(l => [l.optionId, l.price]));
   const order = {
-    orderId,
-    name:          document.getElementById('coName').value.trim(),
-    phone:         document.getElementById('coPhone').value.trim(),
-    street:        document.getElementById('coStreet').value.trim(),
-    city:          document.getElementById('coCity').value.trim(),
-    province:      document.getElementById('coProvince').value.trim(),
-    notes:         document.getElementById('coNotes').value.trim(),
-    deliveryValue: document.querySelector('input[name="coDelivery"]:checked')?.value,
-    deliveryLabel,
-    deliveryFee,
-    promo:         appliedPromo,
-    discount,
-    subtotal,
-    total,
-    cart:          [...cart],
+    orderId:       res.orderId,
+    orderKey:      res.key,
+    name:          body.customer.name,
+    phone:         body.customer.phone,
+    street:        body.customer.street,
+    city:          body.customer.city,
+    province:      body.customer.province,
+    notes:         body.notes,
+    deliveryValue,
+    deliveryLabel: res.deliveryLabel,
+    deliveryFee:   res.shippingFee,
+    promo:         res.promo || null,
+    discount:      res.discount,
+    subtotal:      res.subtotal,
+    total:         res.total,
+    holdHours:     res.holdHours,
+    cart:          cart.map(i => ({ ...i, price: priceById[i.optionId] ?? i.price })),
     placedAt:      new Date().toISOString(),
   };
 
   localStorage.setItem('biopep_order', JSON.stringify(order));
   localStorage.removeItem('biopep_promo');
   window.location.href = 'payment.html';
+}
+
+/** After a "not enough stock" answer: lower or remove the lines that can't be filled. */
+// Options of one product share its stock, so the limit is spent once across all their lines.
+function trimCartToStock(problems) {
+  const left = {};
+  problems.forEach(p => {
+    const key = p.productId || p.optionId;
+    if (!(key in left)) left[key] = p.available;
+    cart.filter(i => i.optionId === p.optionId).forEach(i => {
+      const keep = Math.min(i.qty, Math.max(0, left[key]));
+      left[key] -= keep;
+      i.qty = keep;
+    });
+  });
+  cart = cart.filter(i => i.qty > 0);
+  localStorage.setItem('biopep_cart', JSON.stringify(cart));
+  if (cart.length === 0) { window.location.href = 'index.html#products'; return; }
+  renderCartItems();
+  updateTotals();
 }
 
 // ─── TOAST ────────────────────────────────────

@@ -3,7 +3,6 @@
 const WHATSAPP_NUMBER = '639171132273';
 const VIBER_NUMBER    = '+639171132273';
 const TELEGRAM_USER   = 'legitrche';
-const WEBHOOK_URL     = 'https://script.google.com/macros/s/AKfycbwq6RPckD4svmh2G41NZPO9ekULuPGn4BTyBgXsmbeq7_fW7-nRWjzQBVMahGlAehnT/exec';
 
 document.addEventListener('DOMContentLoaded', () => {
   const order = JSON.parse(localStorage.getItem('biopep_order'));
@@ -24,8 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const sentKey = 'biopep_sent_' + order.orderId;
   if (!localStorage.getItem(sentKey)) {
-    sendToSheet(order);
-    localStorage.setItem(sentKey, '1');
+    sendToSheet(order).then(ok => { if (ok) localStorage.setItem(sentKey, '1'); });
   }
 });
 
@@ -125,34 +123,22 @@ function renderContactLinks(order) {
   });
 }
 
-function sendToSheet(order) {
-  const address = [order.street, order.city, order.province].filter(Boolean).join(', ') || 'N/A — Shopee Checkout';
-  const items = order.cart.map(i => `${i.name} ×${i.qty} — ₱${(i.price * i.qty).toLocaleString('en-PH')}`).join('\n');
-  const date = new Date(order.placedAt).toLocaleString('en-PH', {
-    month: 'short', day: 'numeric', year: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  });
-
-  const payload = {
-    orderId:      order.orderId,
-    date:         date,
-    name:         order.name,
-    phone:        order.phone,
-    address:      address,
-    items:        items,
-    subtotal:     '₱' + order.subtotal.toLocaleString('en-PH'),
-    shippingFee:  order.deliveryFee > 0 ? '₱' + order.deliveryFee.toLocaleString('en-PH') : '',
-    total:        '₱' + order.total.toLocaleString('en-PH'),
-    payment:      order.paymentMethod || '—',
-    delivery:     order.deliveryLabel || '—',
-    notes:        order.notes || '',
-  };
-
-  fetch(WEBHOOK_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    body: JSON.stringify(payload),
-  }).catch(() => {});
+// The order is already in the store sheet (placed at checkout, stock reserved).
+// Here we only record the payment method the buyer chose; the sheet then emails the admin once.
+async function sendToSheet(order) {
+  if (!order.orderKey) return true; // an order from before the sheet switch — nothing to confirm
+  try {
+    const r = await fetch(ORDER_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ action: 'confirm', orderId: order.orderId, key: order.orderKey, payment: order.paymentMethod || '' }),
+    });
+    const res = await r.json();
+    return res.ok === true;
+  } catch (err) {
+    console.warn('Could not confirm the order with the store sheet:', err.message);
+    return false; // retried on the next visit to this page
+  }
 }
 
 function showConfToast(msg) {
