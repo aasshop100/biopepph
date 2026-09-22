@@ -385,7 +385,7 @@ async function placeOrder() {
   btn.textContent = btnText;
 
   if (!res.ok) {
-    if (res.error === 'not_enough_stock') trimCartToStock(res.items || []);
+    if (res.error === 'not_enough_stock') { trimCartToStock(res.items || []); return; }
     showToast('⚠️ ' + (ORDER_ERRORS[res.error] || 'Could not place the order. Please check your connection and try again.'));
     return;
   }
@@ -441,20 +441,44 @@ async function postToStore(body, onRetry) {
 // Options of one product share its stock, so the limit is spent once across all their lines.
 function trimCartToStock(problems) {
   const left = {};
+  const changes = [];
   problems.forEach(p => {
     const key = p.productId || p.optionId;
     if (!(key in left)) left[key] = p.available;
     cart.filter(i => i.optionId === p.optionId).forEach(i => {
       const keep = Math.min(i.qty, Math.max(0, left[key]));
       left[key] -= keep;
+      if (keep !== i.qty) changes.push(keep > 0 ? `${i.name}: only ${keep} available — changed from ${i.qty} to ${keep}` : `${i.name}: sold out — removed`);
       i.qty = keep;
     });
   });
   cart = cart.filter(i => i.qty > 0);
   localStorage.setItem('biopep_cart', JSON.stringify(cart));
-  if (cart.length === 0) { window.location.href = 'index.html#products'; return; }
   renderCartItems();
   updateTotals();
+  showStockNotice(changes, cart.length === 0);
+}
+
+/** A notice that STAYS on screen (a toast is too easy to miss), right above the Place Order button. */
+function showStockNotice(changes, cartEmpty) {
+  const btn = document.getElementById('btnPlaceOrder');
+  let box = document.getElementById('coStockNotice');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'coStockNotice';
+    box.setAttribute('role', 'alert');
+    box.style.cssText = 'margin:0 0 14px;padding:12px 14px;border-radius:12px;background:#FDF2F8;border:1.5px solid #F472B6;color:#831843;font-size:.9rem;line-height:1.45;';
+    btn.insertAdjacentElement('beforebegin', box);
+  }
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  box.innerHTML = '<strong>⚠️ Not enough stock — we updated your cart:</strong><ul style="margin:6px 0 6px 18px;padding:0;">'
+    + changes.map(c => `<li>${esc(c)}</li>`).join('')
+    + '</ul>'
+    + (cartEmpty
+      ? '<a href="index.html#products" style="color:#BE185D;font-weight:700;">← Back to the shop</a>'
+      : '<strong>Please check your order, then tap Place Order again.</strong>');
+  if (cartEmpty) { btn.disabled = true; btn.style.opacity = '0.5'; }
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 // ─── TOAST ────────────────────────────────────

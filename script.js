@@ -413,6 +413,11 @@ function addItem(id, name, price, variantLabel, qty = 1, optionId = null) {
 function changeQty(cartId, delta) {
   const item = cart.find(i => i.id === cartId);
   if (!item) return;
+  if (delta > 0 && item.optionId) {
+    const pid = optionProductId(item.optionId);
+    const stock = pid && sheetProducts[pid].stock;
+    if (stock != null && inCartForProduct(pid) >= stock) { showToast(`⚠️ Only ${stock} available.`); return; }
+  }
   item.qty += delta;
   if (item.qty < 1) cart = cart.filter(i => i.id !== cartId);
   saveCart();
@@ -554,6 +559,7 @@ function openModal(id) {
   updateModalPrice();
   renderManufacturers(prod);
   renderVariants(prod);
+  updateModalStockNote();
 
   const addBtn = document.getElementById('pmodalAddBtn');
   if (prod.soldOut) {
@@ -647,6 +653,7 @@ function selectManufacturer(name) {
   });
   renderVariants(PRODUCTS[modalCurrentId]);
   updateModalPrice();
+  updateModalStockNote();
 }
 
 function selectVariant(idx) {
@@ -655,6 +662,7 @@ function selectVariant(idx) {
     el.classList.toggle('selected', i === idx);
   });
   updateModalPrice();
+  updateModalStockNote();
 }
 
 function updateModalPrice() {
@@ -689,7 +697,61 @@ function closeModal() {
   modalMfr = null;
 }
 
+// ─── STOCK LIMITS (from the sheet) ────────────
+// Options of one sheet product share its stock (Vial Only + Complete Set), so limits are per product.
+function optionProductId(optionId) {
+  for (const p of Object.values(sheetProducts || {})) if (p.options.some(o => o.id === optionId)) return p.id;
+  return null;
+}
+
+function inCartForProduct(productId) {
+  return cart.filter(i => i.optionId && optionProductId(i.optionId) === productId).reduce((n, i) => n + i.qty, 0);
+}
+
+function modalChoice() {
+  const prod = PRODUCTS[modalCurrentId];
+  if (!prod) return null;
+  const v = prod.variants ? prod.variants[modalVariantIdx] : null;
+  return sheetChoice(modalCurrentId, v ? v.label : null, modalMfr);
+}
+
+/** How many more of the chosen option can go in the cart (20 = no stock limit known). */
+function modalMaxQty() {
+  const hit = modalChoice();
+  if (!hit || hit.product.stock == null) return 20;
+  return Math.max(0, Math.min(20, hit.product.stock - inCartForProduct(hit.product.id)));
+}
+
+/** "Only 2 left" under the quantity, and keeps the quantity within what's available. */
+function updateModalStockNote() {
+  const row = document.querySelector('.pmodal-qty-row');
+  if (!row) return;
+  let note = document.getElementById('pmodalStockNote');
+  if (!note) {
+    note = document.createElement('p');
+    note.id = 'pmodalStockNote';
+    note.style.cssText = 'margin:6px 0 0;font-size:.8rem;font-weight:600;color:#BE185D;text-align:right;';
+    row.insertAdjacentElement('afterend', note);
+  }
+  const hit = modalChoice();
+  const stock = hit?.product.stock;
+  const inCart = hit ? inCartForProduct(hit.product.id) : 0;
+  note.textContent = (stock != null && stock > 0 && stock <= 5)
+    ? `Only ${stock} left` + (inCart ? ` · ${inCart} already in your cart` : '')
+    : '';
+  const max = modalMaxQty();
+  if (modalQty > Math.max(1, max)) {
+    modalQty = Math.max(1, max);
+    document.getElementById('pmodalQtyNum').textContent = modalQty;
+  }
+}
+
 function updateModalQty(delta) {
+  const max = modalMaxQty();
+  if (delta > 0 && modalQty >= max) {
+    showToast(max === 0 ? '⚠️ All available stock is already in your cart.' : `⚠️ Only ${max} available.`);
+    return;
+  }
   modalQty = Math.max(1, modalQty + delta);
   document.getElementById('pmodalQtyNum').textContent = modalQty;
 }
@@ -745,8 +807,15 @@ function addFromModal() {
   const hit = sheetChoice(modalCurrentId, variant ? variant.label : null, modalMfr);
   if (!hit) { showToast(sheetProducts ? '⚠️ That option is not available right now.' : '⏳ Still loading prices — please try again in a moment.'); return; }
   if (hit.product.soldOut) { showToast('⚠️ That option is sold out.'); return; }
+  let qty = modalQty;
+  if (hit.product.stock != null) {
+    const left = hit.product.stock - inCartForProduct(hit.product.id);
+    if (left <= 0) { showToast(`⚠️ Only ${hit.product.stock} left — already in your cart.`); return; }
+    if (qty > left) qty = left;
+  }
   const label = [modalMfr, variant?.label].filter(Boolean).join(' · ') || null;
-  addItem(modalCurrentId, prod.name, hit.option.price, label, modalQty, hit.option.id);
+  addItem(modalCurrentId, prod.name, hit.option.price, label, qty, hit.option.id);
+  if (qty < modalQty) showToast(`⚠️ Only ${qty} more available — added ${qty} to your cart.`);
   closeModal();
 }
 
