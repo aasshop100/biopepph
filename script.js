@@ -300,7 +300,7 @@ const PRODUCTS = {
     variants: null,
   },
   'korean-glutaone-1200mg': {
-    name: 'Korean Glutaone 1200mg', price: 4000, origPrice: null, emoji: '✨',
+    name: '🩷 KOREAN GLUTAONE 1200MG', price: 4000, origPrice: null, emoji: '✨',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose Korean glutathione (Glutaone) for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade — one of the most potent whitening formulations available.',
     variants: [
@@ -309,7 +309,7 @@ const PRODUCTS = {
     ],
   },
   'fuan-gtt-1500mg': {
-    name: 'FUAN GTT 1500mg', price: 5000, origPrice: null, emoji: '✨',
+    name: '🩷 FUAN GTT 1500MG', price: 5000, origPrice: null, emoji: '✨',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose FUAN reduced glutathione for skin brightening, antioxidant protection, and cellular detox. 1500mg pharmaceutical-grade formulation.',
     variants: [
@@ -342,13 +342,13 @@ const PRODUCTS = {
     variants: null,
   },
   'glutathione-1200mg-box-preorder': {
-    name: 'Korean Glutathione 1200mg Box Pre-Order', price: 3500, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
+    name: 'BOX - KOREAN GLUTAONE 1200MG', price: 3500, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
     desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials\n💰 ₱3,500 per kit\nAlways open, ETA: 7 days upon payment.',
     variants: null,
   },
   'fuan-glutathione-1500mg-box-preorder': {
-    name: 'FUAN Reduced Glutathione 1500mg Box Pre-Order', price: 4000, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
+    name: 'BOX - FUAN GLUTA 1500MG', price: 4000, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
     desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱4,000 per kit\nAlways open, ETA: 7 days upon payment.',
     variants: null,

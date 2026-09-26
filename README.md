@@ -87,6 +87,16 @@ On load, this page:
 
 Changes are appended here as they're made, most recent first.
 
+### 2026-09-26 — Glutathione products renamed
+- Four Anti-oxidant cards renamed on the site (`index.html` card + `script.js` `name`, which drives the modal, cart, checkout and order record) and in the sheet Catalog tab:
+  - `fuan-glutathione-1500mg-box-preorder` (P-0031) → **BOX - FUAN GLUTA 1500MG**
+  - `glutathione-1200mg-box-preorder` (P-0030) → **BOX - KOREAN GLUTAONE 1200MG**
+  - `korean-glutaone-1200mg` (P-0022/P-0023) → **🩷 KOREAN GLUTAONE 1200MG**
+  - `fuan-gtt-1500mg` (P-0024/P-0025) → **🩷 FUAN GTT 1500MG**
+- "Pre-Order" dropped from the two box names (the Pre-Order badge and button on the card still say so). Sheet Box option rows keep the " Box" suffix (P-0023, P-0025).
+- Product IDs unchanged, so `SHEET_MAP` and existing orders still match. Hidden legacy entries in `script.js` keep their old names. Guidelines nav label updated to match.
+- `.claude/launch.json` added: `npx http-server` on port 5511 for local preview.
+
 ### 2026-09-22 — Store back office in the BIOPEP INVENTORY sheet (stock deducted per order)
 - Catalog now comes from the sheet's **Catalog** tab via its Apps Script web app (`api-config.js`), wired by Product ID (`SHEET_MAP`) instead of matching `Sheet1` rows by name.
 - **Orders go into the sheet at checkout and reserve stock**; prices/fees/discounts are decided by the sheet; the confirmation page records the payment method and triggers one admin email. Cancelled → stock back; unpaid 12 h → auto-cancelled.
