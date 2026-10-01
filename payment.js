@@ -41,7 +41,9 @@ function renderOrder() {
 function renderTotals() {
   document.getElementById('paySubtotal').textContent      = `₱${order.subtotal.toLocaleString('en-PH')}`;
   document.getElementById('payDeliveryLabel').textContent = order.deliveryLabel || '—';
-  document.getElementById('payDelivery').textContent      = `₱${order.deliveryFee.toLocaleString('en-PH')}`;
+  // Shopee orders carry a ₱0 fee because the shipping is paid on Shopee — say so instead of "₱0".
+  document.getElementById('payDelivery').textContent      =
+    order.deliveryValue === 'shopee' ? 'Paid on Shopee' : `₱${order.deliveryFee.toLocaleString('en-PH')}`;
   document.getElementById('payTotal').textContent         = `₱${order.total.toLocaleString('en-PH')}`;
 
   if (order.discount > 0) {

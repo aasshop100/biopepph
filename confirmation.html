@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261001">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-99KWCP7494"></script>
   <script>
@@ -51,8 +51,23 @@
         </div>
       </section>
 
+      <!-- ====== SHOPEE CHECKOUT (shown only for Shopee orders) ====== -->
+      <section class="page-card conf-shopee-card" id="confShopeeCard" style="display:none;">
+        <h2>Last Step — Check Out on Shopee</h2>
+
+        <p class="conf-shopee-note" id="confShopeeNote"></p>
+
+        <div class="conf-shopee-actions">
+          <a class="conf-shopee-btn" id="confShopeeLink" href="#" target="_blank" rel="noopener">🛒 Open Shopee →</a>
+          <button type="button" class="conf-shopee-btn ghost" id="confShopeeCopyLink">Copy link instead</button>
+        </div>
+        <p class="conf-shopee-hint">Button not working? Tap <strong>Copy link instead</strong> and paste it in your browser or the Shopee app.</p>
+
+        <p class="conf-shopee-after">📸 After ordering, screenshot your <strong>Shopee order</strong> too and send it with your payment proof below.</p>
+      </section>
+
       <!-- ====== ORDER SUMMARY ====== -->
-      <section class="page-card">
+      <section class="page-card" id="confSummaryCard">
         <div class="page-card-head">
           <h2>Order Summary</h2>
           <span id="confPlacedAt" style="font-size:0.75rem;color:var(--grey);"></span>
@@ -69,7 +84,7 @@
       </section>
 
       <!-- ====== DELIVERY INFO ====== -->
-      <section class="page-card">
+      <section class="page-card" id="confDeliveryCard">
         <h2>Delivery Details</h2>
         <table class="pay-account-table">
           <tr><td>Name</td><td id="confName">—</td></tr>
@@ -85,7 +100,7 @@
       </section>
 
       <!-- ====== WHAT'S NEXT ====== -->
-      <section class="page-card">
+      <section class="page-card" id="confNextCard">
         <h2>What's Next?</h2>
         <div class="conf-steps">
           <div class="conf-step">
@@ -113,7 +128,7 @@
       </section>
 
       <!-- ====== SEND PROOF OF PAYMENT ====== -->
-      <section class="page-card">
+      <section class="page-card" id="confProofCard">
         <h2>Send Your Proof of Payment</h2>
         <p style="font-size:0.82rem;color:var(--grey);margin-bottom:14px;">Send a screenshot of your payment to us through any of these channels:</p>
         <div class="conf-contact-btns">
@@ -135,7 +150,7 @@
       </section>
 
       <!-- ====== CONTINUE SHOPPING ====== -->
-      <section class="page-card" style="text-align:center;">
+      <section class="page-card" id="confContinueCard" style="text-align:center;">
         <a href="index.html" class="btn-continue">← Continue Shopping</a>
         <p class="co-terms" style="margin-top:10px;">Thank you for trusting BIOPEP PH! 💕</p>
       </section>
@@ -143,7 +158,7 @@
     </div>
   </main>
 
-  <script src="api-config.js?v=20260922b"></script>
-  <script src="confirmation.js?v=20260922b"></script>
+  <script src="api-config.js?v=20261001"></script>
+  <script src="confirmation.js?v=20261001"></script>
 </body>
 </html>

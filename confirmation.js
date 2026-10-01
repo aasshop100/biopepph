@@ -20,12 +20,64 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTotals(order);
   renderDeliveryInfo(order);
   renderContactLinks(order);
+  renderShopeeStep(order);
 
   const sentKey = 'biopep_sent_' + order.orderId;
   if (!localStorage.getItem(sentKey)) {
     sendToSheet(order).then(ok => { if (ok) localStorage.setItem(sentKey, '1'); });
   }
 });
+
+/**
+ * Shopee orders only. The items are paid on the payment page, the shipping is paid on Shopee — which
+ * is why the delivery fee is ₱0 at checkout. One fixed listing serves every order, so the link goes
+ * straight to the item. Cards are reordered so the two things the buyer still has to do (check out on
+ * Shopee, send proof) sit above the explanation and the reference details.
+ */
+function renderShopeeStep(order) {
+  const card = document.getElementById('confShopeeCard');
+  if (!card || order.deliveryValue !== 'shopee') return;
+
+  const cfg = (typeof SHOPEE !== 'undefined' && SHOPEE) || {};
+  const url = cfg.url || '';
+
+  document.getElementById('confShopeeNote').textContent = cfg.note || '';
+  document.getElementById('confShopeeLink').href        = url;
+
+  copyOnClick('confShopeeCopyLink', url, 'Shopee link copied');
+
+  card.style.display = '';
+
+  // Actions first, reference last. Re-stack the cards between the Shopee card and Continue Shopping.
+  const parent = card.parentNode;
+  const anchor = document.getElementById('confContinueCard');
+  ['confProofCard', 'confNextCard', 'confSummaryCard', 'confDeliveryCard'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && anchor) parent.insertBefore(el, anchor);
+  });
+}
+
+function copyOnClick(btnId, text, okMsg) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    const label = btn.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (e) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e2) { /* ignore */ }
+      ta.remove();
+    }
+    btn.textContent = '✓ ' + okMsg;
+    setTimeout(() => { btn.textContent = label; }, 2000);
+  });
+}
 
 function renderHero(order) {
   document.getElementById('confOrderId').textContent = `Order #${order.orderId}`;
@@ -56,7 +108,11 @@ function renderCartItems(order) {
 
 function renderTotals(order) {
   document.getElementById('confSubtotal').textContent = `₱${order.subtotal.toLocaleString('en-PH')}`;
-  document.getElementById('confDelivery').textContent = order.deliveryFee === 0 ? 'Free' : `₱${order.deliveryFee.toLocaleString('en-PH')}`;
+  // Shopee orders carry a ₱0 fee because the shipping is paid on Shopee — never show that as "Free".
+  document.getElementById('confDelivery').textContent =
+    order.deliveryValue === 'shopee' ? 'Paid on Shopee'
+    : order.deliveryFee === 0        ? 'Free'
+    : `₱${order.deliveryFee.toLocaleString('en-PH')}`;
   document.getElementById('confTotal').textContent    = `₱${order.total.toLocaleString('en-PH')}`;
 
   if (order.discount > 0) {
