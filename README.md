@@ -97,6 +97,17 @@ Changes are appended here as they're made, most recent first.
 - Product IDs unchanged, so `SHEET_MAP` and existing orders still match. Hidden legacy entries in `script.js` keep their old names. Guidelines nav label updated to match.
 - `.claude/launch.json` added: `npx http-server` on port 5511 for local preview.
 
+### 2026-10-01 — Shopee checkout step on the confirmation page; new hero headline
+- **How a Shopee order actually works:** the buyer pays for the **items** on the payment page (GCash/Maya/Maribank/GoTyme, exactly like any other order) and pays the **shipping on Shopee**. That is why the `shopee` radio carries `data-fee="0"` — it is *not* free delivery. One fixed Shopee listing serves every order from this site, and the link lands directly on the right item, so the buyer chooses nothing there.
+- **Before this change nothing ever showed the buyer the Shopee link** that `checkout.html` promises ("Shopee link will be provided upon check-out"). They were sent to the GCash QR page and left with no way to finish.
+- **`api-config.js` → `SHOPEE = { url, note }`** holds the listing link and the card copy. Changing either is a one-line edit here, no markup changes.
+- **`#confShopeeCard`** in `confirmation.html`, filled by `renderShopeeStep()` in `confirmation.js`: the note, an **Open Shopee** button, a **Copy link instead** fallback, and a reminder to screenshot the Shopee order. The fallback matters — Messenger's in-app browser blocks `target="_blank"`, and that is where real buyers arrive from.
+- **Card order, Shopee orders only:** Thank You → Shopee → Send Proof → What's Next → Order Summary → Delivery Details. Actions above explanation above reference. Every other delivery option keeps the original order; the card is `display:none` for them.
+- **"Paid on Shopee"** replaces `₱0`/`Free` on both the payment and confirmation pages. Keyed on `order.deliveryValue === 'shopee'`, **never on the fee** — Lalamove is also ₱0 *and is the default*, so a fee-based test would silently relabel it.
+- **Cache-busting:** assets bumped to `?v=20261001`, and **`style.css` is now versioned on every page**. Previously only `index.html` did, so a returning buyer could load new markup against cached CSS.
+- **Hero headline** replaced with three lines ("Your Goals. Your Discipline. / Peptides Are Just The Tool. / *The Commitment Is Yours.*"). Required shrinking `.hero h1` to `clamp(1.5rem,4.2vw,3rem)` and widening `.hero-content` to 820px, or the lines re-wrap. The `@media (min-width:900px)` block no longer forces the hero left — it was aligning for a two-column layout whose `.hero-visual` has not been in the markup for some time.
+- **Local preview path fixed:** the `biopep` entry in `.claude/launch.json` still pointed at the pre-move `./Desktop/BIOPEP` and served 404s; now `./Desktop/PROJECTS/BIOPEP`. The harness caches that file, so within one session start your own instead: `npx --yes http-server . -p 5501 -c-1`.
+
 ### 2026-09-22 — Store back office in the BIOPEP INVENTORY sheet (stock deducted per order)
 - Catalog now comes from the sheet's **Catalog** tab via its Apps Script web app (`api-config.js`), wired by Product ID (`SHEET_MAP`) instead of matching `Sheet1` rows by name.
 - **Orders go into the sheet at checkout and reserve stock**; prices/fees/discounts are decided by the sheet; the confirmation page records the payment method and triggers one admin email. Cancelled → stock back; unpaid 12 h → auto-cancelled.
