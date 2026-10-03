@@ -15,3 +15,12 @@ const SHOPEE = {
   url: 'https://s.shopee.ph/8pmDDhvjWF',
   note: 'Your delivery fee is paid through Shopee. Open the link below and complete the Shopee checkout — it already points to the right item, so you just need to check out.',
 };
+
+// Shown on the confirmation page ONLY when the buyer chose "Via Lalamove".
+// Same shape as Shopee: the items are paid on the payment page, the delivery is arranged outside
+// the site — here through one fixed Lalamove delivery form, where the buyer enters the address and
+// settles the fare with Lalamove. That is why the delivery fee is ₱0 at checkout.
+const LALAMOVE = {
+  url: 'https://delivery.lalamove.com/forms/PHb85c66ea82d14f479f5d4857c9d121b0',
+  note: 'Your delivery is booked through Lalamove. Open the form below and fill in your delivery address — the fee is settled with Lalamove directly.',
+};

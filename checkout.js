@@ -129,17 +129,33 @@ function updateJntFee() {
   if (jntInput.checked) updateTotals();
 }
 
-// ─── SHOPEE CHECKOUT: ADDRESS NOT REQUIRED ────
-function isShopeeDelivery() {
-  return document.querySelector('input[name="coDelivery"]:checked')?.value === 'shopee';
+// ─── SHOPEE / LALAMOVE: ADDRESS NOT REQUIRED ────
+// Both collect the delivery address outside this site — Shopee at its own checkout, Lalamove in
+// the delivery form linked from the confirmation page. Asking for it here would be dead data.
+const EXTERNAL_ADDRESS_NOTES = {
+  shopee:   'coAddressShopeeNote',
+  lalamove: 'coAddressLalamoveNote',
+};
+
+function selectedDelivery() {
+  return document.querySelector('input[name="coDelivery"]:checked')?.value || '';
+}
+
+function isExternalAddressDelivery() {
+  return selectedDelivery() in EXTERNAL_ADDRESS_NOTES;
 }
 
 function updateAddressRequirement() {
-  const isShopee     = isShopeeDelivery();
-  const addressFields = document.getElementById('coAddressFields');
-  const shopeeNote     = document.getElementById('coAddressShopeeNote');
-  if (addressFields) addressFields.style.display = isShopee ? 'none' : '';
-  if (shopeeNote)     shopeeNote.style.display    = isShopee ? 'block' : 'none';
+  const current        = selectedDelivery();
+  const isExternal     = isExternalAddressDelivery();
+  const addressFields  = document.getElementById('coAddressFields');
+  if (addressFields) addressFields.style.display = isExternal ? 'none' : '';
+
+  // Only the note for the chosen option shows; the reason differs per option.
+  Object.entries(EXTERNAL_ADDRESS_NOTES).forEach(([value, noteId]) => {
+    const note = document.getElementById(noteId);
+    if (note) note.style.display = value === current ? 'block' : 'none';
+  });
 }
 
 // ─── INIT ─────────────────────────────────────
@@ -282,7 +298,7 @@ function validateForm() {
     { id: 'coName',   label: 'Full Name'         },
     { id: 'coPhone',  label: 'Phone Number'       },
   ];
-  if (!isShopeeDelivery()) {
+  if (!isExternalAddressDelivery()) {
     required.push(
       { id: 'coStreet', label: 'Street & Barangay'  },
       { id: 'coProvince', label: 'Province',          display: 'coProvinceInput' },

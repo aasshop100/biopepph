@@ -51,7 +51,7 @@ Prices, stock, show/hide, category and card order come from the **Catalog** tab 
 ⚠️ **Editing the sheet changes the LIVE site within about a minute — no deploy.**
 
 ### 2. Checkout (`checkout.html` + `checkout.js`)
-- **Delivery method:** J&T Express (flat regional fee) or Lalamove (fee shouldered by buyer, confirmed at dispatch — not fixed, so it's excluded from all totals/breakdowns until then).
+- **Delivery method:** J&T Express (flat regional fee) or Lalamove (fee shouldered by buyer, settled in the Lalamove delivery form linked from the confirmation page — not fixed, so it's excluded from all totals/breakdowns).
 - **Province/City fields are searchable comboboxes**, not native `<select>` — typing filters the option list live (`setupCombo()` in checkout.js). Selecting a province populates the City combobox from `PH_CITIES_BY_PROVINCE[provinceCode]` and unlocks it. A field must be **selected from the list**, not just typed — if the hidden value never gets set, required-field validation blocks checkout. This guarantees the exact province name reaches WhatsApp/email/sheet (not a typo or free-text variant).
 - **J&T fee auto-detection:** each province in `ph-address-data.js` is tagged with a region (`ncr: ₱160`, `luzon: ₱190`, `visayas: ₱200`, `mindanao: ₱220`). Selecting a province sets `selectedProvinceObj`, and `updateJntFee()` reads its `.region` to set the J&T radio's `data-fee` and update the visible fee text — no fuzzy text matching involved.
 - Promo codes (`PROMO_CODES` object — percent or fixed discount) persist in `localStorage['biopep_promo']` across back-navigation, cleared on order placement or cart clear.
@@ -78,7 +78,7 @@ On load, this page:
 
 - **No backend server** — the sheet's Apps Script web app is the backend (catalog, orders, stock, admin email). If it's unreachable, checkout shows an error and no order is placed (nothing is lost silently); the shop keeps showing the last saved catalog.
 - **Cart/order data lives entirely in `localStorage`** — clearing browser data mid-checkout loses the cart; there's no server-side cart recovery.
-- **Lalamove's fee is never itemized** — it's confirmed manually at dispatch, so it's intentionally left out of the subtotal/shipping breakdown everywhere (checkout totals, WhatsApp message, admin email). Only J&T's fee (auto-detected by province region) shows as a line item.
+- **Lalamove's fee is never itemized** — the buyer settles it with Lalamove in the delivery form, so it's intentionally left out of the subtotal/shipping breakdown everywhere (checkout totals, WhatsApp message, admin email). Only J&T's fee (auto-detected by province region) shows as a line item.
 - **GitHub Pages deploy has no staging environment** — pushing to `master` goes straight to the live domain. Test locally (or push and verify quickly) before pushing changes that touch checkout/payment/confirmation logic.
 
 ---
@@ -97,6 +97,18 @@ Changes are appended here as they're made, most recent first.
 - Product IDs unchanged, so `SHEET_MAP` and existing orders still match. Hidden legacy entries in `script.js` keep their old names. Guidelines nav label updated to match.
 - `.claude/launch.json` added: `npx http-server` on port 5511 for local preview.
 
+### 2026-10-03 — Lalamove becomes an external-form step
+- **How a Lalamove order now works:** the buyer pays for the **items** on the payment page as usual, then fills in a **Lalamove delivery form** linked from the confirmation page. The address and the fare are handled there, with Lalamove — not on this site. Same shape as the Shopee step.
+- **No address at checkout for Lalamove.** `isShopeeDelivery()` became `isExternalAddressDelivery()` and now matches both `shopee` and `lalamove`, driven by `EXTERNAL_ADDRESS_NOTES`. The required fields collapse to **Full Name + Phone Number**; `#coAddressFields` hides. Asking for an address the site never uses was dead data.
+- **Each option gets its own hidden-address note**, because the reason differs: Shopee → "Address not needed for Shopee Checkout"; Lalamove → "You'll enter your delivery address in the Lalamove form after payment". Exactly one shows at a time.
+- **`api-config.js` → `LALAMOVE = { url, note }`** holds the form link and the card copy, beside `SHOPEE`. One fixed form serves every order.
+- **`#confLalamoveCard`** in `confirmation.html` mirrors the Shopee card — note, **Open Lalamove Form** button, **Copy link instead** fallback, screenshot reminder. The fallback is not optional: Messenger's in-app browser blocks `target="_blank"`.
+- **`renderShopeeStep()` → `renderExternalStep()`**, driven by the `EXTERNAL_STEPS` map (`shopee`, `lalamove`). One function, two configs, instead of two near-identical ones. Restacking is unchanged: Thank You → external step → Send Proof → What's Next → Order Summary → Delivery Details. `jnt` matches nothing, shows no card, and keeps the original order.
+- **"Paid via Lalamove"** replaces `₱0`/`Free` on the payment and confirmation pages, via `EXTERNAL_FEE_LABELS`. Keyed on `deliveryValue`, **never on the fee** — Shopee and Lalamove are both ₱0, so a fee test fires on the wrong one.
+- **Blank address reads `N/A — Lalamove form`** (and `N/A — Shopee Checkout` for Shopee) through one `deliveryAddressText()` helper, used by the confirmation page *and* the WhatsApp/Viber/Telegram admin message. It was a hardcoded Shopee string in two places before, so a Lalamove order looked like an order with a missing address.
+- **CSS rename:** the nine `.conf-shopee-*` rules now dress two cards, so they are `.conf-extstep-*`; `.co-address-shopee-note` → `.co-address-extstep-note`. Pure rename, no rule changed.
+- Cache-bust bumped to `v=20261003` on every page.
+- Design spec: `docs/superpowers/specs/2026-10-03-lalamove-checkout-design.md`.
 ### 2026-10-01 — Shopee checkout step on the confirmation page; new hero headline
 - **How a Shopee order actually works:** the buyer pays for the **items** on the payment page (GCash/Maya/Maribank/GoTyme, exactly like any other order) and pays the **shipping on Shopee**. That is why the `shopee` radio carries `data-fee="0"` — it is *not* free delivery. One fixed Shopee listing serves every order from this site, and the link lands directly on the right item, so the buyer chooses nothing there.
 - **Before this change nothing ever showed the buyer the Shopee link** that `checkout.html` promises ("Shopee link will be provided upon check-out"). They were sent to the GCash QR page and left with no way to finish.

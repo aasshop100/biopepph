@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTotals(order);
   renderDeliveryInfo(order);
   renderContactLinks(order);
-  renderShopeeStep(order);
+  renderExternalStep(order);
 
   const sentKey = 'biopep_sent_' + order.orderId;
   if (!localStorage.getItem(sentKey)) {
@@ -29,32 +29,76 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Shopee orders only. The items are paid on the payment page, the shipping is paid on Shopee — which
- * is why the delivery fee is ₱0 at checkout. One fixed listing serves every order, so the link goes
- * straight to the item. Cards are reordered so the two things the buyer still has to do (check out on
- * Shopee, send proof) sit above the explanation and the reference details.
+ * Shopee and Lalamove orders. For both, the items are paid on the payment page and the delivery is
+ * arranged outside this site — which is why the delivery fee is ₱0 at checkout for either one. One
+ * fixed link serves every order, so the buyer has nothing to pick or look up.
+ *
+ * Keyed on deliveryValue, never on the fee: Lalamove and Shopee are both ₱0, so a fee check would
+ * fire on the wrong one.
  */
-function renderShopeeStep(order) {
-  const card = document.getElementById('confShopeeCard');
-  if (!card || order.deliveryValue !== 'shopee') return;
+const EXTERNAL_STEPS = {
+  shopee: {
+    config:  () => (typeof SHOPEE !== 'undefined' ? SHOPEE : null),
+    card:    'confShopeeCard',
+    note:    'confShopeeNote',
+    link:    'confShopeeLink',
+    copyBtn: 'confShopeeCopyLink',
+    copyMsg: 'Shopee link copied',
+  },
+  lalamove: {
+    config:  () => (typeof LALAMOVE !== 'undefined' ? LALAMOVE : null),
+    card:    'confLalamoveCard',
+    note:    'confLalamoveNote',
+    link:    'confLalamoveLink',
+    copyBtn: 'confLalamoveCopyLink',
+    copyMsg: 'Lalamove link copied',
+  },
+};
 
-  const cfg = (typeof SHOPEE !== 'undefined' && SHOPEE) || {};
-  const url = cfg.url || '';
+function renderExternalStep(order) {
+  const step = EXTERNAL_STEPS[order.deliveryValue];
+  if (!step) return;
 
-  document.getElementById('confShopeeNote').textContent = cfg.note || '';
-  document.getElementById('confShopeeLink').href        = url;
+  const card = document.getElementById(step.card);
+  const cfg  = step.config() || {};
+  const url  = cfg.url || '';
+  if (!card || !url) return;
 
-  copyOnClick('confShopeeCopyLink', url, 'Shopee link copied');
+  document.getElementById(step.note).textContent = cfg.note || '';
+  document.getElementById(step.link).href        = url;
+
+  copyOnClick(step.copyBtn, url, step.copyMsg);
 
   card.style.display = '';
 
-  // Actions first, reference last. Re-stack the cards between the Shopee card and Continue Shopping.
+  // Actions first, reference last. Re-stack the cards between this card and Continue Shopping.
   const parent = card.parentNode;
   const anchor = document.getElementById('confContinueCard');
   ['confProofCard', 'confNextCard', 'confSummaryCard', 'confDeliveryCard'].forEach(id => {
     const el = document.getElementById(id);
     if (el && anchor) parent.insertBefore(el, anchor);
   });
+}
+
+// Shopee and Lalamove both carry a ₱0 fee because the delivery is paid outside the site — never
+// show that as "Free". Keyed on deliveryValue, not on the fee.
+const EXTERNAL_FEE_LABELS = {
+  shopee:   'Paid on Shopee',
+  lalamove: 'Paid via Lalamove',
+};
+
+// The buyer gives the address to Shopee / to the Lalamove form, so a blank address here is expected
+// rather than missing. Say which, so the admin message is not read as an incomplete order.
+const EXTERNAL_ADDRESS_FALLBACKS = {
+  shopee:   'N/A — Shopee Checkout',
+  lalamove: 'N/A — Lalamove form',
+};
+
+function deliveryAddressText(order) {
+  const parts = [order.street, order.city, order.province].filter(Boolean);
+  return parts.join(', ')
+      || EXTERNAL_ADDRESS_FALLBACKS[order.deliveryValue]
+      || 'N/A';
 }
 
 function copyOnClick(btnId, text, okMsg) {
@@ -108,11 +152,9 @@ function renderCartItems(order) {
 
 function renderTotals(order) {
   document.getElementById('confSubtotal').textContent = `₱${order.subtotal.toLocaleString('en-PH')}`;
-  // Shopee orders carry a ₱0 fee because the shipping is paid on Shopee — never show that as "Free".
   document.getElementById('confDelivery').textContent =
-    order.deliveryValue === 'shopee' ? 'Paid on Shopee'
-    : order.deliveryFee === 0        ? 'Free'
-    : `₱${order.deliveryFee.toLocaleString('en-PH')}`;
+    EXTERNAL_FEE_LABELS[order.deliveryValue]
+    || (order.deliveryFee === 0 ? 'Free' : `₱${order.deliveryFee.toLocaleString('en-PH')}`);
   document.getElementById('confTotal').textContent    = `₱${order.total.toLocaleString('en-PH')}`;
 
   if (order.discount > 0) {
@@ -127,8 +169,7 @@ function renderDeliveryInfo(order) {
   document.getElementById('confDeliveryOpt').textContent   = order.deliveryLabel  || '—';
   document.getElementById('confPaymentMethod').textContent = order.paymentMethod  || '—';
 
-  const addrParts = [order.street, order.city, order.province].filter(Boolean);
-  document.getElementById('confAddress').textContent = addrParts.join(', ') || 'N/A — Shopee Checkout';
+  document.getElementById('confAddress').textContent = deliveryAddressText(order);
 
   if (order.notes) {
     document.getElementById('confNotesRow').style.display = 'block';
@@ -138,7 +179,7 @@ function renderDeliveryInfo(order) {
 
 function renderContactLinks(order) {
   const items = order.cart.map(i => `  • ${i.name} ×${i.qty} — ₱${(i.price * i.qty).toLocaleString('en-PH')}`).join('\n');
-  const address = [order.street, order.city, order.province].filter(Boolean).join(', ') || 'N/A — Shopee Checkout';
+  const address = deliveryAddressText(order);
 
   const lines = [
     `🧬 NEW ORDER — BIOPEP PH`,

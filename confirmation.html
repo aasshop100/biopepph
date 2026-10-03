@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261001">
+  <link rel="stylesheet" href="style.css?v=20261003">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-99KWCP7494"></script>
   <script>
@@ -52,18 +52,33 @@
       </section>
 
       <!-- ====== SHOPEE CHECKOUT (shown only for Shopee orders) ====== -->
-      <section class="page-card conf-shopee-card" id="confShopeeCard" style="display:none;">
+      <section class="page-card conf-extstep-card" id="confShopeeCard" style="display:none;">
         <h2>Last Step — Check Out on Shopee</h2>
 
-        <p class="conf-shopee-note" id="confShopeeNote"></p>
+        <p class="conf-extstep-note" id="confShopeeNote"></p>
 
-        <div class="conf-shopee-actions">
-          <a class="conf-shopee-btn" id="confShopeeLink" href="#" target="_blank" rel="noopener">🛒 Open Shopee →</a>
-          <button type="button" class="conf-shopee-btn ghost" id="confShopeeCopyLink">Copy link instead</button>
+        <div class="conf-extstep-actions">
+          <a class="conf-extstep-btn" id="confShopeeLink" href="#" target="_blank" rel="noopener">🛒 Open Shopee →</a>
+          <button type="button" class="conf-extstep-btn ghost" id="confShopeeCopyLink">Copy link instead</button>
         </div>
-        <p class="conf-shopee-hint">Button not working? Tap <strong>Copy link instead</strong> and paste it in your browser or the Shopee app.</p>
+        <p class="conf-extstep-hint">Button not working? Tap <strong>Copy link instead</strong> and paste it in your browser or the Shopee app.</p>
 
-        <p class="conf-shopee-after">📸 After ordering, screenshot your <strong>Shopee order</strong> too and send it with your payment proof below.</p>
+        <p class="conf-extstep-after">📸 After ordering, screenshot your <strong>Shopee order</strong> too and send it with your payment proof below.</p>
+      </section>
+
+      <!-- ====== LALAMOVE FORM (shown only for Lalamove orders) ====== -->
+      <section class="page-card conf-extstep-card" id="confLalamoveCard" style="display:none;">
+        <h2>Last Step — Fill Out Your Lalamove Delivery Form</h2>
+
+        <p class="conf-extstep-note" id="confLalamoveNote"></p>
+
+        <div class="conf-extstep-actions">
+          <a class="conf-extstep-btn" id="confLalamoveLink" href="#" target="_blank" rel="noopener">🛵 Open Lalamove Form →</a>
+          <button type="button" class="conf-extstep-btn ghost" id="confLalamoveCopyLink">Copy link instead</button>
+        </div>
+        <p class="conf-extstep-hint">Button not working? Tap <strong>Copy link instead</strong> and paste it in your browser.</p>
+
+        <p class="conf-extstep-after">📸 After submitting, screenshot your <strong>Lalamove form confirmation</strong> too and send it with your payment proof below.</p>
       </section>
 
       <!-- ====== ORDER SUMMARY ====== -->
@@ -158,7 +173,7 @@
     </div>
   </main>
 
-  <script src="api-config.js?v=20261001"></script>
-  <script src="confirmation.js?v=20261001"></script>
+  <script src="api-config.js?v=20261003"></script>
+  <script src="confirmation.js?v=20261003"></script>
 </body>
 </html>

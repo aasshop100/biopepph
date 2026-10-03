@@ -1909,7 +1909,7 @@ footer {
 .co-del-soon { font-size: 0.72rem; font-weight: 700; color: var(--white); background: var(--grey); padding: 2px 8px; border-radius: 20px; flex-shrink: 0; }
 .co-delivery-opt--disabled { cursor: not-allowed; opacity: 0.5; pointer-events: none; }
 .co-delivery-note { font-size: 0.75rem; color: var(--grey); margin-top: 8px; }
-.co-address-shopee-note { font-size: 0.8rem; color: var(--grey); background: var(--light-grey); border-radius: 10px; padding: 10px 14px; margin: -6px 0 16px; }
+.co-address-extstep-note { font-size: 0.8rem; color: var(--grey); background: var(--light-grey); border-radius: 10px; padding: 10px 14px; margin: -6px 0 16px; }
 
 /* Customer details form */
 .co-form { display: flex; flex-direction: column; gap: 12px; }
@@ -2891,23 +2891,23 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
    Shown only when the buyer picked "Via Shopee Checkout". Items are paid on the
    payment page; the shipping is paid on Shopee, which the card explains first.
    ================================================ */
-.conf-shopee-card {
+.conf-extstep-card {
   border: 2px solid var(--pink);
   box-shadow: var(--shadow-pink);
 }
-.conf-shopee-note {
+.conf-extstep-note {
   font-size: 0.86rem;
   line-height: 1.65;
   color: var(--charcoal);
   margin-bottom: 16px;
 }
 
-.conf-shopee-actions {
+.conf-extstep-actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
 }
-.conf-shopee-btn {
+.conf-extstep-btn {
   flex: 1 1 200px;
   text-align: center;
   background: #ee4d2d;            /* Shopee orange */
@@ -2921,21 +2921,21 @@ body.inner-page { background: var(--pink-pale); min-height: 100vh; }
   text-decoration: none;
   transition: var(--transition);
 }
-.conf-shopee-btn:hover { background: #d8431f; color: var(--white); transform: translateY(-2px); }
-.conf-shopee-btn.ghost {
+.conf-extstep-btn:hover { background: #d8431f; color: var(--white); transform: translateY(-2px); }
+.conf-extstep-btn.ghost {
   background: var(--white);
   color: var(--charcoal);
   border: 1px solid var(--pink-border);
 }
-.conf-shopee-btn.ghost:hover { background: var(--pink-pale); color: var(--pink-dark); transform: none; }
+.conf-extstep-btn.ghost:hover { background: var(--pink-pale); color: var(--pink-dark); transform: none; }
 
-.conf-shopee-hint {
+.conf-extstep-hint {
   font-size: 0.76rem;
   color: var(--grey);
   margin-top: 10px;
   line-height: 1.6;
 }
-.conf-shopee-after {
+.conf-extstep-after {
   font-size: 0.82rem;
   color: var(--charcoal);
   background: var(--pink-pale);
