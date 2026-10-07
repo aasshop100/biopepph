@@ -197,19 +197,29 @@ const PRODUCTS = {
     ],
   },
   'pharma-bac-10ml': {
-    name: 'Pharma Bac 10ml Amp', price: 60, origPrice: null, emoji: '💧', image: 'images/PharmaBac10ml.jpg',
+    name: 'Pharma Bac Water 10ml Ampoule', price: 60, origPrice: null, emoji: '💧', image: 'images/PharmaBac10ml.jpg',
     tag: 'New', tagClass: 'new', cat: 'Other',
-    desc: 'Pharmaceutical-grade bacteriostatic water for injection. 10mL multi-use capacity — ideal for reconstituting larger peptide vials. Benzyl alcohol preservative maintains sterility for up to 4 weeks refrigerated.',
+    desc: 'USP pharma-grade bacteriostatic water for injection, 10mL ampoule. Single use only.',
     variants: null,
   },
   'bac-water-options': {
-    name: 'BAC Water', price: 80, origPrice: null, emoji: '💧',
+    name: 'Regular Bac Water Vial', price: 80, origPrice: null, emoji: '💧',
     tag: null, tagClass: '', cat: 'Other',
-    desc: 'Pharmaceutical-grade bacteriostatic water for injection. Required for reconstituting lyophilized peptides. Preserves solution for up to 4 weeks refrigerated.',
+    desc: 'Bacteriostatic water for injection in a multi-use vial. For reconstituting lyophilized peptides — for non-stingy peps. Preserves solution for up to 4 weeks refrigerated.',
     variants: [
       { label: '3mL',           desc: 'Small-volume reconstitution',                                          priceAdd: -20 },
       { label: '5mL',           desc: 'Mid-size vial',                                                        priceAdd: -10 },
       { label: '10mL',          desc: 'Multi-use, for larger peptide vials',                                  priceAdd: 0   },
+    ],
+  },
+  'pharma-bac-vial-chongsan': {
+    name: 'Pharma Bac Water Vial (Chongsan Medical Aesthetics)', price: 100, origPrice: null, emoji: '💧',
+    tag: null, tagClass: '', cat: 'Other',
+    desc: 'Pharma-grade bacteriostatic water for injection by Chongsan Medical Aesthetics. Multi-use vial — for reconstituting lyophilized peptides. For stingy peps.',
+    variants: [
+      { label: '3mL',           desc: '',                                                                     priceAdd: -30 },
+      { label: '5mL',           desc: '',                                                                     priceAdd: -10 },
+      { label: '10mL',          desc: '',                                                                     priceAdd: 0   },
     ],
   },
   'bac-water-3ml': { hidden: true, // replaced 2026-09 by bac-water-options
@@ -331,8 +341,8 @@ const PRODUCTS = {
     tag: null, tagClass: '', cat: 'Anti-Aging', soldOut: true,
     desc: 'Forges 1500mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
     variants: [
-      { label: 'Vial & Saline',                 desc: 'Glutathione vial + saline',                              priceAdd: -5350 },
-      { label: 'Box (10 vials & 10 saline)',    desc: '10 glutathione vials + 10 saline ampoules',             priceAdd: 0     },
+      { label: 'Vial Set',                      desc: '1 Glutathione Vial & 1 Bac Saline 15ml',                 priceAdd: -5350 },
+      { label: 'Box',                           desc: '10 gtt vial & 10 Bac Saline 15ml',                      priceAdd: 0     },
     ],
   },
   'glutathione-1200mg-box': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
@@ -588,7 +598,7 @@ function renderVariants(prod) {
       <input type="radio" name="pmodalVariant" value="${i}" ${i === modalVariantIdx && !out ? 'checked' : ''} ${out ? 'disabled' : ''}>
       <div class="pmodal-variant-info">
         <span class="pmodal-variant-name">${v.label}</span>
-        <span class="pmodal-variant-desc">${v.desc}</span>
+        ${v.desc ? `<span class="pmodal-variant-desc">${v.desc}</span>` : ''}
       </div>
       <span class="pmodal-variant-price">₱${price.toLocaleString('en-PH')}${out ? `<small>${out}</small>` : ''}</span>
     `;
@@ -946,11 +956,12 @@ const SHEET_MAP = {
   'korean-glutaone-1200mg': { variants: { 'Vial Only': 'P-0022', 'Box': 'P-0023' } },
   'fuan-gtt-1500mg':        { variants: { 'Vial Only': 'P-0024', 'Box': 'P-0025' } },
   'generic-gtt-2500mg':     { variants: { 'Vial Only': 'P-0026', 'Kit': 'P-0027' } },
-  'forges-gtt-1500mg':      { variants: { 'Vial & Saline': 'P-0028', 'Box (10 vials & 10 saline)': 'P-0029' } },
+  'forges-gtt-1500mg':      { variants: { 'Vial Set': 'P-0028', 'Box': 'P-0029' } },
   'glutathione-1200mg-box-preorder':      'P-0030',
   'fuan-glutathione-1500mg-box-preorder': 'P-0031',
   'pharma-bac-10ml':     'P-0032',
   'bac-water-options':   { variants: { '3mL': 'P-0033', '5mL': 'P-0034', '10mL': 'P-0035' } },
+  'pharma-bac-vial-chongsan': { variants: { '3mL': 'P-0048', '5mL': 'P-0049', '10mL': 'P-0050' } },
   'syringe-05ml':        'P-0036',
   'syringe-1ml':         'P-0037',
   'pink-syringe-preorder': { variants: { 'Piece': 'P-0038', 'Box (100pcs)': 'P-0039' } },
