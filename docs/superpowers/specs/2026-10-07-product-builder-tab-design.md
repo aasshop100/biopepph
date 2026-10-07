@@ -64,9 +64,15 @@ No field lives in two places, so there is no sync loop.
 | **Builder** | Name · card sub-line · modal description · option labels · option descriptions · category | Rachelle |
 | **Catalog** | Price · Stock · Show on Site · Sort Order | Rachelle, as today |
 
-Price and Stock appear on the Builder tab too, but only as a greyed mirror of Catalog —
-except on a not-yet-built product, where she types the starting values and the builder
-creates the Catalog row with them.
+Price and Stock are deliberately NOT on the Builder tab (Lester, 2026-10-07): a mirrored
+value goes stale the moment Catalog is edited, and two cells showing a price invites the
+wrong one being trusted. The split she holds in her head is "Builder = what the customer
+reads, Catalog = what the customer pays and what is left".
+
+Consequence: a new product lands in Catalog with an empty price, and the site drops
+unpriced options — so the card does not appear until she sets the price in Catalog. That
+is the safe default (no 0-peso product goes live), but it makes a new product two steps.
+The builder prints the exact Catalog rows to fill when it hands back.
 
 ## Builder tab layout
 
@@ -81,10 +87,8 @@ creates the Catalog row with them.
 | G | Modal description (`PRODUCTS[...].desc`) | Rachelle |
 | H | Option Label | Rachelle — one row per option; blank if no options |
 | I | Option Description | Rachelle — optional |
-| J | Price | Rachelle on a new product; greyed mirror after |
-| K | Stock | Rachelle on a new product; greyed mirror after |
-| L | Ready | Rachelle — checkbox |
-| M | Status | builder — Live / New – not built / Edited – not built / ⚠ problem |
+| J | Ready | Rachelle — checkbox |
+| K | Status | builder — Live / New – not built / Edited – not built / ⚠ problem |
 
 A blank Product Name means "this row is another option of the product above", exactly as
 the Catalog tab reads.
@@ -119,7 +123,7 @@ Rachelle edits Builder → ticks Ready → tells Lester → Lester endorses
 **Writes:**
 
 1. *Catalog* — new rows for new products and options (next free IDs, Sort Order appended,
-   price and stock from the Builder row); for edits, Product Name / Option Name / Category.
+   price and stock left blank for Lester/Rachelle to fill in Catalog); for edits, Product Name / Option Name / Category.
    Never deletes a row; hiding is done with Show on Site, as today.
 2. *`script.js`* — the `PRODUCTS` entry (name, desc, variants with label/desc/priceAdd) and
    the `SHEET_MAP` line. Option labels are the `SHEET_MAP` keys, so a relabel regenerates
