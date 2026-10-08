@@ -23,22 +23,36 @@ const PRODUCTS = {
     name: 'Tirzepatide 15mg', price: 1200, origPrice: null, emoji: '💉', image: 'images/tirzepatide15mg.jpg',
     tag: null, tagClass: '', cat: 'Weight Loss',
     desc: 'Dual GLP-1/GIP agonist from the landmark SURMOUNT trials. Reduces hunger, improves insulin sensitivity, and promotes fat oxidation. Clinical-grade weight management.',
-    manufacturers: ['Jinbei', 'Avisala'],
+    manufacturers: ['Jinbei', 'Avisala', 'Chongsan'],
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
+    // Chongsan ships a different bundle, so it has its own option list (see variantsFor).
+    mfrVariants: {
+      Chongsan: [
+        { label: 'Vial + 3ml Bac Water', desc: '',                                                             priceAdd: -200 },
+        { label: 'Complete Set',         desc: 'Peptide vial + bac water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0 },
+      ],
+    },
   },
   'tirze-30mg': {
     name: 'Tirzepatide 30mg', price: 1400, origPrice: null, emoji: '💉', image: 'images/tirzepatide30mg.jpg',
     tag: 'New', tagClass: 'new', cat: 'Weight Loss',
     desc: 'Higher-dose dual GLP-1/GIP agonist for patients who have completed the 15mg titration phase. Designed for accelerated and sustained weight loss at advanced protocol stages.',
-    manufacturers: ['Jinbei', 'Avisala'],
+    manufacturers: ['Jinbei', 'Avisala', 'Chongsan'],
     mfrSoldOut: { Avisala: true }, // fallback only — the sheet's "Tirzepatide 30mg - <Manufacturer>" rows overwrite this
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
+    // Chongsan ships a different bundle, so it has its own option list (see variantsFor).
+    mfrVariants: {
+      Chongsan: [
+        { label: 'Vial + 3ml Bac Water', desc: '',                                                             priceAdd: -200 },
+        { label: 'Complete Set',         desc: 'Peptide vial + bac water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0 },
+      ],
+    },
   },
   'tirze-60mg': {
     name: 'Tirzepatide 60mg', price: 1800, origPrice: null, emoji: '💉',
@@ -130,6 +144,26 @@ const PRODUCTS = {
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0    },
+    ],
+  },
+  // Chongsan line — separate cards, not manufacturers of the cards above: the sheet rows start
+  // at stock 0 with Show on Site unticked, so they stay invisible until the stock lands.
+  'ghkcu-50mg-chongsan': {
+    name: 'GHK-Cu 50mg', brand: 'Chongsan', price: 1200, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
+    tag: null, tagClass: '', cat: 'Anti-Aging',
+    desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
+    variants: [
+      { label: 'Vial + 5ml Bac Water', desc: '',                                                               priceAdd: -300 },
+      { label: 'Complete Set',         desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0 },
+    ],
+  },
+  'ghkcu-100mg-chongsan': {
+    name: 'GHK-Cu 100mg', brand: 'Chongsan', price: 1300, origPrice: null, emoji: '✨', image: 'images/ghkcu50mg.jpg',
+    tag: null, tagClass: '', cat: 'Anti-Aging',
+    desc: 'Copper Peptide naturally found in human plasma. Promotes collagen synthesis, skin renewal, and anti-inflammatory effects. Reduces fine lines and improves skin density.',
+    variants: [
+      { label: 'Vial + 10ml Bac Water', desc: '',                                                              priceAdd: -300 },
+      { label: 'Complete Set',          desc: 'Peptide vial + bacteriostatic water + 25 insulin syringes + 1 needle for recon + 20 alcohol pads + 1 vial cap', priceAdd: 0 },
     ],
   },
   'nad-100mg': {
@@ -532,13 +566,31 @@ let modalQty        = 1;
 let modalVariantIdx = 0;
 let modalMfr        = null; // chosen manufacturer, for products with a `manufacturers` list
 
+/**
+ * The option list for a product, for the chosen manufacturer.
+ * Most manufacturers share `variants`; one that ships a different bundle (different labels,
+ * prices or contents) declares its own list in `mfrVariants`. Before a manufacturer is picked
+ * the shared list is shown, so never read `prod.variants` directly once a manufacturer exists.
+ */
+function variantsFor(prod, mfr) {
+  return (mfr && prod?.mfrVariants?.[mfr]) || prod?.variants || null;
+}
+
+/** Is this option sold out for the chosen manufacturer? Falls back to the across-all state. */
+function variantSoldOut(prod, variant, mfr) {
+  if (!variant) return false;
+  const byMfr = mfr && prod?.mfrOptionSoldOut?.[mfr];
+  if (byMfr && variant.label in byMfr) return byMfr[variant.label];
+  return !!variant.soldOut;
+}
+
 function openModal(id) {
   const prod = PRODUCTS[id];
   if (!prod) return;
 
   modalCurrentId  = id;
   modalQty        = 1;
-  modalVariantIdx = Math.max(0, (prod.variants || []).findIndex(v => !v.soldOut)); // first in-stock option
+  modalVariantIdx = Math.max(0, (variantsFor(prod, null) || []).findIndex(v => !v.soldOut)); // first in-stock option
   modalMfr        = null;
 
   const emojiEl  = document.getElementById('pmodalEmoji');
@@ -552,6 +604,11 @@ function openModal(id) {
   }
   document.getElementById('pmodalCat').textContent   = prod.cat;
   document.getElementById('pmodalName').textContent  = prod.name;
+  const brandEl = document.getElementById('pmodalBrand');
+  if (brandEl) {
+    brandEl.textContent   = prod.brand ? `(${prod.brand})` : '';
+    brandEl.style.display = prod.brand ? '' : 'none';
+  }
   document.getElementById('pmodalDesc').textContent  = prod.desc;
   document.getElementById('pmodalQtyNum').textContent = 1;
 
@@ -583,15 +640,17 @@ function openModal(id) {
 function renderVariants(prod) {
   const wrap = document.getElementById('pmodalVariants');
   const opts = document.getElementById('pmodalVariantOpts');
-  if (!prod.variants || prod.variants.length === 0) {
+  const list = variantsFor(prod, modalMfr);
+  if (!list || list.length === 0) {
     wrap.style.display = 'none';
     return;
   }
   wrap.style.display = 'block';
   opts.innerHTML = '';
-  prod.variants.forEach((v, i) => {
+  list.forEach((v, i) => {
     const price = variantPrice(prod, v);
-    const out = v.soldOut ? (typeof v.soldOut === 'string' ? v.soldOut : 'Sold Out') : '';
+    const soldOut = variantSoldOut(prod, v, modalMfr);
+    const out = soldOut ? (typeof soldOut === 'string' ? soldOut : 'Sold Out') : '';
     const div = document.createElement('label');
     div.className = 'pmodal-variant-opt' + (i === modalVariantIdx && !out ? ' selected' : '') + (out ? ' sold-out' : '');
     div.innerHTML = `
@@ -645,13 +704,19 @@ function renderManufacturers(prod) {
 }
 
 function selectManufacturer(name) {
-  if (PRODUCTS[modalCurrentId]?.mfrSoldOut?.[name]) return;
+  const prod = PRODUCTS[modalCurrentId];
+  if (prod?.mfrSoldOut?.[name]) return;
   modalMfr = name;
   document.getElementById('pmodalMfr')?.classList.remove('needs-choice');
   document.querySelectorAll('.pmodal-mfr-opt').forEach(el => {
     el.classList.toggle('selected', el.dataset.mfr === name);
   });
-  renderVariants(PRODUCTS[modalCurrentId]);
+  // The option list can change with the manufacturer (own labels, own length), so the
+  // selected index is meaningless across a switch — land on this maker's first in-stock option.
+  const list = variantsFor(prod, name) || [];
+  const first = list.findIndex(v => !variantSoldOut(prod, v, name));
+  modalVariantIdx = Math.max(0, first);
+  renderVariants(prod);
   updateModalPrice();
   updateModalStockNote();
 }
@@ -668,7 +733,7 @@ function selectVariant(idx) {
 function updateModalPrice() {
   const prod = PRODUCTS[modalCurrentId];
   if (!prod) return;
-  const variant = prod.variants ? prod.variants[modalVariantIdx] : null;
+  const variant = (variantsFor(prod, modalMfr) || [])[modalVariantIdx] || null;
   const price = variantPrice(prod, variant);
   document.getElementById('pmodalPrice').textContent = `₱${price.toLocaleString('en-PH')}`;
 
@@ -711,7 +776,7 @@ function inCartForProduct(productId) {
 function modalChoice() {
   const prod = PRODUCTS[modalCurrentId];
   if (!prod) return null;
-  const v = prod.variants ? prod.variants[modalVariantIdx] : null;
+  const v = (variantsFor(prod, modalMfr) || [])[modalVariantIdx] || null;
   return sheetChoice(modalCurrentId, v ? v.label : null, modalMfr);
 }
 
@@ -797,8 +862,8 @@ function addFromModal() {
   if (!modalCurrentId) return;
   const prod = PRODUCTS[modalCurrentId];
   if (!prod) return;
-  const variant = prod.variants ? prod.variants[modalVariantIdx] : null;
-  if (variant?.soldOut) { showToast('⚠️ That option is sold out.'); return; }
+  const variant = (variantsFor(prod, modalMfr) || [])[modalVariantIdx] || null;
+  if (variantSoldOut(prod, variant, modalMfr)) { showToast('⚠️ That option is sold out.'); return; }
   if (prod.manufacturers?.length && !modalMfr) {
     document.getElementById('pmodalMfr')?.classList.add('needs-choice');
     showToast('⚠️ Please choose a manufacturer.');
@@ -814,7 +879,10 @@ function addFromModal() {
     if (qty > left) qty = left;
   }
   const label = [modalMfr, variant?.label].filter(Boolean).join(' · ') || null;
-  addItem(modalCurrentId, prod.name, hit.option.price, label, qty, hit.option.id);
+  // A branded card shares its name with the unbranded one ("GHK-Cu 50mg"), so the brand has to
+  // ride along or the cart, the proof message and the Orders tab can't tell the two apart.
+  const name = prod.brand ? `${prod.name} (${prod.brand})` : prod.name;
+  addItem(modalCurrentId, name, hit.option.price, label, qty, hit.option.id);
   if (qty < modalQty) showToast(`⚠️ Only ${qty} more available — added ${qty} to your cart.`);
   closeModal();
 }
@@ -935,8 +1003,8 @@ function initSmoothScroll() {
 //   { variants: { 'Vial Only': 'P-0024', … } } → one sheet product per card option (e.g. vial vs box)
 // A card whose sheet products are all hidden (Show on Site unticked) disappears from the site.
 const SHEET_MAP = {
-  'tirze-10mg':          { mfr: { Jinbei: 'P-0001', Avisala: 'P-0002' } },
-  'tirze-30mg':          { mfr: { Jinbei: 'P-0003', Avisala: 'P-0004' } },
+  'tirze-10mg':          { mfr: { Jinbei: 'P-0001', Avisala: 'P-0002', Chongsan: 'P-0051' } },
+  'tirze-30mg':          { mfr: { Jinbei: 'P-0003', Avisala: 'P-0004', Chongsan: 'P-0052' } },
   'tirze-60mg':          { mfr: { Jinbei: 'P-0005', Avisala: 'P-0006' } },
   'eloralintide-10mg':   'P-0007',
   'cagri-10mg-soon':     'P-0008',
@@ -947,6 +1015,8 @@ const SHEET_MAP = {
   'semax-selank-5mg':    'P-0013',
   'ghkcu-50mg':          'P-0014',
   'ghkcu-100mg':         'P-0015',
+  'ghkcu-50mg-chongsan':  'P-0053',
+  'ghkcu-100mg-chongsan': 'P-0054',
   'cuv-110mg':           'P-0016',
   'cuv-55mg':            'P-0017',
   'nad-100mg':           'P-0018',
@@ -1002,23 +1072,44 @@ function applyCatalog(catalog) {
     const prod = PRODUCTS[id];
     if (!prod) return;
     // Start from the card's original data every time (the catalog is applied twice: saved copy, then fresh).
-    if (!prod._orig) prod._orig = { hidden: !!prod.hidden, variants: prod.variants ? prod.variants.map(v => ({ ...v })) : null };
+    const cloneList = (l) => (l ? l.map(v => ({ ...v })) : null);
+    if (!prod._orig) prod._orig = {
+      hidden: !!prod.hidden,
+      variants: cloneList(prod.variants),
+      mfrVariants: prod.mfrVariants
+        ? Object.fromEntries(Object.entries(prod.mfrVariants).map(([m, l]) => [m, cloneList(l)]))
+        : null,
+    };
     if (prod._orig.hidden) return;
     prod.hidden = false;
-    if (prod._orig.variants) prod.variants = prod._orig.variants.map(v => ({ ...v }));
+    if (prod._orig.variants) prod.variants = cloneList(prod._orig.variants);
+    if (prod._orig.mfrVariants) {
+      prod.mfrVariants = Object.fromEntries(Object.entries(prod._orig.mfrVariants).map(([m, l]) => [m, cloneList(l)]));
+    }
     const mfrs = entry.mfr ? Object.keys(entry.mfr).filter(m => sheetProducts[entry.mfr[m]]) : [null];
-    const labels = prod.variants ? prod.variants.map(v => v.label) : [null];
 
-    // Every choice the sheet still offers, with its price and availability.
-    const offered = {}; // label -> [{ mfr, price, soldOut }]
-    labels.forEach(label => mfrs.forEach(m => {
-      const hit = sheetChoice(id, label, m);
-      if (hit) (offered[label] = offered[label] || []).push({ mfr: m, price: hit.option.price, soldOut: hit.product.soldOut });
+    // What the sheet offers, per manufacturer — a manufacturer with its own option list
+    // (mfrVariants) is asked about its OWN labels, not the shared ones.
+    const perMfr = {}; // mfr -> { label -> { price, soldOut } }
+    mfrs.forEach(m => {
+      perMfr[m] = {};
+      const list = variantsFor(prod, m);
+      (list ? list.map(v => v.label) : [null]).forEach(label => {
+        const hit = sheetChoice(id, label, m);
+        if (hit) perMfr[m][label] = { price: hit.option.price, soldOut: hit.product.soldOut };
+      });
+    });
+
+    // Manufacturers on the shared list decide what the card shows before one is picked.
+    const sharedMfrs = mfrs.filter(m => !(m && prod.mfrVariants?.[m]));
+    const offered = {}; // label -> [{ mfr, price, soldOut }] — shared list only
+    sharedMfrs.forEach(m => Object.entries(perMfr[m]).forEach(([label, o]) => {
+      (offered[label] = offered[label] || []).push({ mfr: m, ...o });
     }));
 
-    const shown = labels.filter(l => offered[l]);
+    const anyOffered = mfrs.some(m => Object.keys(perMfr[m]).length);
     const card = document.querySelector(`.pcard[data-id="${id}"]`);
-    if (!shown.length) { // nothing of it is on the sheet any more → hide the card
+    if (!anyOffered) { // nothing of it is on the sheet any more → hide the card
       prod.hidden = true;
       card?.closest('.pgrid-item')?.classList.add('sheet-hidden');
       return;
@@ -1027,25 +1118,37 @@ function applyCatalog(catalog) {
 
     // Price shown before a manufacturer is chosen = the lowest across manufacturers.
     const priceOf = (label) => Math.min(...offered[label].map(o => o.price));
-    if (prod.variants) {
+    const shown = Object.keys(offered);
+    if (prod.variants && shown.length) {
       prod.variants = prod.variants.filter(v => offered[v.label]);
       prod.price = priceOf(prod.variants[prod.variants.length - 1].label);
       prod.variants.forEach(v => {
         v.priceAdd = priceOf(v.label) - prod.price;
         v.soldOut = offered[v.label].every(o => o.soldOut);
       });
-    } else {
+    } else if (!prod.variants && shown.length) {
       prod.price = priceOf(null);
     }
-    prod.soldOut = shown.every(l => offered[l].every(o => o.soldOut));
+
+    // A manufacturer with its own list: drop options the sheet no longer has, price the rest.
+    mfrs.filter(m => m && prod.mfrVariants?.[m]).forEach(m => {
+      prod.mfrVariants[m] = prod.mfrVariants[m].filter(v => perMfr[m][v.label]);
+      prod.mfrVariants[m].forEach(v => {
+        v.priceAdd = perMfr[m][v.label].price - prod.price;
+        v.soldOut  = perMfr[m][v.label].soldOut;
+      });
+    });
+
+    prod.soldOut = mfrs.every(m => Object.values(perMfr[m]).every(o => o.soldOut));
 
     if (entry.mfr) {
       prod.manufacturers = mfrs;
       prod.mfrSoldOut = Object.fromEntries(mfrs.map(m => [m, sheetProducts[entry.mfr[m]].soldOut]));
-      // per-manufacturer prices, used once a manufacturer is picked
-      prod.mfrPrices = Object.fromEntries(mfrs.map(m => [m, Object.fromEntries(labels.map(l => {
-        const hit = sheetChoice(id, l, m); return [l, hit ? hit.option.price : null];
-      }))]));
+      // Per-manufacturer prices and per-option availability, used once a manufacturer is picked.
+      prod.mfrPrices = Object.fromEntries(mfrs.map(m =>
+        [m, Object.fromEntries(Object.entries(perMfr[m]).map(([l, o]) => [l, o.price]))]));
+      prod.mfrOptionSoldOut = Object.fromEntries(mfrs.map(m =>
+        [m, Object.fromEntries(Object.entries(perMfr[m]).map(([l, o]) => [l, o.soldOut]))]));
     }
 
     // Category comes from the sheet (first mapped product).
@@ -1193,9 +1296,12 @@ function refreshProductCardUI(id) {
 
   const priceEl = card.querySelector('.pcard-price');
   if (priceEl) {
-    const shownPrice = prod.variants
-      ? prod.price + Math.min(...prod.variants.map(v => v.priceAdd))
-      : prod.price;
+    // "from" must be the cheapest thing on the card, including a manufacturer with its own
+    // option list — otherwise the card can advertise a price no buyer can actually pick.
+    const candidates = prod.variants ? prod.variants.map(v => prod.price + v.priceAdd) : [prod.price];
+    Object.values(prod.mfrPrices || {}).forEach(byLabel =>
+      Object.values(byLabel).forEach(p => { if (typeof p === 'number') candidates.push(p); }));
+    const shownPrice = Math.min(...candidates);
     priceEl.innerHTML = (prod.variants
       ? '<small style="font-size:.65em;font-weight:500;opacity:.7">from </small>'
       : '') + `₱${shownPrice.toLocaleString('en-PH')}`;

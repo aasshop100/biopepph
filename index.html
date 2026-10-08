@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261003">
+  <link rel="stylesheet" href="style.css?v=20261008">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-99KWCP7494"></script>
   <script>
@@ -432,6 +432,25 @@
     </div>
 
     <div class="pgrid-item" data-cat="AntiAging">
+      <div class="pcard" data-id="ghkcu-50mg-chongsan">
+        <div class="pcard-img" onclick="openModal('ghkcu-50mg-chongsan')">
+          <img src="images/ghkcu50mg.jpg" alt="GHK-Cu 50mg (Chongsan)" class="pcard-photo">
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Anti-Aging</p>
+          <h6 class="pcard-name" onclick="openModal('ghkcu-50mg-chongsan')">GHK-Cu 50mg</h6>
+          <p class="pcard-brand">(Chongsan)</p>
+          <p class="pcard-desc">Copper Peptide · Skin rejuvenation · Collagen boost</p>
+          <p class="pcard-variants">Vial + 5ml Bac Water · Complete Set</p>
+          <div class="pcard-foot">
+            <span class="pcard-price"><small style="font-size:.65em;font-weight:500;opacity:.7">from </small>₱900</span>
+            <button class="btn-add" onclick="openModal('ghkcu-50mg-chongsan')">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="AntiAging">
       <div class="pcard" data-id="ghkcu-100mg">
         <div class="pcard-img" onclick="openModal('ghkcu-100mg')">
           <img src="images/ghkcu50mg.jpg" alt="GHK-Cu 100mg" class="pcard-photo">
@@ -444,6 +463,25 @@
           <div class="pcard-foot">
             <span class="pcard-price"><small style="font-size:.65em;font-weight:500;opacity:.7">from </small>₱900</span>
             <button class="btn-add" onclick="openModal('ghkcu-100mg')">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pgrid-item" data-cat="AntiAging">
+      <div class="pcard" data-id="ghkcu-100mg-chongsan">
+        <div class="pcard-img" onclick="openModal('ghkcu-100mg-chongsan')">
+          <img src="images/ghkcu50mg.jpg" alt="GHK-Cu 100mg (Chongsan)" class="pcard-photo">
+        </div>
+        <div class="pcard-body">
+          <p class="pcard-cat">Anti-Aging</p>
+          <h6 class="pcard-name" onclick="openModal('ghkcu-100mg-chongsan')">GHK-Cu 100mg</h6>
+          <p class="pcard-brand">(Chongsan)</p>
+          <p class="pcard-desc">Copper Peptide · Skin rejuvenation · Collagen boost</p>
+          <p class="pcard-variants">Vial + 10ml Bac Water · Complete Set</p>
+          <div class="pcard-foot">
+            <span class="pcard-price"><small style="font-size:.65em;font-weight:500;opacity:.7">from </small>₱1,000</span>
+            <button class="btn-add" onclick="openModal('ghkcu-100mg-chongsan')">Add</button>
           </div>
         </div>
       </div>
@@ -904,6 +942,7 @@
   <div class="pmodal-body">
     <p class="pmodal-cat" id="pmodalCat"></p>
     <h3 class="pmodal-name" id="pmodalName"></h3>
+    <p class="pmodal-brand" id="pmodalBrand" style="display:none;"></p>
     <div class="pmodal-price-row">
       <span class="pmodal-price" id="pmodalPrice"></span>
       <span class="pmodal-orig-price" id="pmodalOrigPrice"></span>
@@ -939,7 +978,7 @@
 </div>
 
 <script src="api-config.js?v=20261003"></script>
-<script src="script.js?v=20261007"></script>
+<script src="script.js?v=20261008"></script>
 <script>
 (function () {
   const canvas = document.createElement('canvas');
