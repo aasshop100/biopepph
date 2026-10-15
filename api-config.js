@@ -12,7 +12,7 @@ const CATALOG_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSmelUk
 // delivery fee is ₱0 at checkout. One fixed listing serves every order from this site, so the
 // link goes straight to the item and the buyer has nothing to pick.
 const SHOPEE = {
-  url: 'https://s.shopee.ph/8pmDDhvjWF',
+  url: 'https://s.shopee.ph/7VHBelrObc',
   note: 'Your delivery fee is paid through Shopee. Open the link below and complete the Shopee checkout — it already points to the right item, so you just need to check out.',
 };
 

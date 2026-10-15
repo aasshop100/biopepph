@@ -58,12 +58,20 @@ const PRODUCTS = {
     name: 'Tirzepatide 60mg', price: 1800, origPrice: null, emoji: '💉',
     tag: null, tagClass: '', cat: 'Weight Loss', soldOut: true,
     desc: 'Maximum-strength dual GLP-1/GIP agonist vial for advanced protocol stages. More doses per vial for patients already established on higher Tirzepatide doses.',
-    manufacturers: ['Jinbei', 'Avisala'],
-    mfrSoldOut: { Jinbei: true, Avisala: true },
+    manufacturers: ['Jinbei', 'Chongsan'],
+    mfrSoldOut: { Jinbei: true, Chongsan: true }, // fallback only — the sheet's "Tirzepatide 60mg - <Manufacturer>" rows overwrite this
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
+    // Same labels as the shared list, but Chongsan is dearer — its own list keeps those prices
+    // out of `sharedMfrs`, so they can never set the card's "from" or the pre-pick option prices.
+    mfrVariants: {
+      Chongsan: [
+        { label: 'Vial Only',     desc: '',                                                                     priceAdd: 100 },
+        { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 300 },
+      ],
+    },
   },
   'eloralintide-10mg': {
     name: 'Eloralintide 10mg', price: 1400, origPrice: null, emoji: '💉',
@@ -1005,7 +1013,7 @@ function initSmoothScroll() {
 const SHEET_MAP = {
   'tirze-10mg':          { mfr: { Jinbei: 'P-0001', Avisala: 'P-0002', Chongsan: 'P-0051' } },
   'tirze-30mg':          { mfr: { Jinbei: 'P-0003', Avisala: 'P-0004', Chongsan: 'P-0052' } },
-  'tirze-60mg':          { mfr: { Jinbei: 'P-0005', Avisala: 'P-0006' } },
+  'tirze-60mg':          { mfr: { Jinbei: 'P-0005', Chongsan: 'P-0055' } },
   'eloralintide-10mg':   'P-0007',
   'cagri-10mg-soon':     'P-0008',
   'retro-10mg':          { mfr: { Avisala: 'P-0041' } },
