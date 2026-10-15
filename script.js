@@ -64,11 +64,12 @@ const PRODUCTS = {
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
-    // Same labels as the shared list, but Chongsan is dearer — its own list keeps those prices
-    // out of `sharedMfrs`, so they can never set the card's "from" or the pre-pick option prices.
+    // Chongsan ships bac water with the vial and is dearer, so it has its own option list —
+    // which also keeps its prices out of `sharedMfrs`, where they would set the card's "from"
+    // and the pre-pick option prices. These labels must match the sheet's option names exactly.
     mfrVariants: {
       Chongsan: [
-        { label: 'Vial Only',     desc: '',                                                                     priceAdd: 100 },
+        { label: 'Vial + 10ml Bac Water', desc: '',                                                             priceAdd: 100 },
         { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 300 },
       ],
     },
