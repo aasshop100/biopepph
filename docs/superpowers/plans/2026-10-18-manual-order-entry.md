@@ -193,7 +193,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 Add a new section at the end of `test-flows.js`, immediately before the `console.log('\nALL FLOW TESTS PASSED')` line:
 
 ```js
-  // ── 9. Manual orders: ids come from their own counter ──
+  // ── 10. Manual orders: ids come from their own counter ──
   const bpBefore = props.get('orderCounter');
   const m1 = G.nextManualId_();
   const m2 = G.nextManualId_();
@@ -280,7 +280,7 @@ resolveManualOrder_(body) ->
 Append to the manual-order section of `test-flows.js`:
 
 ```js
-  // ── 9b. Manual order resolution: prices, overrides, hidden products, validation ──
+  // ── 10b. Manual order resolution: prices, overrides, hidden products, validation ──
   const mCustomer = { name: 'WALK-IN TEST', phone: '0917 333 4444', address: '2 Test Ave' };
   const mBody = (over = {}) => ({ customer: mCustomer, delivery: 'lalamove', status: 'Paid',
     payment: 'Cash', shippingFee: null, discount: 0, notes: '', items: [], ...over });
@@ -446,10 +446,10 @@ manualOrder_(body) ->
 Append to the manual-order section:
 
 ```js
-  // ── 9c. Manual order write: row, stock, log, oversell confirmation ──
-  const ordersBefore9c = orders().length;
-  const logBefore9c = logRows().length;
-  const jinStock9c = product('Tirzepatide 15mg (Jinbei)').stock;
+  // ── 10c. Manual order write: row, stock, log, oversell confirmation ──
+  const ordersBefore10c = orders().length;
+  const logBefore10c = logRows().length;
+  const jinStock10c = product('Tirzepatide 15mg (Jinbei)').stock;
 
   const w1 = G.manualOrder_(mBody({ items: [{ optionId: jinVial.id, qty: 2 }], notes: 'met at BGC' }));
   assert.ok(w1.ok, JSON.stringify(w1));
@@ -596,7 +596,7 @@ Without this, a manual order left at Pending is "cancelled" within the hour and 
 Append to the manual-order section:
 
 ```js
-  // ── 9d. autoCancelUnpaid leaves manual orders alone ──
+  // ── 10d. autoCancelUnpaid leaves manual orders alone ──
   const mPending = G.manualOrder_(mBody({ status: 'Pending', items: [{ optionId: jinVial.id, qty: 1 }], confirmOversell: true }));
   assert.ok(mPending.ok, JSON.stringify(mPending));
   const mPendingRow = orders().find((o) => o['Order ID'] === mPending.orderId)._row;
@@ -677,7 +677,7 @@ Unlike `buildCatalog_()` this includes **hidden products** — that is the whole
 Append to the manual-order section:
 
 ```js
-  // ── 9e. catalogForEntry_ feeds the dialog, hidden products included ──
+  // ── 10e. catalogForEntry_ feeds the dialog, hidden products included ──
   const feed = G.catalogForEntry_();
   assert.ok(feed.options.length >= optionCount - 5, 'entry feed should offer nearly every option');
   assert.ok(feed.options.some((o) => o.optionId === hidden.options[0].id), 'hidden products must be offered');
