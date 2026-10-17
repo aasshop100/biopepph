@@ -90,6 +90,13 @@ On load, this page:
 
 Changes are appended here as they're made, most recent first.
 
+### 2026-10-18 — New card: Forges GTT 600mg
+- **New single-option card `forges-gtt-600mg`** — **Forges GTT 600mg**, one option `Vial Set` ("1 Glutathione Vial & 1 Bac Saline 10ml") at **₱450**, Anti-oxidant, starting stock **13**. Sheet product **P-0057** (O-0083), Show on Site TRUE, Sort Order 10.
+- Built on the **Snap-8 pattern**: a plain-string `SHEET_MAP` entry (`'forges-gtt-600mg': 'P-0057'`) with a one-item `variants` list. A plain-string mapping resolves the option **by name**, so the sheet's Option Name must stay exactly `Vial Set` — unlike a `{ variants: {...} }` card, where the label maps to a whole product and the name never has to match.
+- The Catalog row was added with **`insertDimension`** directly under the Forges 1500mg Box row, not a values shift, so the Show-on-Site checkbox validation came with the row (verified `F12` = BOOLEAN, not the text "TRUE"). Sort Order 10 ties with the Box row deliberately: a card's sort is the **minimum** across its mapped products, so Forges 1500mg keeps 9 and the new card lands right after it without renumbering anything below.
+- It is a separate card, not a third option on Forges GTT 1500mg — different strength, and adding options to that card would have meant relabelling live option rows.
+- Verified on localhost against the live sheet: card reads in stock at ₱450, modal shows the option with its description, add-to-cart line carried **`O-0083` at ₱450**, quantity capped at 13, no console errors, no overflow at 375px. Assets bumped to `?v=20261018`; Builder tab regenerated (53 → 54 choices) and `check-consistency.js` PASS.
+
 ### 2026-10-15 — Tirzepatide 60mg: Avisala replaced by Chongsan; new Shopee link
 - **Tirzepatide 60mg dropped Avisala and gained Chongsan** at its own prices — `Vial + 10ml Bac Water` ₱1,900, `Complete Set` ₱2,100 (the shared Jinbei list stays ₱1,600 / ₱1,800, so the card still reads "from ₱1,600"). Sheet product **P-0055** (O-0080/81), stock 0, Show on Site TRUE: Chongsan renders as a greyed-out button until stock lands, and with Jinbei also at 0 the card stays Sold Out.
 - Chongsan gets its own `mfrVariants` entry for both reasons at once: it ships bac water with the vial (`Vial + 10ml Bac Water`, where Jinbei is plain `Vial Only`), and staying off the shared list keeps its higher prices from feeding the card's "from ₱…" and the pre-pick option prices.

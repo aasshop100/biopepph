@@ -388,6 +388,14 @@ const PRODUCTS = {
       { label: 'Box',                           desc: '10 gtt vial & 10 Bac Saline 15ml',                      priceAdd: 0     },
     ],
   },
+  'forges-gtt-600mg': {
+    name: 'Forges GTT 600mg', price: 450, origPrice: null, emoji: '✨',
+    tag: null, tagClass: '', cat: 'Anti-Aging',
+    desc: 'Forges 600mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
+    variants: [
+      { label: 'Vial Set',                      desc: '1 Glutathione Vial & 1 Bac Saline 10ml',                 priceAdd: 0     },
+    ],
+  },
   'glutathione-1200mg-box': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
@@ -1036,6 +1044,7 @@ const SHEET_MAP = {
   'fuan-gtt-1500mg':        { variants: { 'Vial Only': 'P-0024', 'Box': 'P-0025' } },
   'generic-gtt-2500mg':     { variants: { 'Vial Only': 'P-0026', 'Kit': 'P-0027' } },
   'forges-gtt-1500mg':      { variants: { 'Vial Set': 'P-0028', 'Box': 'P-0029' } },
+  'forges-gtt-600mg':       'P-0057',
   'glutathione-1200mg-box-preorder':      'P-0030',
   'fuan-glutathione-1500mg-box-preorder': 'P-0031',
   'pharma-bac-10ml':     'P-0032',
