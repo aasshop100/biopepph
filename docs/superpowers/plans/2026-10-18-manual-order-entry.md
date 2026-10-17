@@ -193,7 +193,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 Add a new section at the end of `test-flows.js`, immediately before the `console.log('\nALL FLOW TESTS PASSED')` line:
 
 ```js
-  // ── 10. Manual orders: ids come from their own counter ──
+  // ── 11. Manual orders: ids come from their own counter ──
   const bpBefore = props.get('orderCounter');
   const m1 = G.nextManualId_();
   const m2 = G.nextManualId_();
@@ -280,7 +280,7 @@ resolveManualOrder_(body) ->
 Append to the manual-order section of `test-flows.js`:
 
 ```js
-  // ── 10b. Manual order resolution: prices, overrides, hidden products, validation ──
+  // ── 11b. Manual order resolution: prices, overrides, hidden products, validation ──
   const mCustomer = { name: 'WALK-IN TEST', phone: '0917 333 4444', address: '2 Test Ave' };
   const mBody = (over = {}) => ({ customer: mCustomer, delivery: 'lalamove', status: 'Paid',
     payment: 'Cash', shippingFee: null, discount: 0, notes: '', items: [], ...over });
@@ -446,17 +446,17 @@ manualOrder_(body) ->
 Append to the manual-order section:
 
 ```js
-  // ── 10c. Manual order write: row, stock, log, oversell confirmation ──
-  const ordersBefore10c = orders().length;
-  const logBefore10c = logRows().length;
-  const jinStock10c = product('Tirzepatide 15mg (Jinbei)').stock;
+  // ── 11c. Manual order write: row, stock, log, oversell confirmation ──
+  const ordersBefore11c = orders().length;
+  const logBefore11c = logRows().length;
+  const jinStock11c = product('Tirzepatide 15mg (Jinbei)').stock;
 
   const w1 = G.manualOrder_(mBody({ items: [{ optionId: jinVial.id, qty: 2 }], notes: 'met at BGC' }));
   assert.ok(w1.ok, JSON.stringify(w1));
   assert.match(w1.orderId, /^BPM-\d{4}$/);
-  assert.strictEqual(orders().length, ordersBefore10c + 1);
-  assert.strictEqual(product('Tirzepatide 15mg (Jinbei)').stock, jinStock10c - 2);
-  assert.strictEqual(logRows().length, logBefore10c + 1);
+  assert.strictEqual(orders().length, ordersBefore11c + 1);
+  assert.strictEqual(product('Tirzepatide 15mg (Jinbei)').stock, jinStock11c - 2);
+  assert.strictEqual(logRows().length, logBefore11c + 1);
   const lastLog = logRows()[logRows().length - 1];
   assert.strictEqual(lastLog['Reason'], 'Reserved by order ' + w1.orderId);
 
@@ -596,7 +596,7 @@ Without this, a manual order left at Pending is "cancelled" within the hour and 
 Append to the manual-order section:
 
 ```js
-  // ── 10d. autoCancelUnpaid leaves manual orders alone ──
+  // ── 11d. autoCancelUnpaid leaves manual orders alone ──
   const mPending = G.manualOrder_(mBody({ status: 'Pending', items: [{ optionId: jinVial.id, qty: 1 }], confirmOversell: true }));
   assert.ok(mPending.ok, JSON.stringify(mPending));
   const mPendingRow = orders().find((o) => o['Order ID'] === mPending.orderId)._row;
@@ -677,7 +677,7 @@ Unlike `buildCatalog_()` this includes **hidden products** — that is the whole
 Append to the manual-order section:
 
 ```js
-  // ── 10e. catalogForEntry_ feeds the dialog, hidden products included ──
+  // ── 11e. catalogForEntry_ feeds the dialog, hidden products included ──
   const feed = G.catalogForEntry_();
   assert.ok(feed.options.length >= optionCount - 5, 'entry feed should offer nearly every option');
   assert.ok(feed.options.some((o) => o.optionId === hidden.options[0].id), 'hidden products must be offered');
