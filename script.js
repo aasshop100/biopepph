@@ -389,7 +389,7 @@ const PRODUCTS = {
     ],
   },
   'forges-gtt-600mg': {
-    name: 'Forges GTT 600mg', price: 450, origPrice: null, emoji: '✨',
+    name: '🩷 Forges GTT 600mg', price: 450, origPrice: null, emoji: '✨',
     tag: null, tagClass: '', cat: 'Anti-Aging',
     desc: 'Forges 600mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
     variants: [
