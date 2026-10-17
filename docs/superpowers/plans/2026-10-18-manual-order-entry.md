@@ -454,9 +454,9 @@ Append to the manual-order section:
   const w1 = G.manualOrder_(mBody({ items: [{ optionId: jinVial.id, qty: 2 }], notes: 'met at BGC' }));
   assert.ok(w1.ok, JSON.stringify(w1));
   assert.match(w1.orderId, /^BPM-\d{4}$/);
-  assert.strictEqual(orders().length, ordersBefore9c + 1);
-  assert.strictEqual(product('Tirzepatide 15mg (Jinbei)').stock, jinStock9c - 2);
-  assert.strictEqual(logRows().length, logBefore9c + 1);
+  assert.strictEqual(orders().length, ordersBefore10c + 1);
+  assert.strictEqual(product('Tirzepatide 15mg (Jinbei)').stock, jinStock10c - 2);
+  assert.strictEqual(logRows().length, logBefore10c + 1);
   const lastLog = logRows()[logRows().length - 1];
   assert.strictEqual(lastLog['Reason'], 'Reserved by order ' + w1.orderId);
 
