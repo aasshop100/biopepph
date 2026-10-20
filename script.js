@@ -357,7 +357,7 @@ const PRODUCTS = {
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose Korean glutathione (Glutaone) for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade — one of the most potent whitening formulations available.',
     variants: [
-      { label: 'Vial Only',     desc: 'Glutathione vial only',                                                priceAdd: -3550 },
+      { label: 'Vial Only',     desc: 'Glutathione vial only - BAC WATER NOT INCLUDED',                       priceAdd: -3550 },
       { label: 'Box',           desc: '10 vials per box',                                                     priceAdd: 0, soldOut: true },
     ],
   },
@@ -366,7 +366,7 @@ const PRODUCTS = {
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose FUAN reduced glutathione for skin brightening, antioxidant protection, and cellular detox. 1500mg pharmaceutical-grade formulation.',
     variants: [
-      { label: 'Vial Only',     desc: 'Glutathione vial only',                                                priceAdd: -4450 },
+      { label: 'Vial Only',     desc: 'Glutathione vial only - BAC WATER NOT INCLUDED',                       priceAdd: -4450 },
       { label: 'Box',           desc: '10 vials per box · BAC water NOT included',                            priceAdd: 0, soldOut: true },
     ],
   },
@@ -375,7 +375,7 @@ const PRODUCTS = {
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose 2500mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
     variants: [
-      { label: 'Vial Only',     desc: 'Glutathione vial only',                                                priceAdd: -4900 },
+      { label: 'Vial Only',     desc: 'Glutathione vial only - BAC WATER NOT INCLUDED',                       priceAdd: -4900 },
       { label: 'Kit',           desc: '',                                                                     priceAdd: 0    },
     ],
   },
