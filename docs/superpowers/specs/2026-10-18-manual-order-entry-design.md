@@ -205,9 +205,32 @@ Apps Script here is updated by pasting. Pasting over Remote Desktop mangles non-
 `Code-paste.gs` with `\uXXXX` escapes. **`AddOrder.html` needs the same treatment** —
 `make-paste.js` must cover it, and the HTML must carry no raw non-ASCII.
 
-Then: paste both files → **Deploy ▸ Manage deployments ▸ ✏️ ▸ New version**, same
-deployment ID. Never "New deployment" — the URL would change and the website would lose
-its fallback.
+Then: paste both files, name the HTML file exactly **`AddOrder`** in the editor (the
+editor appends `.html`; `createHtmlOutputFromFile('AddOrder')` depends on that name, and
+the paste file is called `AddOrder-paste.html`), and reload the spreadsheet so `onOpen`
+re-runs and the menu item appears.
+
+**Do NOT cut a new web-app version for this change** (corrected 2026-10-20 by the final
+review; an earlier draft of this section said to). Every website-facing function —
+`doGet`, `doPost`, `placeOrder_`, `confirmOrder_`, `discountFor_`, `orderResponse_`,
+`buildCatalog_`, `sendAdminEmail_`, `applyOrderStock_`, `onOrderStatusChange_` — is
+byte-identical to the pre-change version, verified function by function. The dialog and
+the menu run from the editor's current code, not from a deployed version, so redeploying
+gains nothing and couples a possible dialog bug to a website outage. The live web app
+keeps serving its known-good version throughout.
+
+When a future change *does* touch a website-facing function: **Deploy ▸ Manage
+deployments ▸ ✏️ ▸ New version**, same deployment ID. Never "New deployment" — the URL
+would change and the website would lose its fallback.
+
+**Do not run `setup()`.** It deletes and recreates every trigger, and this change needs no
+new trigger.
+
+**Check the rollback path before pasting, not after.** `Code-before-manual-orders.gs` is a
+verbatim pre-change backup but contains raw non-ASCII, so it cannot go back through the
+paste channel; `Code-before-manual-orders-paste.gs` is its escaped, pasteable twin.
+Better still, confirm **File ▸ See version history** holds a pre-paste entry — that is the
+real rollback.
 
 ## Out of scope
 
