@@ -396,6 +396,14 @@ const PRODUCTS = {
       { label: 'Vial Set',                      desc: '1 Glutathione Vial & 1 Bac Saline 10ml',                 priceAdd: 0     },
     ],
   },
+  'tad-600mg': {
+    name: 'TAD 600mg', price: 450, origPrice: null, emoji: '✨',
+    tag: 'New', tagClass: 'new', cat: 'Anti-oxidant',
+    desc: 'FDA Approved Glutathione.\nFor IM and IV only.',
+    variants: [
+      { label: 'Vial Set',                      desc: '1 Vial & 4ml Diluent',                                   priceAdd: 0     },
+    ],
+  },
   'glutathione-1200mg-box': { hidden: true, // replaced 2026-09 by korean-glutaone-1200mg / fuan-gtt-1500mg
     name: 'Korean Glutathione 1200mg Box', price: 4000, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
@@ -1045,6 +1053,7 @@ const SHEET_MAP = {
   'generic-gtt-2500mg':     { variants: { 'Vial Only': 'P-0026', 'Kit': 'P-0027' } },
   'forges-gtt-1500mg':      { variants: { 'Vial Set': 'P-0028', 'Box': 'P-0029' } },
   'forges-gtt-600mg':       'P-0057',
+  'tad-600mg':              'P-0058',
   'glutathione-1200mg-box-preorder':      'P-0030',
   'fuan-glutathione-1500mg-box-preorder': 'P-0031',
   'pharma-bac-10ml':     'P-0032',

@@ -90,6 +90,15 @@ On load, this page:
 
 Changes are appended here as they're made, most recent first.
 
+### 2026-10-25 — New card: TAD 600mg; the pink heart swapped for a portable one
+- **The 🩷 on the three gluta cards was rendering as a tofu box on some Android phones.** It was **U+1FA77 PINK HEART**, an Emoji 15.0 character from September 2022 that Google only shipped in Noto Color Emoji with **Android 14**. Android 13 and older have no glyph for it, so the name showed a ☒. iOS 16.4+ and Windows 11 have it, which is why it looked right on those.
+- Replaced everywhere with **U+1F496 SPARKLING HEART** (Emoji 1.0, 2010) — in every Android, iOS and Windows emoji font in circulation, same pink look, no font dependency. Touched `korean-glutaone-1200mg`, `fuan-gtt-1500mg` and `forges-gtt-600mg` in `index.html` and `script.js`, the `guidelines.html` nav item, the sheet Catalog names (C4, C5, C6, C7, C12) and the Builder tab. **Rule of thumb: customer-facing text should stick to Emoji 1.0 characters** — anything newer is a font-coverage gamble on older Android.
+- **New single-option card `tad-600mg`** — **TAD 600mg**, FDA approved glutathione, IM and IV only. One option `Vial Set` ("1 Vial & 4ml Diluent") at **₱450**, Anti-oxidant, starting stock **8**, `New` badge on the card. Sheet product **P-0058** (O-0084), Show on Site TRUE.
+- Same **Snap-8 pattern** as Forges GTT 600mg: plain-string `SHEET_MAP` entry (`'tad-600mg': 'P-0058'`) with a one-item `variants` list, so the sheet's Option Name must stay exactly `Vial Set`.
+- **Sort Order `10.5`**, not a tie — Forges GTT 600mg and the Forges 1500mg Box both sit at 10 and Tirzepatide 15mg at 11, so a fraction lands the card directly below Forges GTT 600mg without renumbering anything. `toNumber_()` and the CSV `num()` both parse floats, so the Apps Script path and the published-CSV path agree.
+- The Catalog row went into **row 82, the first blank row**, which already carried the checkbox and number validation — no `insertDimension` needed this time. Verified `F82`/`J82` are `boolValue` with BOOLEAN validation (not the text "TRUE") and `E82`/`G82` are real numbers.
+- Verified on localhost against the live sheet: card renders between Forges GTT 600mg and Tirzepatide 15mg, New badge shows, modal reads Anti-oxidant / ₱450 / the Vial Set option with its description, add-to-cart enabled, no console errors. `script.js` bumped to `?v=20261025b`; Builder tab regenerated (54 → 55 choices) and `check-consistency.js` PASS.
+
 ### 2026-10-18 — New card: Forges GTT 600mg
 - **New single-option card `forges-gtt-600mg`** — **Forges GTT 600mg**, one option `Vial Set` ("1 Glutathione Vial & 1 Bac Saline 10ml") at **₱450**, Anti-oxidant, starting stock **13**. Sheet product **P-0057** (O-0083), Show on Site TRUE, Sort Order 10.
 - Built on the **Snap-8 pattern**: a plain-string `SHEET_MAP` entry (`'forges-gtt-600mg': 'P-0057'`) with a one-item `variants` list. A plain-string mapping resolves the option **by name**, so the sheet's Option Name must stay exactly `Vial Set` — unlike a `{ variants: {...} }` card, where the label maps to a whole product and the name never has to match.
