@@ -371,7 +371,7 @@ const PRODUCTS = {
     ],
   },
   'generic-gtt-2500mg': {
-    name: 'Generic GTT 2500mg', price: 5500, origPrice: null, emoji: '✨',
+    name: '💖 Generic GTT 2500mg', price: 5500, origPrice: null, emoji: '✨',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose 2500mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
     variants: [
@@ -397,7 +397,7 @@ const PRODUCTS = {
     ],
   },
   'tad-600mg': {
-    name: 'TAD 600mg', price: 450, origPrice: null, emoji: '✨',
+    name: '💖 TAD 600mg', price: 450, origPrice: null, emoji: '✨',
     tag: 'New', tagClass: 'new', cat: 'Anti-oxidant',
     desc: 'FDA Approved Glutathione.\nFor IM and IV only.',
     variants: [
