@@ -380,7 +380,7 @@ const PRODUCTS = {
     ],
   },
   'forges-gtt-1500mg': {
-    name: 'Forges GTT 1500mg', price: 6000, origPrice: null, emoji: '✨',
+    name: '💖 Forges GTT 1500mg', price: 6000, origPrice: null, emoji: '✨',
     tag: null, tagClass: '', cat: 'Anti-Aging', soldOut: true,
     desc: 'Forges 1500mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
     variants: [

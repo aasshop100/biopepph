@@ -92,7 +92,8 @@ Changes are appended here as they're made, most recent first.
 
 ### 2026-10-25 (later) — 💖 added to Generic GTT 2500mg and TAD 600mg
 - Both now carry the same 💖 prefix as the other featured gluta cards: `generic-gtt-2500mg` and `tad-600mg` in `index.html` and `script.js`, and Catalog names C8, C9 (the Kit row too, matching how P-0023/P-0025 carry it) and C82.
-- Builder tab regenerated, `check-consistency.js` PASS, `script.js` bumped to `?v=20261025c`.
+- `forges-gtt-1500mg` followed in the same pass (Catalog C10 and the Box row C11), so every gluta card except the two **BOX -** pre-orders now carries the heart.
+- Builder tab regenerated, `check-consistency.js` PASS, `script.js` bumped to `?v=20261025d`.
 
 ### 2026-10-25 — New card: TAD 600mg; the pink heart swapped for a portable one
 - **The 🩷 on the three gluta cards was rendering as a tofu box on some Android phones.** It was **U+1FA77 PINK HEART**, an Emoji 15.0 character from September 2022 that Google only shipped in Noto Color Emoji with **Android 14**. Android 13 and older have no glyph for it, so the name showed a ☒. iOS 16.4+ and Windows 11 have it, which is why it looked right on those.
