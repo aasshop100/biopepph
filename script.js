@@ -353,7 +353,7 @@ const PRODUCTS = {
     variants: null,
   },
   'korean-glutaone-1200mg': {
-    name: '🩷 KOREAN GLUTAONE 1200MG', price: 4000, origPrice: null, emoji: '✨',
+    name: '💖 KOREAN GLUTAONE 1200MG', price: 4000, origPrice: null, emoji: '✨',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose Korean glutathione (Glutaone) for skin brightening, antioxidant protection, and cellular detox. 1200mg pharmaceutical-grade — one of the most potent whitening formulations available.',
     variants: [
@@ -362,7 +362,7 @@ const PRODUCTS = {
     ],
   },
   'fuan-gtt-1500mg': {
-    name: '🩷 FUAN GTT 1500MG', price: 5000, origPrice: null, emoji: '✨',
+    name: '💖 FUAN GTT 1500MG', price: 5000, origPrice: null, emoji: '✨',
     tag: 'New', tagClass: 'new', cat: 'Anti-Aging',
     desc: 'High-dose FUAN reduced glutathione for skin brightening, antioxidant protection, and cellular detox. 1500mg pharmaceutical-grade formulation.',
     variants: [
@@ -389,7 +389,7 @@ const PRODUCTS = {
     ],
   },
   'forges-gtt-600mg': {
-    name: '🩷 Forges GTT 600mg', price: 450, origPrice: null, emoji: '✨',
+    name: '💖 Forges GTT 600mg', price: 450, origPrice: null, emoji: '✨',
     tag: null, tagClass: '', cat: 'Anti-Aging',
     desc: 'Forges 600mg glutathione for skin brightening, antioxidant protection, and cellular detox.',
     variants: [
