@@ -90,6 +90,12 @@ On load, this page:
 
 Changes are appended here as they're made, most recent first.
 
+### 2026-10-25 (later still) — Rachelle's two BAC-water edits; Builder rebuild no longer wipes the queue
+- **Both BOX pre-order descriptions now say BAC water is not included** — `glutathione-1200mg-box-preorder` and `fuan-glutathione-1500mg-box-preorder` get `Per Kit: 10 vials only (BAC WATER NOT INCLUDED)` in place of `Per Kit: 10 vials`. Rachelle's wording, with her double space before the bracket normalised to one.
+- **These two came out of the Builder queue, which a rebuild had destroyed.** `setup-builder-tab.js` clears the whole Builder tab before rebuilding it, so the two READY rows she had typed were wiped by the four rebuilds run on 2026-10-25. They were recovered from the sheet's **version history** — Drive revision `1060`, her last edit of the day, exported as xlsx through the Drive API. **File → Version history, filtered to her account, is the way to check this by hand.**
+- **`setup-builder-tab.js --write` now refuses to run while the queue has anything in it.** New `readQueue()` reads the white columns only (the grey "NOW" columns are lookup formulas that resolve to blank on an untouched row, and READY is FALSE on every blank row, so neither proves anyone typed anything). A dry run lists the pending rows; `--write` exits 1 and touches nothing; `--force` overrides but first writes the rows to a local `builder-queue-<timestamp>.json`.
+- All three paths were tested against the live sheet with a throwaway row: dry run listed it, `--write` refused with exit 1 and left the row in place, `--force` backed it up and rebuilt. `script.js` bumped to `?v=20261025e`.
+
 ### 2026-10-25 (later) — 💖 added to Generic GTT 2500mg and TAD 600mg
 - Both now carry the same 💖 prefix as the other featured gluta cards: `generic-gtt-2500mg` and `tad-600mg` in `index.html` and `script.js`, and Catalog names C8, C9 (the Kit row too, matching how P-0023/P-0025 carry it) and C82.
 - `forges-gtt-1500mg` followed in the same pass (Catalog C10 and the Box row C11), so every gluta card except the two **BOX -** pre-orders now carries the heart.

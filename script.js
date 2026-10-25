@@ -413,13 +413,13 @@ const PRODUCTS = {
   'glutathione-1200mg-box-preorder': {
     name: 'BOX - KOREAN GLUTAONE 1200MG', price: 3500, origPrice: null, emoji: '✨', image: 'images/kgttbox.jpg',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
-    desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials\n💰 ₱3,500 per kit\nAlways open, ETA: 7 days upon payment.',
+    desc: 'KGTT Glutaone 1200mg\nPer Kit: 10 vials only (BAC WATER NOT INCLUDED)\n💰 ₱3,500 per kit\nAlways open, ETA: 7 days upon payment.',
     variants: null,
   },
   'fuan-glutathione-1500mg-box-preorder': {
     name: 'BOX - FUAN GLUTA 1500MG', price: 4000, origPrice: null, emoji: '✨', image: 'images/fuan1.png',
     tag: 'Pre-Order', tagClass: 'preorder', cat: 'Anti-Aging',
-    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials\n💰 ₱4,000 per kit\nAlways open, ETA: 7 days upon payment.',
+    desc: 'FUAN Reduced Glutathione 1500mg\nPer Kit: 10 vials only (BAC WATER NOT INCLUDED)\n💰 ₱4,000 per kit\nAlways open, ETA: 7 days upon payment.',
     variants: null,
   },
 
