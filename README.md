@@ -76,6 +76,21 @@ On load, this page:
 
 ---
 
+## Making a product or wording change
+
+One change spans this repo, the sheet, and the back-office repo. Skipping a step is how the three drift apart.
+
+0. **Read the `Builder` tab first** (rows 9–20 of the sheet). If Rachelle has queued anything, apply her rows before touching anything else — regenerating that tab destroys them. `setup-builder-tab.js` now refuses to run over a non-empty queue, but `--force` bypasses it.
+1. Edit the card markup in `index.html` **and** the `PRODUCTS` entry in `script.js`. A new product also needs a `SHEET_MAP` entry.
+2. Update the sheet's `Catalog` tab. Prefer the first blank row over `insertDimension` — it already carries the checkbox and number validation. Verify the write came back as `boolValue`, not the text `"TRUE"`.
+3. `cd ../BIOPEP-backoffice && node setup-builder-tab.js --write`
+4. `node check-consistency.js` — must PASS. Two GHK-Cu casing WARNings are pre-existing.
+5. Bump the `script.js` cache-bust in `index.html`. Append a letter rather than reusing a version string; four pushes in one day exhausted the date-only convention on 2026-10-25.
+6. Verify on localhost **over HTTP** (`npx http-server`) against the live sheet — `file://` breaks every relative path.
+7. `git push origin master` here, **and** commit + push `BIOPEP-backoffice` if anything there changed. That repo deploys nothing, so it goes stale silently.
+8. Verify the **live** site, not just the local one — see the `index.html` caching note below.
+9. Add a changelog entry here.
+
 ## Known constraints / gotchas
 
 - **No backend server** — the sheet's Apps Script web app is the backend (catalog, orders, stock, admin email). If it's unreachable, checkout shows an error and no order is placed (nothing is lost silently); the shop keeps showing the last saved catalog.
