@@ -229,13 +229,12 @@ const PRODUCTS = {
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
-  '5-amino-1mq-5mg': { hidden: true, // hidden 2026-09-19 (sold out) — restore by removing this flag + re-adding its card
-    name: '5-Amino-1MQ 5mg', price: 1100, origPrice: null, emoji: '🔥', image: 'images/5amino.jpg', cat: 'Weight Loss',
-    tag: null, tagClass: '', soldOut: true,
+  '5-amino-1mq-50mg': {
+    name: '5-Amino-1MQ 50mg', price: 1400, origPrice: null, emoji: '🔥', image: 'images/5amino.jpg', cat: 'Weight Loss',
+    tag: null, tagClass: '',
     desc: 'NNMT enzyme inhibitor that supports fat metabolism and lean muscle preservation. Popular pairing with GLP-1/GIP therapies for enhanced fat loss.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Vial and Bac',  desc: 'Peptide Vial + Bac water Only',                                        priceAdd: -100 },
       { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
     ],
   },
@@ -1034,6 +1033,7 @@ const SHEET_MAP = {
   'eloralintide-10mg':   'P-0007',
   'cagri-10mg-soon':     'P-0008',
   'retro-10mg':          { mfr: { Avisala: 'P-0041' } },
+  '5-amino-1mq-50mg':    'P-0044',
   'china-lemon-bottle':  { variants: { '10mL': 'P-0009', '50mL': 'P-0010' } },
   'kpv-10mg':            'P-0011',
   'kpv-30mg':            'P-0012',

@@ -103,6 +103,39 @@ One change spans this repo, the sheet, and the back-office repo. Skipping a step
 
 ## Changelog
 
+### 2026-11-14 — 5-Amino-1MQ 50mg restored to the site; help panel on the Catalog tab
+
+**The card.** `5-Amino-1MQ 50mg` is back on the storefront as `5-amino-1mq-50mg`, mapped to sheet
+product `P-0044` (`'5-amino-1mq-50mg': 'P-0044'` in `SHEET_MAP`). Two options, both priced from the
+sheet: `Vial Only` → `O-0064` ₱1,200 and `Complete Set` → `O-0065` ₱1,400. Weight Loss, no badge,
+photo `images/5amino.jpg`, Sort Order 19 so it lands between Eloralintide (18) and Cagrilintide (20).
+
+**Why it had stopped showing.** Ticking `Show on Site` in the sheet did nothing, because the product
+had been retired from the *website* on 2026-09-19, which is three separate things:
+its card markup was deleted from `index.html`, its `PRODUCTS` entry carried `hidden: true`
+(and `applyCatalog()` returns early on `prod._orig.hidden` before any sheet data is applied), and it
+had no `SHEET_MAP` entry at all — and `applyCatalog()` only ever iterates `Object.entries(SHEET_MAP)`,
+so `P-0044` was never looked at. **`Show on Site` only controls products the site already has a card
+and a mapping for.** All three had to be undone.
+
+The old entry was for the **5mg**, which no longer exists in the sheet; it was repurposed to the
+50mg rather than resurrected. Its third option `Vial and Bac` was dropped, since the sheet does not
+offer it (it would have been filtered out silently anyway, as with GHK-Cu and KPV).
+
+**Catalog tab help panel (`BIOPEP-backoffice/setup-catalog-help.js`).** `Catalog!N1:P21` now holds a
+three-block panel for Rachelle: what she can change there herself (Price, Stock, Show on Site,
+Show Option, Sort Order, Category), what the tab cannot change and belongs on the Builder tab
+(Product Name, Option Name, the sub-line, the pop-up description, option small print), and what
+always needs Lester (a brand-new product, removing one for good, photos, checkout wording). Column M
+is a narrow gutter. Safe because every reader of that tab is bounded to `A2:J600`; the published CSV
+gains the extra columns, and `catalogFromCSV()` keys off header names, so the parsed catalog is
+byte-identical with and without them (verified both ways).
+
+Verified: 19/19 assertions on the entry and markup, `check-consistency.js` PASS (37 cards, 36 mapped,
+only the two pre-existing GHK-Cu casing warnings), Builder tab regenerated with the queue empty, and
+a cold localhost load against the live sheet — card visible at `from ₱1,200`, modal showing both
+options and "Only 3 left", and an added cart line carrying `optionId: O-0065`.
+
 Changes are appended here as they're made, most recent first.
 
 ### 2026-10-25 (later still) — Rachelle's two BAC-water edits; Builder rebuild no longer wipes the queue
