@@ -103,6 +103,19 @@ One change spans this repo, the sheet, and the back-office repo. Skipping a step
 
 ## Changelog
 
+### 2026-11-14 (later) — 5-Amino Complete Set: full kit contents
+
+The `Complete Set` option on `5-amino-1mq-50mg` now reads
+`Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap`
+in place of the old `Peptide vial + bacteriostatic water + insulin syringe`. Lester's exact wording.
+
+⚠ The old short string is **shared with another card** (`aod-9604-5mg`, which is `hidden: true` but still in the file),
+so this was edited by line inside the 5-Amino block — a global find/replace would have changed both.
+
+Cache-bust `script.js?v=20261114b` (second push of the day, hence the letter — `20261114` was already
+served). Builder tab regenerated with the queue empty, `check-consistency.js` PASS, modal verified on
+localhost.
+
 ### 2026-11-14 — 5-Amino-1MQ 50mg restored to the site; help panel on the Catalog tab
 
 **The card.** `5-Amino-1MQ 50mg` is back on the storefront as `5-amino-1mq-50mg`, mapped to sheet

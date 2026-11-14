@@ -235,7 +235,7 @@ const PRODUCTS = {
     desc: 'NNMT enzyme inhibitor that supports fat metabolism and lean muscle preservation. Popular pairing with GLP-1/GIP therapies for enhanced fat loss.',
     variants: [
       { label: 'Vial Only',     desc: '',                                                                     priceAdd: -200 },
-      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + insulin syringe',                priceAdd: 0    },
+      { label: 'Complete Set',  desc: 'Peptide vial + bacteriostatic water + 6 insulin syringes + 1 needle for recon + 10 alcohol pads + 1 vial cap', priceAdd: 0    },
     ],
   },
   'pharma-bac-10ml': {
