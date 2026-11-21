@@ -103,6 +103,11 @@ One change spans this repo, the sheet, and the back-office repo. Skipping a step
 
 ## Changelog
 
+### 2026-11-21 — KPV 30mg price increase
+- **KPV 30mg** repriced: **Vial Only ₱1,200 → ₱1,300**, **Complete Set ₱1,500 → ₱1,600**. Sheet `Catalog` rows 58/59 (O-0021 / O-0022) are the source of truth; `script.js` base price 1500 → 1600 (Vial Only keeps `priceAdd: -300`) and the baked card price in `index.html` went to `from ₱1,300`.
+- Builder tab regenerated, `check-consistency.js` PASS (2 pre-existing GHK-Cu casing warnings), cache-bust `script.js?v=20261121a`.
+- Note: the card still renders **SOLD OUT** — Catalog stock for P-0012 is 0, unchanged by this edit.
+
 ### 2026-11-14 (later) — 5-Amino Complete Set: full kit contents
 
 The `Complete Set` option on `5-amino-1mq-50mg` now reads

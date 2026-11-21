@@ -102,7 +102,7 @@ const PRODUCTS = {
     ],
   },
   'kpv-30mg': {
-    name: 'KPV 30mg', price: 1500, origPrice: null, emoji: '🧬',
+    name: 'KPV 30mg', price: 1600, origPrice: null, emoji: '🧬',
     tag: 'New', tagClass: 'new', cat: 'Healing',
     desc: 'Alpha-MSH tripeptide fragment with potent anti-inflammatory and antimicrobial properties. Studied for gut healing, skin conditions, and wound repair. Higher-strength 30mg vial.',
     variants: [
